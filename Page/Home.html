@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-SHOP</title>
+    <link rel="stylesheet" href="../src/output.css">
+    <style>
+        .bgs {
+            background: linear-gradient(to right, rgb(206, 8, 21), rgb(113, 22, 173), rgb(16, 169, 234), red);
+        }
+
+        .log {
+            background-color: rgb(39, 145, 221);
+            transition: 0.8s;
+        }
+
+        .log:hover {
+            animation: loginchange 2s infinite alternate;
+        }
+
+        @keyframes loginchange {
+            0% {
+                background-color: red;
+            }
+
+            50% {
+                background-color: blue;
+            }
+
+            100% {
+                background-color: rgba(9, 95, 12, 0.71);
+            }
+        }
+
+        .logo {
+            border: 2px solid yellow;
+            animation: logochange 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes logochange {
+            0% {
+                border-color: yellow;
+            }
+
+            50% {
+                border-color: rgb(20, 214, 133);
+            }
+
+            100% {
+                border-color: blue;
+            }
+        }
+
+        .slide {
+            border-radius: 5px;
+            border: 2px solid rgb(38, 3, 46);
+            animation: slideMove 5s infinite alternate ease-in-out;
+        }
+
+        @keyframes slideMove {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-85px);
+            }
+        }
+
+        .box {
+            border: 3px solid yellow;
+            animation: logochange 3s infinite alternate ease-in-out;
+        }
+
+        .shop {
+            border: 3px solid yellow;
+            animation: logochange 3s infinite alternate ease-in-out;
+        }
+        .cart{
+    transition: all 0.3s ease;
+}
+
+.cart:hover{
+    box-shadow: 0 25px 20px 12px rgba(41, 226, 59, 0.5);
+}
+    </style>
+</head>
+
+<body class="bg-black">
+
+    <!-- HEADER -->
+    <nav class="bgs shadow-md flex justify-between items-center px-10 py-3 sticky z-50 top-0">
+
+        <!-- LOGO -->
+        <div class="flex items-center gap-3">
+            <img class="w-12 h-12 rounded-full bg-amber-400 logo"
+                src="https://i.pinimg.com/736x/76/3c/2b/763c2bb8624e6e325c1256ce13c56645.jpg" alt="">
+            <h1 class="text-2xl font-bold">
+                <span class="text-blue-600">PC</span><span class="text-red-500">SH</span><span
+                    class="text-yellow-500">OP</span>
+            </h1>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="text-white">
+            <input class="border px-4 py-2 rounded-lg w-100 focus:outline-none focus:ring-2 focus:ring-blue-400 "
+                type="search" placeholder="Search PC, Mouse, Keyboard...">
+        </div>
+
+        <!-- MENU -->
+        <ul class="flex gap-6 font-mono text-xl uppercase items-center  text-white">
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Home.html">Home</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="About.html">About</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Contact.html">Contact</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Mouse.html">Mouse</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Keyborad.html">Keyborad</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Computer.html">Computer</a></li>
+            <li class=" text-white px-4 py-1 rounded cursor-pointer log"><a href="Login.html">Login</a></li>
+        </ul>
+
+    </nav>
+
+
+    <!-- HERO / SLIDE -->
+    <section class="mt-5 px-10">
+        <div
+            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-10 flex justify-between items-center box">
+
+            <!-- TEXT -->
+            <div>
+                <h1 class="text-6xl font-bold mb-4">Best Gaming PC for you</h1>
+                <p class="mb-6 text-3xl">High performance computers for gaming & work</p>
+                <button
+                    class="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-orange-400 text-4xl shop">
+                    Shop Now
+                </button>
+            </div>
+
+            <!-- IMAGE -->
+            <div>
+                <img id="slider" class="w-250 object-cover slide h-100"
+                    src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg">
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FEATURE PRODUCTS -->
+    <section class="px-10 mt-10">
+        <h2 class="text-2xl font-bold mb-5 text-white text-center">Popular Products</h2>
+        <div id="home-list" class="grid grid-cols-4 gap-6"></div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white mt-16 px-10 py-10">
+
+        <div class="grid grid-cols-3 gap-10">
+
+            <!-- ABOUT -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">PCSHOP</h3>
+                <p class="text-gray-400">
+                    We provide the best computers and accessories for gamers and professionals.
+                </p>
+            </div>
+
+            <!-- LINKS -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="hover:text-orange-400 cursor-pointer hover:underline">Home</li>
+                    <li class="hover:text-orange-400 cursor-pointer hover:underline">About</li>
+                    <li class="hover:text-orange-400 cursor-pointer hover:underline">Contact</li>
+                    <li class="hover:text-orange-400 cursor-pointer hover:underline"><a href="Keyborad.html">Keyborad</a></li>
+
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">Contact</h3>
+                <p class="text-gray-400">Email: pcshop@gmail.com</p>
+                <p class="text-gray-400">Phone: +855 123 456</p>
+            </div>
+
+        </div>
+
+        <div class="text-center text-gray-500 mt-8">
+            © 2026 PCSHOP. All rights reserved.
+        </div>
+
+    </footer>
+    <script src="../Data/Home_data.js"></script>
+    <!-- Image in slide  -->
+    <script>
+        const images = [
+            "https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg",
+            "https://i.pinimg.com/736x/01/bd/cc/01bdcc959a424d16f98728163813e4ed.jpg",
+            "https://i.pinimg.com/736x/db/73/ad/db73adcf7ecdaa8c4b29ad92ee02411c.jpg",
+            "https://i.pinimg.com/1200x/77/97/7f/77977f29649988b3155d87adbb733066.jpg",
+            "https://i.pinimg.com/736x/52/12/f7/5212f79026a030f7ddcbe9fb6b4ba992.jpg",
+            "https://i.pinimg.com/1200x/c8/12/f4/c812f4a9ac4b0f7091fc819d0022b676.jpg",
+            "https://i.pinimg.com/736x/57/ea/85/57ea856d17d40d187d166a75048215a2.jpg",
+            "https://i.pinimg.com/736x/0b/b9/eb/0bb9eb899024ec2f93efbd58f1c12adf.jpg"
+          
+        ];
+
+        let index = 0;
+        const slider = document.getElementById("slider");
+
+        setInterval(() => {
+            index++;
+            if (index >= images.length) {
+                index = 0;
+            }
+            slider.src = images[index];
+        }, 5000);
+    </script>
+</body>
+
+</html>

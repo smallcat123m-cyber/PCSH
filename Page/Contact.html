@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC-SHOP</title>
+    <link rel="stylesheet" href="../src/output.css">
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- HEADER -->
+    <nav class="bg-white shadow-md flex justify-between items-center px-10 py-3">
+
+        <!-- LOGO -->
+        <div class="flex items-center gap-3">
+            <img class="w-12 h-12 rounded-full bg-amber-400" src="" alt="">
+            <h1 class="text-2xl font-bold text-blue-600">PCSHOP</h1>
+        </div>
+
+        <!-- SEARCH -->
+        <div>
+            <input class="border px-4 py-2 rounded-lg w-80 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                type="search" placeholder="Search PC, Mouse, Keyboard...">
+        </div>
+
+        <!-- MENU -->
+        <ul class="flex gap-6 font-medium">
+            <li class="hover:text-blue-500 cursor-pointer"><a href="Home.html">Home</a></li>
+            <li class="hover:text-blue-500 cursor-pointer"><a href="About.html">About</a></li>
+            <li class="hover:text-blue-500 cursor-pointer"><a href="Contact.html">Contact</a></li>
+            <li class="hover:text-blue-500 cursor-pointer"><a href="Mouse.html">Mouse</a></li>
+            <li class="hover:text-blue-500 cursor-pointer"><a href="Keyborad.html">Keyborad</a></li>
+            <li class="hover:text-blue-500 cursor-pointer"><a href="Computer.html">Computer</a></li>
+            <li class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 cursor-pointer"><a href="Login.html">Login</a></li>
+        </ul>
+
+    </nav>
+
+
+    <!-- HERO / SLIDE -->
+    <section class="mt-5 px-10">
+        <div
+            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-10 flex justify-between items-center">
+
+            <!-- TEXT -->
+            <div>
+                <h1 class="text-4xl font-bold mb-4">Best Gaming PC</h1>
+                <p class="mb-6 text-lg">High performance computers for gaming & work</p>
+                <button class="bg-white text-blue-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-200">
+                    Shop Now
+                </button>
+            </div>
+
+            <!-- IMAGE -->
+            <div>
+                <img class="w-80" src="https://via.placeholder.com/300" alt="">
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FEATURE PRODUCTS -->
+    <section class="px-10 mt-10">
+        <h2 class="text-2xl font-bold mb-5">Popular Products</h2>
+       <div id="product-list" class="grid grid-cols-4 gap-6"></div>
+    </section>
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white mt-16 px-10 py-10">
+
+        <div class="grid grid-cols-3 gap-10">
+
+            <!-- ABOUT -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">PCSHOP</h3>
+                <p class="text-gray-400">
+                    We provide the best computers and accessories for gamers and professionals.
+                </p>
+            </div>
+
+            <!-- LINKS -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="hover:text-white cursor-pointer">Home</li>
+                    <li class="hover:text-white cursor-pointer">About</li>
+                    <li class="hover:text-white cursor-pointer">Contact</li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div>
+                <h3 class="text-xl font-bold mb-3">Contact</h3>
+                <p class="text-gray-400">Email: pcshop@gmail.com</p>
+                <p class="text-gray-400">Phone: +855 123 456</p>
+            </div>
+
+        </div>
+
+        <div class="text-center text-gray-500 mt-8">
+            © 2026 PCSHOP. All rights reserved.
+        </div>
+
+    </footer>
+<script src="../Data/Computer_data.js"></script>
+</body>
+
+</html>

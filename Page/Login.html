@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form onsubmit="return sub()">
+    <label>Email</label>
+    <input id="email" type="email" required><br>
+
+    <label>Password</label>
+    <input id="password" type="password" required><br>
+
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+</form>
+
+<script>
+function sub(){
+    // get values
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    // simple check
+    if(email !== "" && password !== ""){
+        window.location.href = "Home.html"; // 👉 go to homepage
+        return false; // stop reload
+    }else{
+        alert("Please fill all fields!");
+        return false;
+    }
+}
+</script>
+</body>
+</html>
