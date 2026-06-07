@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="../src/output.css">
 </head>
-<body>
-   <form onsubmit="return sub()">
-    <label>Email</label>
-    <input id="email" type="email" required><br>
 
-    <label>Password</label>
-    <input id="password" type="password" required><br>
+<body class="h-screen flex items-center justify-center bg-black">
 
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
-</form>
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-[350px]">
+    
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+      Login
+    </h2>
 
-<script>
-function sub(){
-    // get values
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
+    <form onsubmit="return sub()">
 
-    // simple check
-    if(email !== "" && password !== ""){
-        window.location.href = "Home.html"; // 👉 go to homepage
-        return false; // stop reload
-    }else{
+      <!-- Email -->
+      <div class="mb-4">
+        <label class="block text-sm text-gray-600">Email</label>
+        <input id="email" type="email" placeholder="Enter your email"
+          class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          required>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="block text-sm text-gray-600">Password</label>
+        <input id="password" type="password" placeholder="Enter your password"
+          class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          required>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between gap-3 mt-6">
+        <button type="submit"
+          class="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition">
+          Login
+        </button>
+
+        <button type="reset"
+          class="w-full bg-gray-200 py-2 rounded-lg hover:bg-gray-300 transition">
+          Reset
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    function sub(){
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+
+      if(email !== "" && password !== ""){
+        alert("Login Successful ✅");
+        window.location.href = "Home.html";
+        return false;
+      }else{
         alert("Please fill all fields!");
         return false;
+      }
     }
-}
-</script>
+  </script>
+
 </body>
 </html>

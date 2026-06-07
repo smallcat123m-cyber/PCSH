@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="../src/output.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #000);
+        }
+
+        .card {
+            width: 850px;
+            max-width: 95%;
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .bank-box input {
+            display: none;
+        }
+
+        .bank-box {
+            display: flex;
+            gap: 2px;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .bank-box label {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            color: rgb(22, 222, 118);
+        }
+
+        .bank-box input:checked+label {
+            background: linear-gradient(135deg, #3b82f6, #9333ea);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-img {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            border: 2px solid #22d3ee;
+        }
+
+        .Aba {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 7px;
+
+        }
+        .bank-box{
+    width: 100%;
+}
+
+.bank-card{
+    flex: 1;
+    cursor: pointer;
+}
+
+.bank-card input{
+    display: none;
+}
+
+/* CARD STYLE */
+.bank-content{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    transition: 0.3s;
+    color: white;
+}
+
+/* IMAGE */
+.bank-img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* HOVER EFFECT */
+.bank-content:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+/* ACTIVE (SELECTED) */
+.bank-card input:checked + .bank-content{
+    border: 2px solid #3b82f6;
+    background: linear-gradient(135deg,#3b82f6,#9333ea);
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+}
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen text-white">
+
+    <div class="card">
+
+        <!-- TITLE -->
+        <h2 class="text-3xl font-bold text-center mb-6">💳 Payment Checkout</h2>
+
+        <!-- BANK -->
+        <div class="bank-box flex gap-4">
+
+            <!-- ABA -->
+            <label class="bank-card">
+                <input type="radio" name="bank" value="ABA">
+
+                <div class="bank-content">
+                    <img src="https://i.pinimg.com/1200x/e2/33/f5/e233f5b0c5a358449398f202b03f063a.jpg"
+                        class="bank-img">
+                    <span class="uppercase text-3xl">ABA Bank</span>
+                </div>
+            </label>
+
+            <!-- ACLEDA -->
+            <label class="bank-card">
+                <input type="radio" name="bank" value="ACLEDA">
+
+                <div class="bank-content">
+                    <img src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg"
+                        class="bank-img">
+                    <span class="uppercase text-3xl">ACLEDA Bank</span>
+                </div>
+            </label>
+        </div>
+        <div class="bank-box flex gap-4">
+
+            <!-- Wing -->
+            <label class="bank-card">
+                <input type="radio" name="bank" value="WINGBANK">
+
+                <div class="bank-content">
+                    <img src="https://i.pinimg.com/1200x/8c/60/0e/8c600eac1bf06ecd663db232c4611a39.jpg"
+                        class="bank-img">
+                    <span class="uppercase text-3xl">wing Bank</span>
+                </div>
+            </label>
+             <label class="bank-card">
+                <input type="radio" name="bank" value="VISA">
+
+                <div class="bank-content">
+                    <img src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg"
+                        class="bank-img">
+                    <span class="uppercase text-3xl">visa cart</span>
+                </div>
+            </label>
+        </div>
+
+        <!-- ORDER -->
+        <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3">🛒 Order Summary</h3>
+            <div id="orderList"></div>
+
+            <div class="flex justify-between mt-4 text-lg font-bold">
+                <span>Total</span>
+                <span class="text-pink-400">$<span id="totalPrice">0</span></span>
+            </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="space-y-4">
+
+            <input id="accName" placeholder="Account Name"
+                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
+
+            <input id="accNumber" placeholder="Account Number"
+                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
+
+            <input id="amount" type="number" placeholder="Amount"
+                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
+
+            <!-- BUTTONS -->
+            <div class="flex gap-4 mt-4">
+
+                <button onclick="payments()"
+                    class="w-1/2 bg-gradient-to-r from-blue-500 to-purple-600 py-3 rounded-lg font-bold hover:scale-105 transition">
+                    Pay Now
+                </button>
+
+                <button onclick="Back()" class="w-1/2 bg-white/10 py-3 rounded-lg hover:bg-red-500 transition">
+                    Back To cart
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    function loadOrder() {
+        let orderList = document.getElementById("orderList");
+        let total = 0;
+
+        orderList.innerHTML = "";
+
+        if (cart.length === 0) {
+            orderList.innerHTML = `
+            <p class="text-center text-gray-400 py-4">
+                🛒 Your cart is empty
+            </p>
+        `;
+            document.getElementById("totalPrice").innerText = "0";
+            document.getElementById("amount").value = "";
+            return;
+        }
+
+        cart.forEach(item => {
+            let itemTotal = item.price * item.qty;
+            total += itemTotal;
+
+            orderList.innerHTML += `
+        <div class="flex items-center justify-between py-3 border-b border-white/10">
+
+            <!-- IMAGE + NAME -->
+            <div class="flex items-center gap-3">
+                <img src="${item.image}" class="cart-img">
+
+                <div>
+                    <p class="font-semibold">${item.name}</p>
+                    <p class="text-sm text-gray-400">
+                        Color: ${item.color}
+                    </p>
+                </div>
+            </div>
+
+            <!-- QTY -->
+            <div class="text-center text-gray-300">
+                x${item.qty}
+            </div>
+
+            <!-- PRICE -->
+            <div class="text-pink-400 font-bold">
+                $${itemTotal}
+            </div>
+
+        </div>
+        `;
+        });
+
+        document.getElementById("totalPrice").innerText = total;
+        document.getElementById("amount").value = total;
+    }
+
+    function payments() {
+
+        let bank = document.querySelector('input[name="bank"]:checked');
+        let name = document.getElementById("accName").value.trim();
+        let number = document.getElementById("accNumber").value.trim();
+        let amount = document.getElementById("amount").value.trim();
+
+        if (!bank) {
+            alert("⚠️ Please select a bank");
+            return;
+        }
+
+        if (name === "" || number === "" || amount === "") {
+            alert("⚠️ Please fill all fields");
+            return;
+        }
+
+        if (cart.length === 0) {
+            alert("⚠️ Your cart is empty");
+            return;
+        }
+
+        // CONFIRM
+        let confirmPay = confirm(
+            `💳 Pay $${amount} using ${bank.value}?`
+        );
+
+        if (confirmPay) {
+
+            alert("✅ Payment Successful!");
+
+            // CLEAR CART
+            localStorage.removeItem("cart");
+
+            // REDIRECT
+            window.location.href = "Home.html";
+
+        } else {
+            alert("❌ Payment Cancelled");
+        }
+    }
+    function Back() {
+        let ok = confirm("Do you want to go back to cart?");
+        if (ok) {
+            window.location.href = "Addcart.html";
+        }
+    }
+
+    loadOrder();
+</script>
+</html>
