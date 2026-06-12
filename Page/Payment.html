@@ -73,53 +73,86 @@
             border-radius: 7px;
 
         }
-        .bank-box{
-    width: 100%;
-}
 
-.bank-card{
-    flex: 1;
-    cursor: pointer;
-}
+        .bank-box {
+            width: 100%;
+        }
 
-.bank-card input{
-    display: none;
-}
+        .bank-card {
+            flex: 1;
+            cursor: pointer;
+        }
 
-/* CARD STYLE */
-.bank-content{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.05);
-    transition: 0.3s;
-    color: white;
-}
+        .bank-card input {
+            display: none;
+        }
 
-/* IMAGE */
-.bank-img{
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 8px;
-}
+        /* CARD STYLE */
+        .bank-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+            color: white;
+        }
 
-/* HOVER EFFECT */
-.bank-content:hover{
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-}
+        /* IMAGE */
+        .bank-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-/* ACTIVE (SELECTED) */
-.bank-card input:checked + .bank-content{
-    border: 2px solid #3b82f6;
-    background: linear-gradient(135deg,#3b82f6,#9333ea);
-    transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(59,130,246,0.4);
-}
+        /* HOVER EFFECT */
+        .bank-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ACTIVE (SELECTED) */
+        .bank-card input:checked+.bank-content {
+            border: 2px solid #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #9333ea);
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f10707;
+            border-top: 6px solid #aaadd3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -149,8 +182,7 @@
                 <input type="radio" name="bank" value="ACLEDA">
 
                 <div class="bank-content">
-                    <img src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg"
-                        class="bank-img">
+                    <img src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg" class="bank-img">
                     <span class="uppercase text-3xl">ACLEDA Bank</span>
                 </div>
             </label>
@@ -167,12 +199,11 @@
                     <span class="uppercase text-3xl">wing Bank</span>
                 </div>
             </label>
-             <label class="bank-card">
+            <label class="bank-card">
                 <input type="radio" name="bank" value="VISA">
 
                 <div class="bank-content">
-                    <img src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg"
-                        class="bank-img">
+                    <img src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg" class="bank-img">
                     <span class="uppercase text-3xl">visa cart</span>
                 </div>
             </label>
@@ -192,12 +223,6 @@
         <!-- FORM -->
         <div class="space-y-4">
 
-            <input id="accName" placeholder="Account Name"
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
-
-            <input id="accNumber" placeholder="Account Number"
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
-
             <input id="amount" type="number" placeholder="Amount"
                 class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
 
@@ -216,6 +241,10 @@
             </div>
 
         </div>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
     </div>
 </body>
 <script>
@@ -251,7 +280,7 @@
                 <div>
                     <p class="font-semibold">${item.name}</p>
                     <p class="text-sm text-gray-400">
-                        Color: ${item.color}
+                        Model: ${item.size}
                     </p>
                 </div>
             </div>
@@ -274,11 +303,16 @@
         document.getElementById("amount").value = total;
     }
 
-    function payments() {
+    function showLoading() {
+        document.getElementById("loading").classList.remove("hidden");
+    }
 
+    function hideLoading() {
+        document.getElementById("loading").classList.add("hidden");
+    }
+
+    function payments() {
         let bank = document.querySelector('input[name="bank"]:checked');
-        let name = document.getElementById("accName").value.trim();
-        let number = document.getElementById("accNumber").value.trim();
         let amount = document.getElementById("amount").value.trim();
 
         if (!bank) {
@@ -286,16 +320,10 @@
             return;
         }
 
-        if (name === "" || number === "" || amount === "") {
-            alert("⚠️ Please fill all fields");
-            return;
-        }
-
         if (cart.length === 0) {
             alert("⚠️ Your cart is empty");
             return;
         }
-
         // CONFIRM
         let confirmPay = confirm(
             `💳 Pay $${amount} using ${bank.value}?`
@@ -303,13 +331,20 @@
 
         if (confirmPay) {
 
-            alert("✅ Payment Successful!");
+            showLoading(); // show spinner
 
-            // CLEAR CART
-            localStorage.removeItem("cart");
+            setTimeout(() => {
 
-            // REDIRECT
-            window.location.href = "Home.html";
+                // clear cart
+                localStorage.removeItem("cart");
+
+                hideLoading(); // hide spinner
+
+                // redirect
+                alert("payment Successful");
+                window.location.href = "Home.html";
+
+            }, 8000); // loading time
 
         } else {
             alert("❌ Payment Cancelled");
@@ -323,5 +358,6 @@
     }
 
     loadOrder();
+
 </script>
 </html>

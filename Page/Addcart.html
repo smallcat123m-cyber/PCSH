@@ -67,30 +67,6 @@
             margin-top: 100px;
             opacity: 0.7;
         }
-
-        /* QTY BUTTON */
-        .qty-btn {
-            background: gray;
-            padding: 4px 10px;
-            border-radius: 5px;
-        }
-
-        .qty-btn:hover {
-            background: rgb(238, 8, 8);
-            cursor: pointer;
-        }
-
-        .qty-btnup {
-            background: gray;
-            padding: 4px 10px;
-            border-radius: 5px;
-        }
-
-        .qty-btnup:hover {
-            background: rgb(13, 88, 227);
-            cursor: pointer;
-        }
-
         .cart-row {
             display: flex;
             align-items: center;
@@ -106,13 +82,6 @@
             border-radius: 10px;
             object-fit: cover;
         }
-
-        .remove-btn {
-            background: red;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
         .bgc:hover {
             background-color: #361703;
         }
@@ -127,7 +96,103 @@
         .Menu {
             width: 130px;
             height: 30px;
+        }
+        .fbx:hover{
+            box-shadow: rgb(6, 238, 10) 0 2px 2px 2px;
+        }
+        .fbx{
+            height: 90px;
+            display: flex;
+            gap: 90px;
+        }
+        .ff{
+            color: yellow;
+            font-size: 40px;
+            font-family: monospace;
+            box-shadow: yellow 0 2px 3px  2px ;
+            border-radius: 5px;
+            width: 420px;
 
+
+        }
+        .ssbox{
+            border-radius: 5px;
+            border: 1px solid rgb(185, 185, 213);
+            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
+            width: auto;
+            height: auto;
+            font-size: 25px;
+            font-family: monospace;
+        }
+        .btnup:active{
+            box-shadow: rgb(203, 230, 33) 0 2px 3px 3px;
+        }
+        .btnup{
+            background-color: blue;
+            border-radius: 4px;
+            width: 40px;
+            height: 30px;
+        }
+        .btnup:hover{
+            cursor: pointer;
+        }
+        .btndw:active{
+            box-shadow: rgb(13, 70, 203) 0 2px 3px 3px;
+        }
+        .btndw{
+            background-color: rgba(112, 58, 3, 0.916);
+            border-radius: 4px;
+            width: 40px;
+            height: 30px;
+        }
+        .btndw:hover{
+            cursor: pointer;
+        }
+        .remove{
+            color: rgb(225, 17, 13);
+            font-size: 20px;
+            background: #c7c8d9;
+            width: 40px;
+            height: 30px;
+            border-radius: 5px;
+        }
+        .remove:hover{
+            cursor: pointer;
+            box-shadow: rgb(230, 31, 8) 0 3px 3px 3px;
+        }
+        .carts{
+            border-radius: 4px;
+        }
+        .carts:hover{
+            cursor: pointer;
+            box-shadow: rgb(92, 212, 106) 1px 0 4px 3px;
+            background-color: rgba(16, 82, 136, 0.491);
+        }
+        .act{
+            border-radius: 5px;
+            border: 1px solid rgb(185, 185, 213);
+            width: 200px;
+            font-size: 20px;
+            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
+            font-family: monospace;
+            text-align: center;
+            background-color: black;
+            color: yellow;
+        }
+        .acts{
+            border-radius: 5px;
+            border: 1px solid rgb(185, 185, 213);
+            width: 200px;
+            font-size: 20px;
+            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
+            font-family: monospace;
+            text-align: center;
+            background-color: black;
+            color: yellow;
+            /* animation: aach 7s infinite ease-in-out; */
+        }
+        .acts:active{
+            background-color: rgb(135, 157, 221);
         }
     </style>
 </head>
@@ -138,14 +203,15 @@
     <nav class="bgs flex justify-between items-center px-10 py-3">
         <h1 class="text-2xl font-bold">🛒 PC SHOP</h1>
 
-        <a href="#" onclick="goBack()" class="bg-blue-500 px-4 py-1 rounded hover:bg-blue-700">
+        <a href="#" onclick="goBack()" class="acts">
             ← Back to Shop
         </a>
     </nav>
 
     <!-- CART -->
     <section class="px-10 mt-10">
-        <h2 class="text-4xl font-bold mb-8 text-center">Your Cart</h2>
+            <h2 class="text-4xl font-bold mb-8 text-center bg-black justify-center ">Your Cart</h2>
+        <input type="range" name="" id="">
 
         <div class="grid grid-cols-3 gap-8">
 
@@ -175,199 +241,169 @@
                 </button>
             </div>
         </div>
-        </div>
+        </>
     </section>
     <script>
 
-        let selectedColor = "All";
-        function filterByColor(color) {
-            selectedColor = color;
-
-            const badge = document.getElementById("active-color");
-
-            if (color === "All") {
-                badge.classList.add("hidden");
-            } else {
-                badge.classList.remove("hidden");
-                badge.innerText = "Color: " + color;
+        let selectedSize = "All";
+        function getSize(type){
+            if(type === "shirt" || type === "trousers"){
+                return ["XS", "S", "M", "L", "XL"];
+            }else if(type === "shoes"){
+                return ["20", "25", "33", "40"];
+            }else if(type === "sildebag"){
+                return ["Black","white","Gray","Red"]
             }
-
-            loadCart();
+            return [];
         }
-
         function loadCart() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             const cartContainer = document.getElementById("cart-items");
             const totalItems = document.getElementById("total-items");
             const totalPrice = document.getElementById("total-price");
-
-            cartContainer.innerHTML = "";
-
             if (cart.length === 0) {
                 cartContainer.innerHTML = `
-        <div class="empty">
-            <h2 class="text-2xl font-bold text-red-500">🛒 Cart is Empty</h2>
-            <p>Add some products first...</p>
-        </div>`;
+                <div class="empty">
+                    <h2 class="text-2xl font-bold text-red-500">🛒 Cart is Empty</h2>
+                    <p>Add some products first...</p>
+                </div>`;
                 totalItems.innerText = 0;
                 totalPrice.innerText = "$0";
                 return;
             }
-
             let total = 0;
             let count = 0;
-
             let html = `
-    <!-- FILTER -->
-    <div class="flex flex-wrap items-center gap-4 mb-6 bg-gray-800 p-4 rounded-xl shadow-lg">
+            <!-- FILTER -->
+            <div class="flex flex-wrap items-center gap-4 mb-6 bg-gray-800 p-4 rounded-xl shadow-lg fbx">
+                <div class=" font-semibold ff">
+                    <i class="fa-solid fa-filter"></i>Filter by Model 
+                </div>
+                <div id="active-size" 
+                    class="text-xs bg-blue-500 text-white px-3 py-1 ssbox uppercase text-center ${selectedSize === "All"}">
+                    <i class="fa-solid fa-bolt"></i>  ${selectedSize}
+                </div>
+                <div class="relative">
+                    <select onchange="filterBySize(this.value)" 
+                        class="bg-gray-900 text-white px-4 py-2 rounded-lg">
+                        <option >${selectedSize}</option>
+                        <option value="All">Show Alls</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="33">33</option>
+                        <option value="40">40</option>
+                        <option value="Black">Black</option>
+                        <option value="White">White</option>
+                        <option value="Gray">Gray</option>
+                        <option value="Red">Red</option>
 
-    <!-- LABEL -->
-    <div class="text-white font-semibold text-xl tracking-wide">
-        🎨 Filter by Color:
-    </div>
-
-    <!-- SELECT -->
-    <div class="relative">
-        <select 
-            onchange="filterByColor(this.value)" 
-            class="appearance-none bg-gray-900 text-white border border-gray-600 
-                   px-4 py-2 pr-10 rounded-lg text-sm 
-                   focus:outline-none focus:ring-2 focus:ring-pink-500 
-                   hover:border-pink-400 transition cursor-pointer">
-
-            <option value="All">All Colors</option>
-            <option value="Black">Black</option>
-            <option value="White">White</option>
-            <option value="Blue">Blue</option>
-            <option value="Red">Red</option>
-        </select>
-
-        <!-- CUSTOM ARROW -->
-        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
-                 viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-            </svg>
-        </div>
-    </div>
-
-    <!-- ACTIVE FILTER BADGE -->
-    <div id="active-color" class="text-xs bg-pink-500 text-white px-3 py-1 rounded-full hidden">
-        Color: All
-    </div>
-
-</div>
-    `;
-
+                    </select>
+                </div>
+                <div>
+                    <p class="act">ACTIONS BUTTON</p>
+                </div>
+            </div>
+            `;
             cart.forEach((item, index) => {
-                // FILTER
-                let itemColor = (item.color || "").toLowerCase();
-                let filterColor = selectedColor.toLowerCase();
-                if (filterColor !== "all" && itemColor !== filterColor) return;
-                if (!item.qty) item.qty = 1;
-                total += item.price * item.qty;
-                count++;
-
-                html += `
-            <div class="cart-row">
+            let itemSize = (item.size || "").toLowerCase();
+            let filterSize = selectedSize.toLowerCase();
+            if (filterSize !== "all" && itemSize !== filterSize) return;
+            let itemSizes = getSize(item.type);
+            let sizeOptions = itemSizes.map(size => `
+                <option ${item.size == size ? "selected" : ""}>${size}</option>
+            `).join("");
+            if (!item.qty) item.qty = 1;
+            total += item.price * item.qty;
+            count++;
+            html += `
+            <div class="cart-row carts">
                 <div class="flex items-center gap-4 w-1/3">
                     <img src="${item.image}" class="cart-img">
                     <div>
                         <h4>${item.name}</h4>
-                        <p>Color: ${item.color}</p>
+                        <p>Model: ${item.size}</p>
                     </div>
-            </div>
-
-            <div>$${item.price}</div>
-
-                <div class="flex gap-6 ">
-                    <button onclick="changeQty(${index}, -1)" class="qty-btn"><i class="fa-solid fa-arrow-down"></i></button>
-                    <p class=" text-3xl text-yellow-200  ">${item.qty}</p>
-                    <button onclick="changeQty(${index}, 1)" class="qty-btnup"><i class="fa-solid fa-arrow-up"></i></button>
                 </div>
-
-                <div class=" bg-gray-500 text-black rounded cursor-pointer Menu">
-                    <select onchange="changeColor(${index}, this.value)" class="cursor-pointer menu"><i class="fa-solid fa-bars"></i>
-                        <option ${item.color == "Black" ? "selected" : ""}>Black</option>
-                        <option ${item.color == "White" ? "selected" : ""}>White</option>
-                        <option ${item.color == "Blue" ? "selected" : ""}>Blue</option>
-                        <option ${item.color == "Red" ? "selected" : ""}>Red</option>
+                <div>$${item.price}</div>
+                <div class="flex gap-6">
+                    <button onclick="changeQty(${index}, -1)" class="btndw"><i class="fa-solid fa-minus"></i></button>
+                    <p class="text-2xl">${item.qty}</p>
+                    <button onclick="changeQty(${index}, 1)" class="btnup"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="bg-gray-500 text-black rounded">
+                    <select onchange="changeSize(${index}, this.value)">
+                        ${sizeOptions}
                     </select>
                 </div>
-
-                <button onclick="removeItem(${index})" class="remove-btn"><i class="fa-solid fa-trash"></i></button>
+                <button onclick="removeItem(${index})" class="remove"><i class="fa-solid fa-trash"></i></button>
             </div>
-        `;
-            });
-
-
+            `;
+             });
             cartContainer.innerHTML = html;
-
             totalItems.innerText = count;
             totalPrice.innerText = "$" + total;
             localStorage.setItem("cart", JSON.stringify(cart));
         }
+        function filterBySize(size) {
+            selectedSize = size;
+            loadCart();
+        }
 
+        function changeSize(index, newSize) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart[index].size = newSize;
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
         function changeQty(index, d) {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             cart[index].qty += d;
-            if (cart[index].qty <= 0) cart.splice(index, 1);
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
             localStorage.setItem("cart", JSON.stringify(cart));
             loadCart();
         }
-
-        function changeColor(index, value) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart[index].color = value;
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
-        }
-
         function removeItem(index) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart.splice(index, 1);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
+            let confirmRemove = confirm("Remove it now or not!");
+            if (confirmRemove) {
+                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                cart.splice(index, 1);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                loadCart();
+            } else {
+                alert("Ok continue");
+            }
         }
-
         function clearCart() {
             if (!confirm("Clear all cart?")) return;
             localStorage.removeItem("cart");
             loadCart();
         }
-
         function checkout() {
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
             if (cart.length === 0) {
                 alert("No products to checkout!");
                 return;
             }
-
             if (confirm("Proceed to payment?")) {
                 window.location.href = "Payment.html";
             }
         }
         function goBack() {
             let page = localStorage.getItem("backPage");
-
-            if (page === "Home.html") {
-                window.location.href = "Home.html";
-            }
-            else if (page === "Mouse.html") {
-                window.location.href = "Mouse.html";
-            }
-            else if (page === "Computer.html") {
-                window.location.href = "Computer.html";
-            }
-            else if (page === "Keyborad.html") {
-                window.location.href = "Keyborad.html";
-            }
-            else {
+            if (page) {
+                window.location.href = page;
+            } else {
                 window.location.href = "Home.html";
             }
         }
-        loadCart();
-    </script>
+loadCart();
+</script>
 </body>
 </html>

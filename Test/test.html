@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Color Slider</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 50px;
+        background: #111;
+        color: white;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    /* COLOR BOX */
+    .box {
+        width: 300px;
+        height: 200px;
+        margin: 20px auto;
+        border-radius: 12px;
+        background: hsl(0, 100%, 50%);
+        transition: 0.3s;
+    }
+
+    /* SLIDER */
+    input[type="range"] {
+        width: 300px;
+        height: 10px;
+        border-radius: 5px;
+        outline: none;
+        appearance: none;
+        
+        /* Rainbow track */
+        background: linear-gradient(to right, 
+            red, yellow, lime, cyan, blue, magenta, red);
+    }
+
+    /* Slider Thumb */
+    input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid black;
+    }
+
+    #value {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🎨 Color Slider</h1>
+
+<input type="range" id="slider" min="0" max="360" value="0">
+
+<div class="box" id="box"></div>
+
+<div id="value">Hue: 0</div>
+
+<script>
+    const slider = document.getElementById("slider");
+    const box = document.getElementById("box");
+    const valueText = document.getElementById("value");
+
+    slider.addEventListener("input", () => {
+        let hue = slider.value;
+
+        // Change color
+        box.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+
+        // Show value
+        valueText.innerText = "Hue: " + hue;
+    });
+</script>
+
+</body>
+</html>

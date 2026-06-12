@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading Animation</title>
+
+<style>
+body{
+    font-family: Arial;
+    padding: 40px;
+}
+
+/* LOADING OVERLAY */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* HIDE */
+.hidden {
+    display: none;
+}
+
+/* SPINNER */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #ccc;
+    border-top: 6px solid #00f;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* ANIMATION */
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* BUTTON STYLE */
+button{
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    background: black;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Loading Animation Demo</h1>
+
+<button onclick="startLoading()">Start Loading</button>
+<button onclick="stopLoading()">Stop Loading</button>
+
+<!-- LOADING -->
+<div id="loading" class="loading hidden">
+    <div class="spinner"></div>
+</div>
+
+<script>
+// SHOW
+function showLoading() {
+    document.getElementById("loading").classList.remove("hidden");
+}
+
+// HIDE
+function hideLoading() {
+    document.getElementById("loading").classList.add("hidden");
+}
+
+// DEMO START
+function startLoading() {
+    showLoading();
+
+    // simulate loading
+    setTimeout(() => {
+        hideLoading();
+    }, 2000);
+}
+
+// MANUAL STOP
+function stopLoading() {
+    hideLoading();
+}
+
+// AUTO LOAD WHEN PAGE OPEN
+window.onload = function(){
+    showLoading();
+
+    setTimeout(() => {
+        hideLoading();
+    }, 1500);
+}
+</script>
+
+</body>
+</html>
