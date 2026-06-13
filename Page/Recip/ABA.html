@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABA Receipt</title>
+
+<!-- Tailwind -->
+
+<link rel="stylesheet" href="/src/output.css">
+
+<!-- Libraries (IMPORTANT) -->
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+</head>
+
+<body id="body" class="bg-black flex flex-col items-center justify-center min-h-screen gap-4">
+
+<!-- Buttons -->
+
+<div class="flex gap-3">
+    <button onclick="toggleDark()" class="px-4 py-2 bg-gray-800 text-white rounded">Dark</button>
+    <button onclick="downloadPDF()" class="px-4 py-2 bg-blue-600 text-white rounded">PDF</button>
+    <button onclick="screenshot()" class="px-4 py-2 bg-green-600 text-white rounded">Screenshot</button>
+</div>
+
+<!-- Receipt -->
+
+<div id="receipt" class="bg-white w-[350px] rounded-2xl shadow-2xl overflow-hidden">
+
+```
+<!-- Header -->
+<div class="bg-blue-600 text-white text-center py-4">
+    <h1 class="text-xl font-bold">ABA Bank</h1>
+    <p class="text-sm opacity-80">Payment Receipt</p>
+</div>
+
+<!-- Body -->
+<div class="p-5 space-y-4">
+
+    <!-- Amount -->
+    <div class="text-center">
+        <p class="text-gray-500 text-sm">Amount</p>
+        <h2 id="amount" class="text-3xl font-bold text-green-600">$0.00</h2>
+    </div>
+
+    <div class="border-t border-dashed"></div>
+
+    <!-- Info -->
+    <div class="space-y-3 text-sm">
+        <div class="flex justify-between">
+            <span class="text-gray-500">From</span>
+            <span id="from"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-gray-500">To</span>
+            <span id="to"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-gray-500">Account</span>
+            <span id="account"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-gray-500">Date</span>
+            <span id="date"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-gray-500">Time</span>
+            <span id="time"></span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-gray-500">Transaction</span>
+            <span id="txn"></span>
+        </div>
+    </div>
+
+    <div class="border-t border-dashed"></div>
+
+    <!-- QR -->
+    <div class="flex justify-center">
+        <canvas id="qr"></canvas>
+    </div>
+
+    <!-- Status -->
+    <div class="text-center">
+        <span class="bg-green-100 text-green-600 px-4 py-1 rounded-full text-sm font-semibold">
+            Successful
+        </span>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="bg-gray-100 text-center py-3 text-xs text-gray-500">
+    Thank you for using ABA Bank
+</div>
+```
+
+</div>
+
+<script>
+/* ✅ DATA */
+const data = {
+    amount: 120,
+    from: "Samol",
+    to: "ABA Account",
+    account: "123 456 789",
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    txn: "TXN" + Math.floor(Math.random() * 100000000)
+};
+
+/* ✅ INSERT DATA */
+document.getElementById("amount").innerText = "$" + data.amount;
+document.getElementById("from").innerText = data.from;
+document.getElementById("to").innerText = data.to;
+document.getElementById("account").innerText = data.account;
+document.getElementById("date").innerText = data.date;
+document.getElementById("time").innerText = data.time;
+document.getElementById("txn").innerText = data.txn;
+
+/* ✅ QR */
+QRCode.toCanvas(document.getElementById("qr"), JSON.stringify(data));
+
+/* 🌙 DARK MODE */
+function toggleDark() {
+    document.getElementById("body").classList.toggle("bg-black");
+    document.getElementById("body").classList.toggle("bg-gray-200");
+}
+
+/* 📸 SCREENSHOT (FIXED) */
+function screenshot() {
+    const element = document.getElementById("receipt");
+
+    html2canvas(element).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "receipt.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }).catch(err => console.error(err));
+}
+
+/* 📄 PDF (FIXED) */
+function downloadPDF() {
+    const element = document.getElementById("receipt");
+
+    html2canvas(element).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        const imgWidth = 190;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+        pdf.save("receipt.pdf");
+    }).catch(err => console.error(err));
+}
+</script>
+
+</body>
+</html>

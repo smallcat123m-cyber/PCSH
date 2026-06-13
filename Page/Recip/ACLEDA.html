@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            /* background-color: blue; */
+            width: 200px;
+            height: 200px;
+            border-radius:5px ;
+            border: 2px solid rgb(22, 178, 235);
+        }
+        .box canvas{
+            margin: 17px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class=" box">
+        <canvas id="qr">
+    </div>
+    </body>
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+QRCode.toCanvas(document.getElementById("qr"), "https://chatgpt.com/c/6a2cf0cd-f35c-83ec-a5fc-793add68e148", function (error) {
+    if (error) console.error(error);
+    console.log("QR generated!");
+});
+</script>
+</html>
