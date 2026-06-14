@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC-SHOP</title>
-    <link rel="stylesheet" href="../src/output.css">
+    <link rel="stylesheet" href="/src/output.css">
     <style>
         .bgs {
-            background: linear-gradient(to right, rgb(206, 8, 21), rgb(113, 22, 173), rgb(16, 169, 234), red);
+            background: linear-gradient(to right, rgb(7, 60, 206));
         }
 
         .log {
@@ -35,8 +35,9 @@
         }
 
         .logo {
-            border: 2px solid yellow;
-            animation: logochange 3s infinite alternate ease-in-out;
+            border: 2px solid rgb(2, 16, 26);
+            border-radius: 50%;
+            /* animation: logochange 3s infinite alternate ease-in-out; */
         }
 
         @keyframes logochange {
@@ -58,12 +59,14 @@
             padding: 2px;
             height: 320px;
             border: 2px solid rgb(212, 155, 225);
-            animation: slideMove 5s infinite alternate ease-in-out;
+            /* animation: slideMove 5s infinite alternate ease-in-out; */
         }
+
         @keyframes slideMove {
             0% {
                 transform: translateX(0);
             }
+
             100% {
                 transform: translateX(-85px);
             }
@@ -160,33 +163,42 @@
             height: 3px;
             background: rgb(184, 232, 12);
         }
-        .btn{
+
+        .btn {
             display: flex;
             gap: 30px;
             width: 400px;
             height: 60px;
             justify-content: space-between;
         }
-        .btn button{
+
+        .btn button {
             border-radius: 10px;
             border: 2px solid rgb(73, 79, 27);
-        } 
-       .size-btn.active{
-    border: 2px solid yellow;
-    transform: scale(1.05);
-}
+        }
+
+        .size-btn.active {
+            border: 2px solid yellow;
+            transform: scale(1.05);
+        }
+        .banners{
+            height: 300px;
+            width: 900px;
+            object-fit: cover;
+        }
     </style>
 </head>
 
 <body class="bg-black">
 
     <!-- HEADER -->
+
     <nav class="bgs shadow-md flex justify-between items-center px-10 py-3 sticky z-50 top-0">
 
         <!-- LOGO -->
         <div class="flex items-center gap-3">
-            <img class="w-12 h-12 rounded-full bg-amber-400 logo"
-                src="https://i.pinimg.com/736x/76/3c/2b/763c2bb8624e6e325c1256ce13c56645.jpg" alt="">
+            <img class="w-12 h-12 logo" src="https://i.pinimg.com/1200x/07/c5/4e/07c54ef40a1e655c94b4403c29582861.jpg"
+                alt="">
             <h1 class="text-2xl font-bold">
                 <span class="text-blue-600">PC</span><span class="text-red-500">SH</span><span
                     class="text-yellow-500">OP</span>
@@ -216,28 +228,49 @@
 
 
     <!-- HERO / SLIDE -->
-    <section class="mt-5 px-10">
-        <div
-            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-10 flex justify-between items-center box">
+   <section class="mt-6 px-4 md:px-10">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
 
-            <!-- TEXT -->
-            <div>
-                <h1 class="text-6xl font-bold mb-4">HOME PAGE</h1>
-                <p class="mb-6 text-3xl">High performance computers for gaming & work</p>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-10 p-8 md:p-14">
+
+            <!-- LEFT TEXT -->
+            <div class="max-w-xl">
+                <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+                    High Performance Computers
+                </h1>
+
+                <p class="mt-4 text-lg md:text-xl text-blue-100">
+                    Built for gaming, design, and professional work. Power, speed, and reliability in one machine.
+                </p>
+
                 <button
-                    class="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-orange-400 text-4xl shop">
+                    class="mt-6 px-6 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 transition font-semibold shadow-md">
                     Shop Now
                 </button>
             </div>
 
-            <!-- IMAGE -->
-            <div>
-                <img id="slider" class="w-250 object-cover slide h-100"
-                    src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg">
+            <!-- RIGHT MARQUEE IMAGE -->
+            <div class="w-full md:w-1/2  overflow-hidden">
+                <div class="relative">
+
+                    <marquee behavior="scroll" direction="left" scrollamount="10" class="rounded-xl">
+                        <img
+                            id="slider"
+                            src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg"
+                            class="rounded-xl shadow-2xl mx-10 banners"
+                            alt="Gaming PC"
+                        />
+                    </marquee>
+
+                    <!-- soft glow background -->
+                    <div class="absolute -inset-3 bg-white/10 blur-2xl rounded-full h-50"></div>
+
+                </div>
             </div>
 
         </div>
-    </section>
+    </div>
+</section>
 
 
     <!-- FEATURE PRODUCTS -->
@@ -332,18 +365,17 @@
         </div>
 
     </footer>
+    <a href="/Banner/Men_Banner/men1.png"></a>
     <script src="../File_Data/Home_data.js"></script>
     <!-- Image in slide  -->
     <script>
         const images = [
-            "https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg",
-            "https://i.pinimg.com/736x/01/bd/cc/01bdcc959a424d16f98728163813e4ed.jpg",
-            "https://i.pinimg.com/736x/db/73/ad/db73adcf7ecdaa8c4b29ad92ee02411c.jpg",
-            "https://i.pinimg.com/1200x/77/97/7f/77977f29649988b3155d87adbb733066.jpg",
-            "https://i.pinimg.com/736x/52/12/f7/5212f79026a030f7ddcbe9fb6b4ba992.jpg",
-            "https://i.pinimg.com/1200x/c8/12/f4/c812f4a9ac4b0f7091fc819d0022b676.jpg",
-            "https://i.pinimg.com/736x/57/ea/85/57ea856d17d40d187d166a75048215a2.jpg",
-            "https://i.pinimg.com/736x/0b/b9/eb/0bb9eb899024ec2f93efbd58f1c12adf.jpg"
+            "/Banner/Men_Banner/men1.png",
+            "https://i.pinimg.com/736x/4a/e5/d3/4ae5d3074757a801a194a46b84f095cb.jpg",
+            "https://i.pinimg.com/736x/d6/20/cf/d620cf73dfc1456a52a9d55578e3da4c.jpg",
+            "https://i.pinimg.com/1200x/a8/22/a1/a822a15065a73db607b4380439fad3b5.jpg"
+
+            
 
         ];
 
@@ -356,10 +388,10 @@
                 index = 0;
             }
             slider.src = images[index];
-        }, 5000);
+        }, 15710);
 
         localStorage.setItem("backPage", "Home.html");
     </script>
 </body>
-
+<!-- hhhhhhhhhhhhhhhhhh -->
 </html>
