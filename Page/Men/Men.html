@@ -303,6 +303,12 @@
             color: #000;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
         }
+        .banners{
+            height: 300px;
+            width: 900px;
+            object-fit: cover;
+        }
+      
     </style>
 </head>
 
@@ -341,27 +347,49 @@
 
     </nav>
     <!-- HERO / SLIDE -->
-    <section class="mt-5 px-10">
-        <div class=" text-white rounded-xl p-10 flex justify-between items-center box">
+    <section class="mt-6 px-4 md:px-10">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg ">
 
-            <!-- TEXT -->
-            <div>
-                <h1 class="text-6xl  mb-4 text-blue-300 font-extrabold  mouse">MENS PAGE</h1>
-                <p class="mb-6 text-2xl uppercase text-white">High performance clothes for men</p>
+        <div class="flex flex-col md:flex-row items-center justify-between gap-10 p-8 md:p-14">
+
+            <!-- LEFT TEXT -->
+            <div class="max-w-xl">
+                <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+                    High Performance Computers
+                </h1>
+
+                <p class="mt-4 text-lg md:text-xl text-blue-100">
+                    Built for gaming, design, and professional work. Power, speed, and reliability in one machine.
+                </p>
+
                 <button
-                    class="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-orange-400 text-4xl shop">
+                    class="mt-6 px-6 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 transition font-semibold shadow-md">
                     Shop Now
                 </button>
-                <br>
-                <br>
             </div>
 
-            <!-- IMAGE -->
-            <div>
-                <img id="slider" class="w-250 object-cover slide h-100" src="../Banner/Men_Banner/men1.png">
+            <!-- RIGHT MARQUEE IMAGE -->
+            <div class="w-full md:w-1/2  overflow-hidden">
+                <div class="relative">
+
+                    <marquee behavior="scroll" direction="left" scrollamount="10" class="rounded-xl">
+                        <img
+                            id="slider"
+                            src="/Banner/Men_Banner/yyh.png"
+                            class="rounded-xl shadow-2xl mx-10 banners"
+                            alt="men products"
+                        />
+                    </marquee>
+
+                    <!-- soft glow background -->
+                    <div class="absolute -inset-3 bg-white/10 blur-2xl rounded-full h-50"></div>
+
+                </div>
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
 
     <!-- FEATURE PRODUCTS -->
@@ -465,11 +493,19 @@
 
     <!-- Image in slide  -->
     <script>
-
         const images = [
-            "../Banner/Men_Banner/men2.png",
-            "../Banner/Men_Banner/yyh.png",
-            "../Banner/Men_Banner/men3.png"
+            "/Banner/Men_Banner/men1.png",
+            "/Banner/Men_Banner/men2.png",
+            "/Banner/Men_Banner/men3.png",
+            "/Banner/Men_Banner/men4.png",
+            "/Banner/Men_Banner/men5.jpg",
+            "/Banner/Men_Banner/men6.jpg",
+            // "https://i.pinimg.com/736x/4a/e5/d3/4ae5d3074757a801a194a46b84f095cb.jpg",
+            // "https://i.pinimg.com/736x/d6/20/cf/d620cf73dfc1456a52a9d55578e3da4c.jpg",
+            // "https://i.pinimg.com/1200x/a8/22/a1/a822a15065a73db607b4380439fad3b5.jpg"
+
+            
+
         ];
 
         let index = 0;
@@ -481,8 +517,9 @@
                 index = 0;
             }
             slider.src = images[index];
-        }, 5000);
-        localStorage.setItem("backPage", "Men.html");
+        }, 15710);
+
+        localStorage.setItem("backPage", "Home.html");
     </script>
 </body>
 
