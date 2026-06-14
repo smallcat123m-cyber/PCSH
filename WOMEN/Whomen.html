@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CL-SHOP</title>
-    <link rel="stylesheet" href="/src/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>PC-SHOP</title>
+    <link rel="stylesheet" href="../src/output.css">
     <style>
         .bgs {
-            background-color: rgb(44, 105, 46);
-            color: black;
+            background: linear-gradient(to right, rgb(206, 8, 21), rgb(113, 22, 173), rgb(16, 169, 234), red);
         }
 
         .log {
@@ -62,173 +60,28 @@
             border: 2px solid rgb(212, 155, 225);
             animation: slideMove 5s infinite alternate ease-in-out;
         }
-
         @keyframes slideMove {
             0% {
                 transform: translateX(0);
             }
-
             100% {
                 transform: translateX(-85px);
             }
         }
-
         .box {
             border: 3px solid yellow;
             animation: logochange 3s infinite alternate ease-in-out;
-        }
-
-        .box {
-            background: linear-gradient(to right, rgb(60, 54, 98), rgb(70, 78, 62), black, rgb(158, 129, 226));
-
         }
 
         .shop {
             border: 3px solid yellow;
             animation: logochange 3s infinite alternate ease-in-out;
         }
-
-        /* ===== CARD ===== */
-.cart {
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    position: relative;
-    height: 450px;
-}
-
-.cart:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
-
-/* ===== IMAGE ===== */
-.imgs {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.cart:hover .imgs {
-    transform: scale(1.08);
-}
-
-/* ===== CONTENT ===== */
-.cart h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 12px;
-    color: #222;
-}
-
-.texts {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 12px;
-    margin-bottom: 10px;
-}
-
-.texts p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.texts p:first-child {
-    color: #2563eb; /* blue price */
-    font-weight: bold;
-}
-
-.texts i {
-    color: #ef4444;
-}
-
-/* ===== BUTTONS ===== */
-.btn {
-    display: flex;
-    gap: 10px;
-    padding: 12px;
-}
-
-/* LIKE BUTTON */
-.like {
-    flex: 1;
-    background: #ffe4e6;
-    color: #ef4444;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.like:hover {
-    background: #fecdd3;
-    transform: scale(1.05);
-}
-
-/* VIEW BUTTON */
-.view {
-    flex: 1;
-    background: #3b82f6;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.view:hover {
-    background: #2563eb;
-    transform: scale(1.05);
-}
-
-/* ===== HEART CLICK ANIMATION ===== */
-.like:active i {
-    transform: scale(1.4);
-    transition: 0.2s;
-}
-
-/* ===== GRID LAYOUT (IMPORTANT) ===== */
-/* #Men-list {
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); */
-    /* gap: 20px; */
-    /* padding: 20px; */
-} */
-
-/* ===== SMOOTH FADE IN ===== */
-.cart {
-    animation: fadeUp 0.5s ease;
-}
-
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-        .mouse {
-            text-shadow:
-                1px 1px 2px rgb(0, 0, 0),
-                0 0 10px purple,
-                0 0 20px blue;
-        }
-
-        .Men {
+        .Whomens {
             position: relative;
         }
 
-        .Men::after {
+        .Whomens::after {
             content: "";
             position: absolute;
             left: 0;
@@ -236,72 +89,84 @@
             width: 100%;
             height: 3px;
             background: rgb(184, 232, 12);
+
         }
-        /* CONTAINER */
-        .filter-box {
-            background: linear-gradient(145deg, #1f1f2e, #2a2a3d);
-            padding: 20px;
-            border-radius: 15px;
-            width: 300px;
-            height: 100px;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        .cart {
+            transition: all 0.3s ease;
         }
 
-        /* TITLE */
-        .filter-title {
-            font-size: 18px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 15px;
+        .cart:hover {
+            box-shadow: 0 10px 10px 10px rgba(29, 139, 235, 0.5);
         }
-
-        /* RANGE WRAPPER */
-        .range-wrapper {
-            position: relative;
+        .btn{
+            display: flex;
+            gap: 30px;
+            width: 400px;
+            height: 60px;
+            justify-content: space-between;
         }
-
-        /* RANGE STYLE */
-        #priceRange {
-            width: 100%;
-            appearance: none;
-            height: 8px;
+        .btn button{
             border-radius: 10px;
-            background: linear-gradient(to right, #00f5a0, #00d9f5);
-            outline: none;
-            transition: 0.3s;
+            border: 2px solid rgb(73, 79, 27);
+        }
+        .not-found {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
         }
 
-        /* THUMB */
-        #priceRange::-webkit-slider-thumb {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border: 3px solid #00d9f5;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
+        .not-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
-        #priceRange::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            background: #00f5a0;
-        }
-
-        /* PRICE FLOAT BOX */
-        .price-tag {
-            position: absolute;
-            right: 0;
-            top: -35px;
-            background: #00d9f5;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 14px;
+        /* Title Animation */
+        .not-title {
+            font-size: 40px;
             font-weight: bold;
-            color: #000;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            color: #ff4d4d;
+            animation: fadeBounce 2s infinite;
+        }
+
+        /* Text */
+        .not-text {
+            font-size: 18px;
+            color: #aaa;
+            margin-top: 10px;
+            animation: fadeIn 3s infinite alternate;
+        }
+
+        /* 🔥 Animation */
+        @keyframes fadeBounce {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -330,9 +195,9 @@
         <!-- MENU -->
         <ul class="flex gap-6 font-mono text-xl uppercase items-center  text-white">
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Home.html">Home</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer Men"><a href="Men.html">Men</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Whomen.html">whomen</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer "><a href="Computer.html">Couple</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Men.html">men</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer Whomens"><a href="Whomen.html">whomen</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer "><a href="Couple.html">couple</a></li>
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Addcart.html">Cart</a></li>
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Contact.html">Contact</a></li>
             <li class="hover:text-yellow-500 cursor-pointer"><a href="About.html">About</a></li>
@@ -340,38 +205,37 @@
         </ul>
 
     </nav>
+
+
     <!-- HERO / SLIDE -->
     <section class="mt-5 px-10">
-        <div class=" text-white rounded-xl p-10 flex justify-between items-center box">
+        <div
+            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-10 flex justify-between items-center box">
 
             <!-- TEXT -->
             <div>
-                <h1 class="text-6xl  mb-4 text-blue-300 font-extrabold  mouse">MENS PAGE</h1>
-                <p class="mb-6 text-2xl uppercase text-white">High performance clothes for men</p>
+                <h1 class="text-6xl font-bold mb-4 uppercase">whomen page</h1>
+                <p class="mb-6 text-3xl">High performance computers for gaming & work</p>
                 <button
                     class="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-orange-400 text-4xl shop">
                     Shop Now
                 </button>
-                <br>
-                <br>
             </div>
 
             <!-- IMAGE -->
             <div>
-                <img id="slider" class="w-250 object-cover slide h-100" src="../Banner/Men_Banner/men1.png">
+                <img id="slider" class="w-250 object-cover slide h-100"
+                    src="../Banner/Whomen_Banner/2.png">
             </div>
+
         </div>
     </section>
 
 
     <!-- FEATURE PRODUCTS -->
     <section class="px-10 mt-10">
-
-        <h2 class="text-2xl font-bold mb-5 text-white text-center">
-            Popular Products
-        </h2>
-
-        <div id="Men-list" class="grid grid-cols-4 gap-6"></div>
+        <h2 class="text-2xl font-bold mb-5 text-white text-center">Popular Products</h2>
+        <div id="Whomen-list" class="grid grid-cols-4 gap-6"></div>
     </section>
     <!-- FOOTER -->
     <!-- FOOTER -->
@@ -461,15 +325,13 @@
         </div>
 
     </footer>
-    <script src="../File_Data/Men_data.js"></script>
-
+    <script src="../File_Data/Whomen_data.js"></script>
     <!-- Image in slide  -->
     <script>
-
         const images = [
-            "../Banner/Men_Banner/men2.png",
-            "../Banner/Men_Banner/yyh.png",
-            "../Banner/Men_Banner/men3.png"
+            "../Banner/Whomen_Banner/1.png",
+            "../Banner/Whomen_Banner/3.png",
+            "../Banner/Whomen_Banner/4.png"
         ];
 
         let index = 0;
@@ -482,7 +344,9 @@
             }
             slider.src = images[index];
         }, 5000);
-        localStorage.setItem("backPage", "Men.html");
+
+        localStorage.setItem("backPage", "Whomen.html");
+
     </script>
 </body>
 
