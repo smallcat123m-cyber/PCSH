@@ -335,6 +335,28 @@ function displayProducts(list) {
     </div>
 </div>
 `;
+        <div class="shadow hover:shadow-lg cart">
+            <img src="${item.image}" class="imgs">
+            <h3 class="font-bold">${item.name}</h3>
+            <div class="texts">
+            <p class="text-gray-500 ">$ ${item.price}</p>
+            <p><i class="fa-solid fa-heart"></i> <span id="like-${item.id}">${likeCount}</span></p>
+            </div>
+
+
+            <div class="btn">
+                <button onclick="addLike(${item.id})"
+                class="like">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+
+                <button onclick="viewProduct(${item.id})"
+                class="view">
+                    View
+                </button>
+            </div>
+        </div>
+        `;
     });
 }
 
@@ -417,4 +439,5 @@ function searchProduct(){
 }else{
     displayProducts(result);
 }
+    window.location.href = "../ViewsPage/Men_Views.html";
 }
