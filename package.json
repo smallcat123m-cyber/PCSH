@@ -13,6 +13,17 @@
   "type": "commonjs",
   "dependencies": {
     "@tailwindcss/cli": "^4.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
     "tailwindcss": "^4.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smallcat123m-cyber/PCSH.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smallcat123m-cyber/PCSH/issues"
+  },
+  "homepage": "https://github.com/smallcat123m-cyber/PCSH#readme"
 }

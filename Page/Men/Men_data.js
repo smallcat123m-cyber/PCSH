@@ -281,28 +281,59 @@ function displayProducts(list) {
         const likeCount = likes[item.id] || 0;
 
         Menlist.innerHTML += `
-        <div class="shadow hover:shadow-lg cart">
-            <img src="${item.image}" class="imgs">
-            <h3 class="font-bold">${item.name}</h3>
-            <div class="texts">
-            <p class="text-gray-500 ">$ ${item.price}</p>
-            <p><i class="fa-solid fa-heart"></i> <span id="like-${item.id}">${likeCount}</span></p>
-            </div>
+<div class="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden
+    hover:shadow-[0_0_30px_rgba(0,255,255,0.2)] hover:border-cyan-400 transition duration-300">
 
+    <!-- IMAGE -->
+    <div class="overflow-hidden">
+        <img src="${item.image}"
+            class="imgs w-full h-[280px] object-cover transition duration-500 group-hover:scale-110">
+    </div>
 
-            <div class="btn">
-                <button onclick="addLike(${item.id})"
-                class="like">
-                    <i class="fa-solid fa-heart"></i>
-                </button>
+    <!-- CONTENT -->
+    <div class="p-4">
 
-                <button onclick="viewProduct(${item.id})"
-                class="view">
-                    View
-                </button>
-            </div>
+        <!-- NAME -->
+        <h3 class="font-semibold text-lg text-white group-hover:text-cyan-400 transition">
+            ${item.name}
+        </h3>
+
+        <!-- PRICE + LIKE COUNT -->
+        <div class="flex justify-between items-center mt-2 text-sm">
+
+            <p class="text-cyan-400 font-bold text-lg">
+                $ ${item.price}
+            </p>
+
+            <p class="flex items-center gap-2 text-gray-300">
+                <i class="fa-solid fa-heart text-red-400"></i>
+                <span id="like-${item.id}" class="text-white">${likeCount}</span>
+            </p>
+
         </div>
-        `;
+
+        <!-- BUTTONS -->
+        <div class="flex gap-3 mt-4">
+
+            <!-- LIKE -->
+            <button onclick="addLike(${item.id})"
+                class="like flex-1 py-2 rounded-xl bg-red-500/10 border border-red-500/20
+                text-red-400 hover:bg-red-500/20 hover:scale-105 transition">
+                <i class="fa-solid fa-heart"></i>
+            </button>
+
+            <!-- VIEW -->
+            <button onclick="viewProduct(${item.id})"
+                class="view flex-1 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500
+                font-semibold hover:scale-105 transition shadow-lg">
+                View
+            </button>
+
+        </div>
+
+    </div>
+</div>
+`;
     });
 }
 
@@ -337,5 +368,52 @@ function viewProduct(id) {
 
     localStorage.setItem("viewProduct", JSON.stringify(product));
 
-    window.location.href = "../ViewsPage/Men_Views.html";
+    window.location.href = "Men_Views.html";
+}
+function searchProduct(){
+    const keyword = document.getElementById("search").value.toLowerCase();
+
+    const result = Mens.filter(item =>
+        item.name.toLowerCase().includes(keyword)
+    );
+
+    const Menlist = document.getElementById("Men-list");
+
+    // ❗ IF NOT FOUND
+    if(result.length === 0){
+    Menlist.innerHTML = `
+    <div class="col-span-full flex items-center justify-center py-10">
+
+        <div class="text-center bg-white/5 border border-white/10 backdrop-blur-md
+            rounded-2xl px-6 py-8 shadow-lg hover:scale-105 transition duration-300 max-w-md w-full">
+
+            <!-- ICON -->
+            <div class="text-4xl mb-3 text-cyan-400 animate-pulse">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <!-- TITLE -->
+            <h2 class="text-2xl font-bold text-white mb-2">
+                No Product Found
+            </h2>
+
+            <!-- TEXT -->
+            <p class="text-gray-400 text-sm mb-5">
+                Try searching <span class="text-cyan-400 font-semibold">shirt, jacket, hoodie</span>
+            </p>
+
+            <!-- BUTTON -->
+            <button onclick="displayProducts(Mens)"
+                class="px-5 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500
+                text-sm font-semibold hover:scale-105 transition shadow-md">
+                Show All
+            </button>
+
+        </div>
+
+    </div>
+    `;
+}else{
+    displayProducts(result);
+}
 }
