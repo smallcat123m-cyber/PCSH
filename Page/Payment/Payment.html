@@ -2,6 +2,466 @@
 <html lang="en">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+
+<link rel="stylesheet" href="/src/output.css">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+<!-- CONFETTI -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="http://192.168.1.13:3000/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+<style>
+body{
+    background: radial-gradient(circle at top, #0f172a, #000);
+}
+
+/* CARD */
+.card{
+    width: 900px;
+    max-width: 95%;
+    margin: auto;
+    padding: 28px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+}
+
+/* BUTTON */
+.btn{
+    transition: 0.2s;
+}
+.btn:hover{
+    transform: translateY(-2px);
+}
+.btn:active{
+    transform: scale(0.95);
+}
+
+/* BANK */
+.bank-card input{ display:none; }
+
+.bank-content{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.bank-content:hover{
+    transform: translateY(-4px);
+    border-color:#22d3ee;
+}
+
+.bank-card input:checked + .bank-content{
+    background: linear-gradient(135deg,#06b6d4,#3b82f6);
+    transform: scale(1.03);
+}
+
+.bank-img{
+    width:48px;
+    height:48px;
+    border-radius:10px;
+}
+
+/* LOADING */
+.loading{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.7);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+    backdrop-filter: blur(10px);
+}
+
+.spinner{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:6px solid rgba(255,255,255,0.1);
+    border-top:6px solid #22d3ee;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{transform:rotate(360deg)}
+}
+
+/* PROGRESS BAR */
+.progress{
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:4px;
+    background:#22d3ee;
+    width:0%;
+    transition: width 2s linear;
+}
+
+/* SUCCESS */
+.success-box{
+    animation: pop 0.4s ease;
+}
+@keyframes pop{
+    from{transform:scale(0.7); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+#progressCircle {
+    transition: stroke-dashoffset 0.3s linear;
+}
+.qrcode{
+    border: 1px solid yellow;
+    border-radius: 4px;
+    padding: 4px;
+}
+</style>
+</head>
+
+<body class="text-white flex items-center justify-center min-h-screen">
+
+<div class="card relative">
+
+    <div id="progressBar" class="progress"></div>
+
+    <h2 class="text-3xl font-bold text-center mb-6">💳 Secure Checkout</h2>
+
+    <!-- BANKS -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+
+        <label class="bank-card">
+            <input type="radio" name="bank" value="ABA">
+            <div class="bank-content">
+                <img class="bank-img" src="https://i.pinimg.com/1200x/e2/33/f5/e233f5b0c5a358449398f202b03f063a.jpg">
+                <span>ABA Bank</span>
+            </div>
+        </label>
+
+        <label class="bank-card">
+            <input type="radio" name="bank" value="ACLEDA">
+            <div class="bank-content">
+                <img class="bank-img" src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg">
+                <span>ACLEDA</span>
+            </div>
+        </label>
+
+        <label class="bank-card">
+            <input type="radio" name="bank" value="WING">
+            <div class="bank-content">
+                <img class="bank-img" src="https://i.pinimg.com/1200x/8c/60/0e/8c600eac1bf06ecd663db232c4611a39.jpg">
+                <span>Wing</span>
+            </div>
+        </label>
+
+        <label class="bank-card">
+            <input type="radio" name="bank" value="VISA">
+            <div class="bank-content">
+                <img class="bank-img" src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg">
+                <span>Visa</span>
+            </div>
+        </label>
+
+    </div>
+
+    <!-- ORDER -->
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-3">🛒 Order Summary</h3>
+        <div id="orderList"></div>
+
+        <div class="flex justify-between mt-4 text-xl font-bold">
+            <span>Total</span>
+            <span class="text-cyan-400">$<span id="totalPrice">0</span></span>
+        </div>
+    </div>
+
+    <input id="amount" type="number"
+        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 mb-4">
+
+    <div class="flex gap-4">
+
+        <button id="payBtn" onclick="payments()"
+            class="w-1/2 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 font-bold btn">
+            Pay Now
+        </button>
+
+        <button onclick="Back()"
+            class="w-1/2 py-3 rounded-xl bg-white/10 hover:bg-red-500 transition">
+            Back
+        </button>
+
+
+    </div>
+    <!-- QR Section -->
+<div id="qrSection" class="hidden text-center mt-5 justify-center">
+
+    <h2 class="text-xl font-bold mb-3">Scan to Pay</h2>
+
+    <!-- CIRCLE WRAPPER -->
+    <div class="relative w-[220px] h-[220px] mx-auto flex items-center justify-center">
+
+        <!-- PROGRESS RING -->
+        <svg class="absolute w-full h-full" viewBox="0 0 100 100">
+
+            <circle cx="50" cy="50" r="45"
+                stroke="rgba(255,255,255,0.1)"
+                stroke-width="6"
+                fill="none" />
+
+            <circle id="progressCircle"
+                cx="50" cy="50" r="45"
+                stroke="#22d3ee"
+                stroke-width="6"
+                fill="none"
+                stroke-linecap="round"
+                stroke-dasharray="283"
+                stroke-dashoffset="283"
+                transform="rotate(-90 50 50)" />
+        </svg>
+
+        <!-- QR CODE -->
+        <div id="qrcode" class="z-10 qrcode"></div>
+    </div>
+
+    <p class="mt-3 text-gray-400">Waiting for payment...</p>
+</div>
+
+
+</div>
+
+<div id="loading" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
+  <div class="spinner"></div>
+</div>
+
+<!-- SUCCESS -->
+<div id="success" class="hidden fixed inset-0 flex items-center justify-center bg-black/70 z-[1000]">
+    <div class="success-box text-center">
+        <i class="fa-solid fa-circle-check text-green-400 text-6xl mb-3"></i>
+        <h2 class="text-2xl font-bold">Payment Successful</h2>
+        <p id="countdown" class="text-gray-400 mt-2">Redirecting...</p>
+    </div>
+</div>
+
+
+
+<!-- <a href="scan.html"></a> -->
+
+<!-- <button id="payBtn" onclick="payments()">Pay Now</button> -->
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// 🔥 REAL-TIME CHANNEL
+const channel = new BroadcastChannel("payment_channel");
+
+/* ================= LOAD ORDER ================= */
+function loadOrder(){
+    let total = 0;
+    let list = document.getElementById("orderList");
+    list.innerHTML = "";
+
+    cart.forEach(item=>{
+        let t = item.price * item.qty;
+        total += t;
+
+        list.innerHTML += `
+        <div class="flex justify-between py-2 border-b border-white/10">
+            <span>${item.name} x${item.qty}</span>
+            <span class="text-cyan-400">$${t}</span>
+        </div>`;
+    });
+
+    document.getElementById("totalPrice").innerText = total;
+    document.getElementById("amount").value = total;
+}
+
+/* ================= CONFETTI ================= */
+function fireConfetti(){
+    confetti({ particleCount:150, spread:120, origin:{y:0.6} });
+}
+
+/* ================= BACK ================= */
+function Back(){
+    if(confirm("Back to cart?")){
+        window.location.href = "/Page/Carts/Addcart.html";
+    }
+}
+
+/* ================= PAYMENT START ================= */
+function payments(){
+
+    let bank = document.querySelector('input[name="bank"]:checked');
+    let amount = document.getElementById("amount").value;
+
+    if(!bank) return alert("Select bank");
+    if(cart.length === 0) return alert("Cart empty");
+
+    if(!confirm(`Pay $${amount} via ${bank.value}?`)) return;
+
+    document.getElementById("payBtn").disabled = true;
+    document.getElementById("payBtn").innerText = "Processing...";
+
+    document.getElementById("loading").classList.remove("hidden");
+
+    let width = 0;
+    let progress = document.getElementById("progressBar");
+
+    let interval = setInterval(()=>{
+
+        width += 10;
+        progress.style.width = width + "%";
+
+        if(width >= 100){
+            clearInterval(interval);
+            document.getElementById("loading").classList.add("hidden");
+            showQRCode(amount);
+        }
+
+    }, 200);
+}
+
+/* ================= QR ================= */
+async function showQRCode(amount){
+
+    let qrDiv = document.getElementById("qrcode");
+    qrDiv.innerHTML = "";
+
+    // 🔥 CREATE PAYMENT FROM SERVER
+    let res = await fetch("http://localhost:3000/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount })
+    });
+
+    let data = await res.json();
+    let paymentId = data.paymentId;
+
+    let host = window.location.hostname;
+    if(host === "localhost" || host === "127.0.0.1"){
+        // host = "192.168.1.13";
+        host = "192.168.0.155";
+    }
+
+    let scanUrl = `http://${host}:5500/Page/Payment/scan.html?id=${paymentId}`;
+
+    new QRCode(qrDiv, {
+        text: scanUrl,
+        width: 200,
+        height: 200
+    });
+
+    document.getElementById("qrSection").classList.remove("hidden");
+
+    startWatcher(paymentId);
+}
+
+/* ================= WATCHER (PC SIDE) ================= */
+function startWatcher(paymentId){
+
+    const socket = io("http://localhost:3000");
+
+    socket.on("payment-success", (data) => {
+        if(data.paymentId === paymentId){
+            handleSuccess(paymentId);
+        }
+    });
+
+}
+
+/* ================= SUCCESS ================= */
+function handleSuccess(paymentId){
+
+    if(window.done) return;
+    window.done = true;
+
+    document.getElementById("qrSection").classList.add("hidden");
+    document.getElementById("success").classList.remove("hidden");
+
+    fireConfetti();
+
+    // 🔥 CLEAR CART (MAIN REQUIREMENT)
+    localStorage.removeItem("cart");
+
+    // 🔥 REMOVE ALL PAYMENT KEYS
+    Object.keys(localStorage).forEach(key => {
+        if(key.startsWith("PAY_")){
+            localStorage.removeItem(key);
+        }
+    });
+
+    redirectAfterSuccess();
+}
+
+/* ================= REDIRECT ================= */
+function redirectAfterSuccess(seconds = 3){
+
+    let time = seconds;
+    const cd = document.getElementById("countdown");
+
+    const timer = setInterval(() => {
+
+        if (cd) {
+            cd.innerText = `Redirecting in ${time}s...`;
+        }
+
+        time--;
+
+        if (time < 0) {
+            clearInterval(timer);
+            window.location.href = "/Page/Home/Home.html";
+        }
+
+    }, 1000);
+}
+
+loadOrder();
+function startQRProgress(duration = 10){
+
+    let circle = document.getElementById("progressCircle");
+
+    let radius = 45;
+    let circumference = 2 * Math.PI * radius;
+
+    circle.style.strokeDasharray = circumference;
+
+    let start = Date.now();
+
+    let timer = setInterval(() => {
+
+        let elapsed = (Date.now() - start) / 1000;
+        let progress = elapsed / duration;
+
+        if(progress >= 1){
+            progress = 1;
+            clearInterval(timer);
+        }
+
+        let offset = circumference - (progress * circumference);
+        circle.style.strokeDashoffset = offset;
+
+    }, 50);
+}
+</script>
+
+
+
+
+
+
+</body>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment</title>

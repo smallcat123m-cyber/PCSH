@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CL-SHOP | Women</title>
+    <link rel="stylesheet" href="/src/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+
+<body class="bg-gradient-to-b from-black via-gray-900 to-black text-white">
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
+
+    <!-- LOGO -->
+    <span class="text-3xl font-extrabold tracking-[6px] text-white drop-shadow-[0_0_15px_cyan]">
+        VEXO
+    </span>
+
+    <!-- SEARCH -->
+    <input id="search" type="search" onkeyup="searchProduct()"
+        placeholder="Search Dress, Shoes, Bag..."
+        class="hidden md:block w-[300px] px-4 py-2 rounded-full bg-white/10 border border-white/10
+        text-white focus:outline-none focus:ring-2 focus:ring-pink-400">
+
+    <!-- MENU -->
+    <ul class="flex items-center gap-6 text-sm uppercase font-medium">
+        <li class="hover:text-pink-400 transition"><a href="Home.html">Home</a></li>
+        <li class="hover:text-pink-400 transition"><a href="/Page/Men/Men.html">Men</a></li>
+        <li class="hover:text-pink-400 transition border-b-2 border-pink-400">
+            <a href="Women/whomen.html">Women</a>
+        </li>
+        <li class="hover:text-pink-400 transition"><a href="/Page/Couple/Couples.html">Couple</a></li>
+        <li class="hover:text-pink-400 transition"><a href="/Page/Carts/Addcart.html">Cart</a></li>
+        <li class="hover:text-pink-400 transition"><a href="Contact.html">Contact</a></li>
+        <li class="hover:text-pink-400 transition"><a href="About.html">About</a></li>
+        <li>
+            <a href="Login.html"
+                class="px-4 py-2 rounded-full bg-pink-500 hover:bg-pink-600 transition font-semibold">
+                Login
+            </a>
+        </li>
+    </ul>
+</nav>
+
+   
+<!-- HERO -->
+<section class="px-6 md:px-10 mt-8">
+
+    <div class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md
+        flex flex-col md:flex-row items-stretch gap-10 p-8 md:p-14 shadow-2xl h-100">
+
+        <!-- TEXT -->
+        <div class="justify-center">
+
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                Premium <span class="text-pink-400">Women’s Fashion</span>
+            </h1>
+
+            <p class="mt-4 text-gray-300 text-lg">
+                Discover elegant styles, modern dresses, and trendy outfits designed for confidence and beauty.
+            </p>
+
+            <button
+                class="mt-6 px-7 py-3 rounded-full bg-gradient-to-r from-pink-400 to-purple-500
+                hover:scale-105 transition font-bold shadow-lg w-fit">
+                Shop Women’s Collection
+            </button>
+
+        </div>
+
+        <!-- SLIDER -->
+        <div class="w-full md:w-1/2 overflow-hidden relative">
+
+            <div class="absolute inset-0 bg-pink-400/10 blur-3xl rounded-full"></div>
+
+            <div class="relative z-10 overflow-hidden rounded-2xl">
+
+                <div id="sliderWrapper"
+                    class="flex w-full transition-transform duration-700 ease-in-out">
+
+                    <!-- KEEP SAME IMAGES OR CHANGE LATER -->
+                    <img src="/Banner/Men_Banner/men1.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+                    <img src="/Banner/Men_Banner/men2.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+                    <img src="/Banner/Men_Banner/men3.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+                    <img src="/Banner/Men_Banner/men4.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="px-6 md:px-10 mt-16">
+
+    <h2 class="text-center text-3xl font-extrabold tracking-[5px] text-pink-400 mb-10">
+        POPULAR WOMEN PRODUCTS
+    </h2>
+
+    <div id="whomen-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- SAME CARD -->
+        <div class="cart bg-white/5 border border-white/10 rounded-2xl overflow-hidden
+            hover:scale-105 hover:border-pink-400 transition duration-300 shadow-lg">
+
+            <img src="/Banner/Men_Banner/men1.png"
+                class="imgs w-full h-[280px] object-cover hover:scale-110 transition">
+
+            <h3 class="p-3 font-semibold">Elegant Dress</h3>
+
+            <div class="texts flex justify-between px-3 pb-3 text-sm">
+                <p class="text-pink-400 font-bold">$49</p>
+                <i class="fa-solid fa-heart text-red-400"></i>
+            </div>
+
+            <div class="flex gap-2 p-3">
+                <button class="like flex-1 py-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
+                    Like
+                </button>
+
+                <button class="view flex-1 py-2 rounded-lg bg-pink-500 hover:bg-pink-600 transition">
+                    View
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-20 border-t border-white/10 px-6 md:px-10 py-10 text-center text-gray-400">
+
+    <h2 class="text-white text-2xl font-bold tracking-widest">VEXO</h2>
+    <p class="mt-2">Premium Women Fashion Store</p>
+
+    <p class="mt-6 text-sm">© 2026 VEXO. All rights reserved.</p>
+</footer>
+
+<script src="Whomen_data.js"></script>
+
+<!-- SLIDER SCRIPT (UNCHANGED) -->
+<script>
+const images = [
+    "/Banner/Men_Banner/men1.png",
+    "/Banner/Men_Banner/men2.png",
+    "/Banner/Men_Banner/men3.png",
+    "/Banner/Men_Banner/men4.png"
+];
+
+const sliderWrapper = document.getElementById("sliderWrapper");
+const slides = sliderWrapper.children;
+
+let index = 0;
+const total = slides.length;
+
+function slideNext() {
+    index++;
+
+    sliderWrapper.style.transition = "transform 0.7s ease-in-out";
+    sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+
+    if (index === total) {
+        setTimeout(() => {
+            sliderWrapper.style.transition = "none";
+            index = 0;
+            sliderWrapper.style.transform = `translateX(0%)`;
+        }, 700);
+    }
+}
+
+setInterval(slideNext, 5000);
+</script>
+
+</body>
+</html>

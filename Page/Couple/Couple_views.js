@@ -1,6 +1,9 @@
 const product = JSON.parse(localStorage.getItem("viewProduct"));
 
+
+const box = document.getElementById("Couple_box");
 const box = document.getElementById("couple-view-box");
+
 
 function getSize(type){
 
@@ -22,6 +25,63 @@ if(product){
         ${size}
     </button>
         `).join("");
+
+ box.innerHTML = `
+<div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 md:px-16 py-10">
+
+    <!-- TOP BAR -->
+    <div class="flex justify-between items-center mb-10">
+
+        <button onclick="goBack()"
+            class="flex items-center gap-2 text-gray-300 hover:text-cyan-400 transition text-lg">
+            <i class="fa-solid fa-arrow-left"></i> Back
+        </button>
+
+        <button onclick="goCart()"
+            class="px-5 py-2 rounded-full bg-cyan-500 hover:bg-cyan-600 transition font-semibold shadow-lg">
+            Cart <i class="fa-solid fa-cart-shopping"></i>
+        </button>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <!-- IMAGE SECTION -->
+        <div class="space-y-4">
+
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md
+                shadow-[0_0_40px_rgba(0,255,255,0.08)]">
+
+                <img src="${product.image}"
+                    class="w-full h-[520px] object-cover rounded-2xl hover:scale-105 transition duration-500">
+            </div>
+
+        </div>
+
+        <!-- DETAILS -->
+        <div class="flex flex-col justify-between">
+
+            <div>
+
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                    ${product.name}
+                </h1>
+
+                <p class="mt-5 text-gray-300 text-lg leading-relaxed max-w-xl">
+                    ${product.des}
+                </p>
+
+                <h2 class="mt-6 text-4xl font-bold text-cyan-400">
+                    $${product.price}
+                </h2>
+
+                <!-- MODELS / SIZE -->
+                <div class="mt-8">
+                    <p class="text-gray-400 mb-3">Models</p>
+
+                    <div class="flex flex-wrap gap-3">
+
   box.innerHTML = `
 <div class="bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white px-16 py-10 cart w-full h-screen">
 
@@ -73,9 +133,33 @@ if(product){
                 <div class="mb-8">
                     <p class="text-gray-400 mb-3 text-lg">Models :</p>
                     <div class="flex gap-4 flex-wrap">
+
                         ${sizeHTML}
                     </div>
                 </div>
+
+
+                <!-- QUANTITY -->
+                <div class="mt-8">
+                    <p class="text-gray-400 mb-3">Quantity</p>
+
+                    <div class="flex items-center gap-4">
+
+                        <button onclick="changeQty(-1)"
+                            class="w-12 h-12 rounded-xl bg-white/10 hover:bg-red-500 transition text-xl">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+
+                        <span id="qty"
+                            class="text-2xl font-bold px-4 py-2 bg-white/5 rounded-xl">
+                            1
+                        </span>
+
+                        <button onclick="changeQty(1)"
+                            class="w-12 h-12 rounded-xl bg-white/10 hover:bg-green-500 transition text-xl">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+
 
                <!-- QUANTITY -->
                 <div class="mb-8">
@@ -86,10 +170,37 @@ if(product){
                         <button onclick="changeQty(1)" 
                         class="px-5 py-3 bg-white/10 hover:bg-green-500 rounded-xl text-xl btnups"><i class="fa-solid fa-plus"></i></button>
                         <p id="qty" class="text-2xl text-center font-bold px-2 py-2 qtys">1</p>
+
                     </div>
                 </div>
 
                 <!-- FEATURES -->
+
+                <div class="grid grid-cols-2 gap-4 mt-10 text-gray-300">
+                    <p>✔ Free Shipping</p>
+                    <p>✔ Secure Payment</p>
+                    <p>✔ Easy Returns</p>
+                    <p>✔ 24/7 Support</p>
+                </div>
+
+            </div>
+
+            <!-- ACTION BAR -->
+            <div class="mt-10 border-t border-white/10 pt-8">
+
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-400 text-lg">Total</span>
+                    <span id="totalPrice" class="text-3xl font-bold text-cyan-400">
+                        $${product.price}
+                    </span>
+                </div>
+
+                <div class="flex gap-4">
+
+                    <button onclick="goBack()"
+                        class="w-1/2 py-4 rounded-xl border border-white/20 hover:border-red-500
+                        hover:bg-red-500/10 transition font-semibold">
+
                 <div class="grid grid-cols-2 gap-4 text-gray-300 text-lg mb-10">
                     <p><i class="fa-solid fa-square-check"></i> Free Shipping</p>
                     <p><i class="fa-solid fa-square-check"></i> Secure Payment</p>
@@ -109,13 +220,21 @@ if(product){
                 <div class="flex gap-6">
                     <button onclick="goBack()" 
                     class="w-1/2 border border-gray-400 py-4 rounded-xl text-lg hover:bg-gray-700 transition">
+
                         Cancel
                     </button>
 
                     <button onclick="addToCartFromView()"
+
+                        class="w-1/2 py-4 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500
+                        hover:scale-105 transition font-bold shadow-lg">
+                        Add to Cart <i class="fa-solid fa-bag-shopping"></i>
+                    </button>
+
                     class="w-1/2 bg-gradient-to-r from-pink-500 to-purple-600 py-4 rounded-xl text-lg font-bold shadow-lg hover:scale-105 transition">
                         Add to Cart 🛒
                     </button>
+
                 </div>
 
             </div>
@@ -123,18 +242,31 @@ if(product){
         </div>
     </div>
 </div>
+
+`;     
+
 `;
+
 }else{
     box.innerHTML = "<p>No product found</p>";
     setTimeout(() => {
     document.getElementById("addBtn").disabled = true;
 }, 0);
 }
+
+
+function goBack(){
+    window.location.href = "Couples.html";
+}
+function goCart(){
+    window.location.href = "/Page/Carts/Addcart.html";
+
 function goBack(){
     window.location.href = "../Page/Computer.html";
 }
 function goCart(){
     window.location.href = "../Page/Addcart.html";
+
 }
 
 let quantity = 1;
@@ -168,6 +300,7 @@ function addToCartFromView() {
 
     alert("Added to cart!");
 }
+
 let selectedSize = null;
 function selectSize(btn){
     document.querySelectorAll(".size-btn").forEach(b => {
@@ -175,4 +308,4 @@ function selectSize(btn){
     });
     btn.classList.add("bg-pink-500");
     selectedSize = btn.innerText.trim(); // IMPORTANT
-}
+

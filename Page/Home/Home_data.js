@@ -31,6 +31,7 @@ const Homes = [
 const Homelist = document.getElementById("home-list");
 
 
+
 // 🔁 LOOP
 Homes.forEach(item => {
     const card = `
