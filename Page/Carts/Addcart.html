@@ -1,70 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart</title>
-<link rel="stylesheet" href="/src/output.css">
+<title>VEXO Cart</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
 <style>
-.summary-box {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
+
+/* ===== BODY ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ===== TITLE ===== */
+.title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* ===== GLASS EFFECT ===== */
+.glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(14px);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 16px;
 }
 
-.checkout-btn {
-    background: linear-gradient(135deg, #ef4444, #f97316);
-    transition: 0.3s;
-}
-
-.checkout-btn:hover {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    transform: scale(1.02);
-}
-
-.cart-row {
+/* ===== CART ITEM ===== */
+.cart-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
+    gap: 20px;
+    padding: 16px;
+    margin-bottom: 15px;
     transition: 0.3s;
 }
 
-.cart-row:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+.cart-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
+/* ===== IMAGE ===== */
 .cart-img {
     width: 70px;
     height: 70px;
-    border-radius: 12px;
     object-fit: cover;
+    border-radius: 12px;
 }
 
-.btnup, .btndw {
-    width: 36px;
-    height: 36px;
+/* ===== LEFT ===== */
+.left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 40%;
+}
+
+/* ===== PRICE ===== */
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: cyan;
+}
+
+/* ===== QTY BUTTON ===== */
+.qty-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
     border-radius: 8px;
     color: white;
     cursor: pointer;
 }
 
-.btnup { background: #22c55e; }
-.btndw { background: #ef4444; }
+.plus { background: #22c55e; }
+.minus { background: #ef4444; }
 
+.qty-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ===== REMOVE ===== */
 .remove {
-    background: transparent;
     color: #ef4444;
-    font-size: 18px;
     cursor: pointer;
 }
 
@@ -72,633 +111,153 @@
     transform: scale(1.2);
 }
 
+/* ===== TOTAL ===== */
+.total-box {
+    margin-top: 20px;
+    padding: 20px;
+    text-align: right;
+}
+
+/* ===== BUTTON ===== */
+.checkout {
+    margin-top: 10px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.checkout:hover {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+/* ===== EMPTY ===== */
 .empty {
     text-align: center;
-    opacity: 0.7;
     padding: 80px;
+    opacity: 0.7;
+    animation: fade 0.5s;
 }
 
-.fbx {
-    background: rgba(255,255,255,0.05);
-    border-radius: 14px;
-    padding: 12px;
-    backdrop-filter: blur(10px);
+@keyframes fade {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1;}
 }
+
 </style>
-
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../src/output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <style>
-        .summary-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .checkout-btn {
-            background: linear-gradient(to right, red, orange);
-            transition: 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background: linear-gradient(to right, blue, purple);
-        }
-
-        /* CART ITEM */
-        .cart-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .cart-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .cart-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .remove-btn {
-            background: red;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .remove-btn:hover {
-            background: darkred;
-        }
-
-        /* NAV */
-        .bgs {
-            background: linear-gradient(to right, red, purple, blue);
-        }
-
-        /* EMPTY */
-        .empty {
-            text-align: center;
-            margin-top: 100px;
-            opacity: 0.7;
-        }
-        .cart-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* IMAGE */
-        .cart-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-        .bgc:hover {
-            background-color: #361703;
-        }
-
-        .menu {
-            width: 130px;
-            height: 30px;
-            cursor: pointer;
-            border-radius: 6px;
-        }
-
-        .Menu {
-            width: 130px;
-            height: 30px;
-        }
-        .fbx:hover{
-            box-shadow: rgb(6, 238, 10) 0 2px 2px 2px;
-        }
-        .fbx{
-            height: 90px;
-            display: flex;
-            gap: 90px;
-        }
-        .ff{
-            color: yellow;
-            font-size: 40px;
-            font-family: monospace;
-            box-shadow: yellow 0 2px 3px  2px ;
-            border-radius: 5px;
-            width: 420px;
-
-
-        }
-        .ssbox{
-            border-radius: 5px;
-            border: 1px solid rgb(185, 185, 213);
-            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
-            width: auto;
-            height: auto;
-            font-size: 25px;
-            font-family: monospace;
-        }
-        .btnup:active{
-            box-shadow: rgb(203, 230, 33) 0 2px 3px 3px;
-        }
-        .btnup{
-            background-color: blue;
-            border-radius: 4px;
-            width: 40px;
-            height: 30px;
-        }
-        .btnup:hover{
-            cursor: pointer;
-        }
-        .btndw:active{
-            box-shadow: rgb(13, 70, 203) 0 2px 3px 3px;
-        }
-        .btndw{
-            background-color: rgba(112, 58, 3, 0.916);
-            border-radius: 4px;
-            width: 40px;
-            height: 30px;
-        }
-        .btndw:hover{
-            cursor: pointer;
-        }
-        .remove{
-            color: rgb(225, 17, 13);
-            font-size: 20px;
-            background: #c7c8d9;
-            width: 40px;
-            height: 30px;
-            border-radius: 5px;
-        }
-        .remove:hover{
-            cursor: pointer;
-            box-shadow: rgb(230, 31, 8) 0 3px 3px 3px;
-        }
-        .carts{
-            border-radius: 4px;
-        }
-        .carts:hover{
-            cursor: pointer;
-            box-shadow: rgb(92, 212, 106) 1px 0 4px 3px;
-            background-color: rgba(16, 82, 136, 0.491);
-        }
-        .act{
-            border-radius: 5px;
-            border: 1px solid rgb(185, 185, 213);
-            width: 200px;
-            font-size: 20px;
-            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
-            font-family: monospace;
-            text-align: center;
-            background-color: black;
-            color: yellow;
-        }
-        .acts{
-            border-radius: 5px;
-            border: 1px solid rgb(185, 185, 213);
-            width: 200px;
-            font-size: 20px;
-            box-shadow: rgb(85, 127, 217) 0 1px 2px 2px;
-            font-family: monospace;
-            text-align: center;
-            background-color: black;
-            color: yellow;
-            /* animation: aach 7s infinite ease-in-out; */
-        }
-        .acts:active{
-            background-color: rgb(135, 157, 221);
-        }
-    </style>
-
 </head>
 
-<body class="bg-black text-white">
+<body>
 
+<div class="container">
 
-<!-- NAV -->
-<nav class="flex justify-between items-center px-10 py-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500">
-    <h1 class="text-xl font-bold">🛒 VEXO CART</h1>
+    <h1 class="title">🛒 Your Cart</h1>
 
-    <a onclick="goBack()" class="cursor-pointer bg-black/30 px-4 py-2 rounded-lg hover:bg-black/50">
-        ← Back
-    </a>
-</nav>
+    <div id="cart"></div>
 
-<!-- CART -->
-<section class="px-6 md:px-10 mt-10">
+    <div id="total"></div>
 
-    <h2 class="text-3xl font-bold text-center mb-8">Your Shopping Cart</h2>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        <!-- ITEMS -->
-        <div id="cart-items" class="lg:col-span-2 space-y-4"></div>
-
-        <!-- SUMMARY -->
-        <div class="summary-box p-6 h-fit sticky top-10">
-
-            <h3 class="text-2xl font-bold mb-4">Summary</h3>
-
-            <div class="flex justify-between mb-3">
-                <span>Total Items</span>
-                <span id="total-items">0</span>
-            </div>
-
-            <div class="flex justify-between text-xl font-bold mb-6">
-                <span>Total</span>
-                <span id="total-price">$0</span>
-            </div>
-
-            <button onclick="checkout()" class="checkout-btn w-full py-3 rounded-lg font-bold mb-3">
-                Checkout
-            </button>
-
-            <button onclick="clearCart()" class="w-full bg-gray-700 py-3 rounded-lg hover:bg-gray-900">
-                Clear Cart
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+</div>
 
 <script>
 
-let selectedSize = "All";
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-// ================= LOAD CART =================
+/* ===== LOAD CART ===== */
 function loadCart() {
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartDiv = document.getElementById("cart");
+    let totalDiv = document.getElementById("total");
 
-    const cartContainer = document.getElementById("cart-items");
-    const totalItems = document.getElementById("total-items");
-    const totalPrice = document.getElementById("total-price");
+    if(cart.length === 0){
+        cartDiv.innerHTML = `
+        <div class="empty">
+            <h2>🛒 Cart is Empty</h2>
+            <p>Add some products first</p>
+            <button onclick="goHome()">Shop Now</button>
+        </div>`;
+        totalDiv.innerHTML = "";
+        return;
+    }
 
+    let html = "";
     let total = 0;
-    let count = 0;
-
-    let html = `
-    <div class="flex items-center gap-4 fbx mb-4">
-
-        <span class="font-bold">Filter:</span>
-
-        <select onchange="filterBySize(this.value)"
-            class="bg-black/60 px-3 py-2 rounded-lg border border-white/10">
-
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="Black">Black</option>
-            <option value="White">White</option>
-            <option value="All">All</option>
-
-        </select>
-
-    </div>
-    `;
 
     cart.forEach((item, index) => {
 
-        let itemSize = (item.size || "all").toLowerCase();
-        let filter = selectedSize.toLowerCase();
-
-        if (filter !== "all" && itemSize !== filter) return;
-
-        if (!item.qty) item.qty = 1;
-
         total += item.price * item.qty;
-        count++;
 
         html += `
-        <div class="cart-row">
+        <div class="cart-item glass">
 
-            <div class="flex items-center gap-4 w-1/3">
+            <div class="left">
                 <img src="${item.image}" class="cart-img">
                 <div>
-                    <h4 class="font-semibold">${item.name}</h4>
-                    <p class="text-gray-400 text-sm">Model: ${item.size || "-"}</p>
+                    <h4>${item.name}</h4>
+                    <small>${item.size || ""}</small>
                 </div>
             </div>
 
-            <div class="text-cyan-400 font-bold">$${item.price}</div>
+            <div class="price">$${item.price}</div>
 
-            <div class="flex items-center gap-2">
-
-                <button onclick="changeQty(${index}, -1)" class="btndw">-</button>
-
+            <div class="qty-box">
+                <button class="qty-btn minus" onclick="changeQty(${index}, -1)">-</button>
                 <span>${item.qty}</span>
-
-                <button onclick="changeQty(${index}, 1)" class="btnup">+</button>
-
+                <button class="qty-btn plus" onclick="changeQty(${index}, 1)">+</button>
             </div>
 
-            <button onclick="removeItem(${index})" class="remove">
+            <div class="remove" onclick="removeItem(${index})">
                 <i class="fa-solid fa-trash"></i>
-            </button>
+            </div>
 
         </div>
         `;
     });
 
-    cartContainer.innerHTML = html;
+    cartDiv.innerHTML = html;
 
-    totalItems.innerText = count;
-    totalPrice.innerText = "$" + total;
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    totalDiv.innerHTML = `
+    <div class="total-box glass">
+        <h2>Total: $${total}</h2>
+        <button class="checkout" onclick="checkout()">Checkout</button>
+    </div>
+    `;
 }
 
-// ================= FILTER =================
-function filterBySize(size) {
-    selectedSize = size;
-    loadCart();
-}
+/* ===== CHANGE QTY ===== */
+function changeQty(index, amount){
+    cart[index].qty += amount;
 
-// ================= CHANGE QTY =================
-function changeQty(index, value) {
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart[index].qty = (cart[index].qty || 1) + value;
-
-    if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
+    if(cart[index].qty <= 0){
+        cart.splice(index,1);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
     loadCart();
 }
 
-// ================= REMOVE =================
-function removeItem(index) {
-
-    if (!confirm("Remove this item?")) return;
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart.splice(index, 1);
-
+/* ===== REMOVE ===== */
+function removeItem(index){
+    cart.splice(index,1);
     localStorage.setItem("cart", JSON.stringify(cart));
     loadCart();
 }
 
-// ================= CLEAR =================
-function clearCart() {
-
-    if (!confirm("Clear all cart?")) return;
-
-    localStorage.removeItem("cart");
-    loadCart();
+/* ===== CHECKOUT ===== */
+function checkout(){
+    alert("Proceed to payment 💳");
+    window.location.href ="/Page/Payment/Payment.html";
 }
 
-// ================= CHECKOUT =================
-function checkout() {
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cart.length === 0) {
-        alert("Cart is empty!");
-        return;
-    }
-      
-
-    if (confirm("Proceed to checkout?")) {
-        window.location.href = "/Page/Payment/Payment.html";
-    }
-}
-
-// ================= BACK =================
-function goBack() {
+/* ===== GO HOME ===== */
+function goHome(){
     window.location.href = "/Page/Home/Home.html";
 }
 
-// INIT
 loadCart();
-let scanUrl = `http://10.88.90.217:5500/Page/Payment/scan.html?id=${paymentId}`;
 
-</script>
-
-
-    <!-- HEADER -->
-    <nav class="bgs flex justify-between items-center px-10 py-3">
-        <h1 class="text-2xl font-bold">🛒 PC SHOP</h1>
-
-        <a href="#" onclick="goBack()" class="acts">
-            ← Back to Shop
-        </a>
-    </nav>
-
-    <!-- CART -->
-    <section class="px-10 mt-10">
-            <h2 class="text-4xl font-bold mb-8 text-center bg-black justify-center ">Your Cart</h2>
-        <input type="range" name="" id="">
-
-        <div class="grid grid-cols-3 gap-8">
-
-            <!-- ITEMS -->
-            <div id="cart-items" class="col-span-2 space-y-5"></div>
-
-            <!-- SUMMARY -->
-            <div class="summary-box p-6 rounded-xl sticky top-10 h-fit">
-                <h3 class="text-2xl font-bold mb-4">Summary</h3>
-
-                <div class="flex justify-between mb-2">
-                    <span>Total Items</span>
-                    <span id="total-items">0</span>
-                </div>
-
-                <div class="flex justify-between mb-4 text-xl font-bold">
-                    <span>Total</span>
-                    <span id="total-price">$0</span>
-                </div>
-
-                <button onclick="checkout()" class="checkout-btn w-full py-2 rounded-lg font-bold mb-3 cursor-pointer">
-                    Checkout
-                </button>
-
-                <button onclick="clearCart()" class="w-full bg-gray-700 py-2 rounded hover:bg-gray-900 cursor-pointer">
-                    Clear Cart
-                </button>
-            </div>
-        </div>
-        </>
-    </section>
-    <script>
-
-        let selectedSize = "All";
-        function getSize(type){
-            if(type === "shirt" || type === "trousers"){
-                return ["XS", "S", "M", "L", "XL"];
-            }else if(type === "shoes"){
-                return ["20", "25", "33", "40"];
-            }else if(type === "sildebag"){
-                return ["Black","white","Gray","Red"]
-            }
-            return [];
-        }
-        function loadCart() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartContainer = document.getElementById("cart-items");
-            const totalItems = document.getElementById("total-items");
-            const totalPrice = document.getElementById("total-price");
-            if (cart.length === 0) {
-                cartContainer.innerHTML = `
-                <div class="empty">
-                    <h2 class="text-2xl font-bold text-red-500">🛒 Cart is Empty</h2>
-                    <p>Add some products first...</p>
-                </div>`;
-                totalItems.innerText = 0;
-                totalPrice.innerText = "$0";
-                return;
-            }
-            let total = 0;
-            let count = 0;
-            let html = `
-            <!-- FILTER -->
-            <div class="flex flex-wrap items-center gap-4 mb-6 bg-gray-800 p-4 rounded-xl shadow-lg fbx">
-                <div class=" font-semibold ff">
-                    <i class="fa-solid fa-filter"></i>Filter by Model 
-                </div>
-                <div id="active-size" 
-                    class="text-xs bg-blue-500 text-white px-3 py-1 ssbox uppercase text-center ${selectedSize === "All"}">
-                    <i class="fa-solid fa-bolt"></i>  ${selectedSize}
-                </div>
-                <div class="relative">
-                    <select onchange="filterBySize(this.value)" 
-                        class="bg-gray-900 text-white px-4 py-2 rounded-lg">
-                        <option >${selectedSize}</option>
-                        <option value="All">Show Alls</option>
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="20">20</option>
-                        <option value="25">25</option>
-                        <option value="33">33</option>
-                        <option value="40">40</option>
-                        <option value="Black">Black</option>
-                        <option value="White">White</option>
-                        <option value="Gray">Gray</option>
-                        <option value="Red">Red</option>
-
-                    </select>
-                </div>
-                <div>
-                    <p class="act">ACTIONS BUTTON</p>
-                </div>
-            </div>
-            `;
-            cart.forEach((item, index) => {
-            let itemSize = (item.size || "").toLowerCase();
-            let filterSize = selectedSize.toLowerCase();
-            if (filterSize !== "all" && itemSize !== filterSize) return;
-            let itemSizes = getSize(item.type);
-            let sizeOptions = itemSizes.map(size => `
-                <option ${item.size == size ? "selected" : ""}>${size}</option>
-            `).join("");
-            if (!item.qty) item.qty = 1;
-            total += item.price * item.qty;
-            count++;
-            html += `
-            <div class="cart-row carts">
-                <div class="flex items-center gap-4 w-1/3">
-                    <img src="${item.image}" class="cart-img">
-                    <div>
-                        <h4>${item.name}</h4>
-                        <p>Model: ${item.size}</p>
-                    </div>
-                </div>
-                <div>$${item.price}</div>
-                <div class="flex gap-6">
-                    <button onclick="changeQty(${index}, -1)" class="btndw"><i class="fa-solid fa-minus"></i></button>
-                    <p class="text-2xl">${item.qty}</p>
-                    <button onclick="changeQty(${index}, 1)" class="btnup"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                <div class="bg-gray-500 text-black rounded">
-                    <select onchange="changeSize(${index}, this.value)">
-                        ${sizeOptions}
-                    </select>
-                </div>
-                <button onclick="removeItem(${index})" class="remove"><i class="fa-solid fa-trash"></i></button>
-            </div>
-            `;
-             });
-            cartContainer.innerHTML = html;
-            totalItems.innerText = count;
-            totalPrice.innerText = "$" + total;
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
-        function filterBySize(size) {
-            selectedSize = size;
-            loadCart();
-        }
-
-        function changeSize(index, newSize) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart[index].size = newSize;
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
-        }
-        function changeQty(index, d) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            cart[index].qty += d;
-            if (cart[index].qty <= 0) {
-                cart.splice(index, 1);
-            }
-            localStorage.setItem("cart", JSON.stringify(cart));
-            loadCart();
-        }
-        function removeItem(index) {
-            let confirmRemove = confirm("Remove it now or not!");
-            if (confirmRemove) {
-                let cart = JSON.parse(localStorage.getItem("cart")) || [];
-                cart.splice(index, 1);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                loadCart();
-            } else {
-                alert("Ok continue");
-            }
-        }
-        function clearCart() {
-            if (!confirm("Clear all cart?")) return;
-            localStorage.removeItem("cart");
-            loadCart();
-        }
-        function checkout() {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            if (cart.length === 0) {
-                alert("No products to checkout!");
-                return;
-            }
-            if (confirm("Proceed to payment?")) {
-                window.location.href = "Payment.html";
-            }
-        }
-        function goBack() {
-            let page = localStorage.getItem("backPage");
-            if (page) {
-                window.location.href = page;
-            } else {
-                window.location.href = "Home.html";
-            }
-        }
-loadCart();
 </script>
 
 </body>

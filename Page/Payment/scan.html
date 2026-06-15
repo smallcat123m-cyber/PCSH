@@ -2,94 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Scan Payment</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:,">
+<title>Scan Payment</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: white;
+body{
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+    padding:20px;
 }
 
-.card {
-    background: #1e293b;
-    padding: 25px;
-    border-radius: 12px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+.box{
+    max-width:400px;
+    margin:auto;
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
 }
 
-h2 {
-    margin-bottom: 10px;
+button{
+    padding:10px 20px;
+    border:none;
+    background:cyan;
+    cursor:pointer;
+    margin-top:20px;
 }
 
-.id {
-    font-size: 14px;
-    color: #94a3b8;
-    margin-bottom: 20px;
-    word-break: break-all;
-}
-
-.status {
-    margin: 15px 0;
-    font-weight: bold;
-    color: #fbbf24;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.btn-success {
-    background: #22c55e;
-    color: white;
-}
-
-.btn-success:hover {
-    background: #16a34a;
-}
-
-.btn-disabled {
-    background: #64748b;
-    color: white;
-    cursor: not-allowed;
-}
-
-.done { color: #22c55e; }
-.error { color: #ef4444; }
+.done{ color:lime; }
+.error{ color:red; }
 </style>
 </head>
-
 <body>
 
-<div class="card">
-    <h2>QR Payment Scan</h2>
+<div class="box">
 
-    <div class="id" id="paymentId">Loading...</div>
+<h2>📱 Confirm Payment</h2>
 
-    <div class="status" id="status">Waiting for action...</div>
+<p id="paymentId"></p>
 
-    <button id="btn" class="btn-success" onclick="confirmPayment()">
-        Confirm Payment
-    </button>
+<h3 id="status">Waiting for confirmation...</h3>
+
+<button id="btn" onclick="confirmPayment()">Confirm Payment</button>
+
 </div>
-<a href="/Page/Payment/Payment.html"></a>
-
 
 <script>
+
+/* ================= GET PAYMENT ID ================= */
 const params = new URLSearchParams(window.location.search);
 const paymentId = params.get("id");
 
@@ -97,64 +58,88 @@ const paymentText = document.getElementById("paymentId");
 const statusText = document.getElementById("status");
 const btn = document.getElementById("btn");
 
-if (!paymentId) {
+let interval = null;
+let isPaid = false;
+
+/* ================= INIT ================= */
+if(!paymentId){
     paymentText.innerHTML = "<span class='error'>Invalid QR Code</span>";
     statusText.innerText = "No payment ID found";
     btn.disabled = true;
-    btn.className = "btn-disabled";
-} else {
+}else{
     paymentText.innerText = "Payment ID: " + paymentId;
+    startChecking();
 }
 
-// ===============================
-// FIXED: CONFIRM PAYMENT
-// ===============================
+/* ================= CONFIRM PAYMENT ================= */
 async function confirmPayment(){
 
-    const id = new URLSearchParams(location.search).get("id");
-    if(!id) return;
+    if(!paymentId || isPaid) return;
 
     if(!confirm("Confirm payment?")) return;
 
-    // 🔥 SEND TO SERVER
-    // ETEC FLOOR 3 IP ADDRESS 
-    await fetch(" http://10.88.90.217:3000/confirm-payment", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ paymentId: id })
-    });
+    try{
 
-    alert("Payment Successful!");
+        await fetch("http://192.168.1.13:3000/confirm-payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ paymentId })
+        });
 
-    window.close();
+        showSuccess();
+
+    }catch(err){
+        alert("Server error!");
+        console.error(err);
+    }
 }
 
-// ===============================
-// SHOW IF ALREADY PAID
-// ===============================
-function checkStatus() {
-    if (!paymentId) return;
+/* ================= CHECK STATUS ================= */
+async function checkStatus(){
 
-    let data = localStorage.getItem(paymentId);
+    if(!paymentId || isPaid) return;
 
-    if (!data) return;
+    try{
 
-    try {
-        let parsed = JSON.parse(data);
+        let res = await fetch(`http://192.168.1.13:3000/status/${paymentId}`);
+        let data = await res.json();
 
-        if (parsed.status === "success") {
-            statusText.innerHTML = "<span class='done'>Payment SUCCESS ✅</span>";
-            btn.disabled = true;
-            btn.className = "btn-disabled";
-            btn.innerText = "Already Paid";
+        console.log("STATUS:", data);
+
+        if(data.status === "success"){
+            showSuccess();
         }
-    } catch (e) {}
+
+    }catch(e){
+        console.error("Status error:", e);
+    }
 }
 
-setInterval(checkStatus, 1000);
-checkStatus();
+/* ================= START LOOP ================= */
+function startChecking(){
+    interval = setInterval(checkStatus, 1000);
+    checkStatus();
+}
+
+/* ================= SUCCESS ================= */
+function showSuccess(){
+
+    if(isPaid) return;
+    isPaid = true;
+
+    statusText.innerHTML = "<span class='done'>✅ Payment Success</span>";
+
+    btn.disabled = true;
+    btn.innerText = "Paid";
+
+    if(interval){
+        clearInterval(interval);
+    }
+}
+
 </script>
+
 </body>
 </html>

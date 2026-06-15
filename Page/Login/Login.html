@@ -1,69 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="../src/output.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | VEXO Couple</title>
+
+<link rel="stylesheet" href="/src/output.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+<style>
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease forwards;
+}
+</style>
+
 </head>
 
-<body class="h-screen flex items-center justify-center bg-black">
+<body class="h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-white">
 
-  <div class="bg-white p-8 rounded-2xl shadow-xl w-[350px]">
-    
-    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-      Login
-    </h2>
+<!-- LOGIN CARD -->
+<div class="w-[380px] bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl animate-fadeUp">
 
-    <form onsubmit="return sub()">
+  <!-- TITLE -->
+  <h2 class="text-3xl font-extrabold text-center text-pink-400 mb-2">
+    VEXO LOGIN ❤️
+  </h2>
 
-      <!-- Email -->
-      <div class="mb-4">
-        <label class="block text-sm text-gray-600">Email</label>
-        <input id="email" type="email" placeholder="Enter your email"
-          class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          required>
-      </div>
+  <p class="text-center text-gray-400 text-sm mb-6">
+    Welcome back to Couple Fashion
+  </p>
 
-      <!-- Password -->
-      <div class="mb-4">
-        <label class="block text-sm text-gray-600">Password</label>
-        <input id="password" type="password" placeholder="Enter your password"
-          class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          required>
-      </div>
+  <form onsubmit="return sub()" class="space-y-4">
 
-      <!-- Buttons -->
-      <div class="flex justify-between gap-3 mt-6">
-        <button type="submit"
-          class="w-full bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-600 transition">
-          Login
-        </button>
+    <!-- EMAIL -->
+    <div>
+      <label class="text-sm text-gray-400">Email</label>
+      <input id="email" type="email" placeholder="Enter your email"
+        class="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none focus:ring-2 focus:ring-pink-400">
+    </div>
 
-        <button type="reset"
-          class="w-full bg-gray-200 py-2 rounded-lg hover:bg-gray-300 transition">
-          Reset
-        </button>
-      </div>
+    <!-- PASSWORD -->
+    <div>
+      <label class="text-sm text-gray-400">Password</label>
+      <input id="password" type="password" placeholder="Enter your password"
+        class="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+    </div>
 
-    </form>
-  </div>
+    <!-- REMEMBER -->
+    <div class="flex items-center justify-between text-sm text-gray-400">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-pink-400">
+        Remember me
+      </label>
 
-  <script>
-    function sub(){
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
+      <a href="#" class="text-pink-400 hover:underline">Forgot?</a>
+    </div>
 
-      if(email !== "" && password !== ""){
-        alert("Login Successful ✅");
-        window.location.href = "Home.html";
-        return false;
-      }else{
-        alert("Please fill all fields!");
-        return false;
-      }
-    }
-  </script>
+    <!-- BUTTON -->
+    <button type="submit"
+      class="w-full py-3 rounded-lg bg-gradient-to-r from-pink-400 to-red-500 font-bold hover:scale-105 transition shadow-lg">
+      Login ❤️
+    </button>
+
+    <!-- RESET -->
+    <button type="reset"
+      class="w-full py-3 rounded-lg bg-white/10 border border-white/10 hover:bg-white/20 transition">
+      Reset
+    </button>
+
+  </form>
+
+  <!-- FOOT NOTE -->
+  <p class="text-center text-xs text-gray-500 mt-5">
+    © 2026 VEXO Couple Fashion
+  </p>
+
+</div>
+
+<script>
+function sub() {
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value.trim();
+
+  if (!email || !password) {
+    alert("❌ Please fill all fields");
+    return false;
+  }
+
+  if (!email.includes("@")) {
+    alert("❌ Invalid email");
+    return false;
+  }
+
+  alert("❤️ Login Successful!");
+  window.location.href = "Home.html";
+
+  return false;
+}
+</script>
 
 </body>
 </html>

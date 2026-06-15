@@ -2,406 +2,152 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC-SHOP</title>
-    <link rel="stylesheet" href="/src/output.css">
-    <style>
-        .bgs {
-            background: linear-gradient(to right, rgb(7, 60, 206));
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Couple Home | VEXO</title>
 
-        .log {
-            background-color: rgb(39, 145, 221);
-            transition: 0.8s;
-        }
+<link rel="stylesheet" href="/src/output.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-        .log:hover {
-            animation: loginchange 2s infinite alternate;
-        }
+<style>
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-        @keyframes loginchange {
-            0% {
-                background-color: red;
-            }
+.animate-fadeUp {
+    animation: fadeUp 0.6s ease forwards;
+}
 
-            50% {
-                background-color: blue;
-            }
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.3s;
+}
 
-            100% {
-                background-color: rgba(9, 95, 12, 0.71);
-            }
-        }
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+}
+</style>
 
-        .logo {
-            border: 2px solid rgb(2, 16, 26);
-            border-radius: 50%;
-            /* animation: logochange 3s infinite alternate ease-in-out; */
-        }
-
-        @keyframes logochange {
-            0% {
-                border-color: yellow;
-            }
-
-            50% {
-                border-color: rgb(20, 214, 133);
-            }
-
-            100% {
-                border-color: blue;
-            }
-        }
-
-        .slide {
-            border-radius: 5px;
-            padding: 2px;
-            height: 320px;
-            border: 2px solid rgb(212, 155, 225);
-            /* animation: slideMove 5s infinite alternate ease-in-out; */
-        }
-
-        @keyframes slideMove {
-            0% {
-                transform: translateX(0);
-            }
-
-            100% {
-                transform: translateX(-85px);
-            }
-        }
-
-        .box {
-            border: 3px solid yellow;
-            animation: logochange 3s infinite alternate ease-in-out;
-        }
-
-        .shop {
-            border: 3px solid yellow;
-            animation: logochange 3s infinite alternate ease-in-out;
-        }
-
-        .cart {
-            transition: all 0.3s ease;
-        }
-
-        .cart:hover {
-            box-shadow: 0 10px 10px 10px rgba(29, 139, 235, 0.5);
-        }
-
-        .not-found {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 30vh;
-        }
-
-        .not-box {
-            text-align: center;
-            padding: 30px;
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Title Animation */
-        .not-title {
-            font-size: 40px;
-            font-weight: bold;
-            color: #ff4d4d;
-            animation: fadeBounce 2s infinite;
-        }
-
-        /* Text */
-        .not-text {
-            font-size: 18px;
-            color: #aaa;
-            margin-top: 10px;
-            animation: fadeIn 3s infinite alternate;
-        }
-
-        /* 🔥 Animation */
-        @keyframes fadeBounce {
-            0% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-
-            50% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0.5;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        .home {
-            position: relative;
-        }
-
-        .home::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 3px;
-            background: rgb(184, 232, 12);
-        }
-
-        .btn {
-            display: flex;
-            gap: 30px;
-            width: 400px;
-            height: 60px;
-            justify-content: space-between;
-        }
-
-        .btn button {
-            border-radius: 10px;
-            border: 2px solid rgb(73, 79, 27);
-        }
-
-        .size-btn.active {
-            border: 2px solid yellow;
-            transform: scale(1.05);
-        }
-        .banners{
-            height: 300px;
-            width: 900px;
-            object-fit: cover;
-        }
-    </style>
 </head>
 
-<body class="bg-black">
+<body class="bg-gradient-to-b from-black via-gray-900 to-black text-white">
 
-    <!-- HEADER -->
+<!-- NAV -->
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
 
-    <nav class="bgs shadow-md flex justify-between items-center px-10 py-3 sticky z-50 top-0">
+    <h1 class="text-3xl font-extrabold tracking-[6px] text-pink-400 drop-shadow-[0_0_15px_pink]">
+        VEXO ❤️
+    </h1>
 
-        <!-- LOGO -->
-        <div class="flex items-center gap-3">
-            <img class="w-12 h-12 logo" src="https://i.pinimg.com/1200x/07/c5/4e/07c54ef40a1e655c94b4403c29582861.jpg"
-                alt="">
-            <h1 class="text-2xl font-bold">
-                <span class="text-blue-600">PC</span><span class="text-red-500">SH</span><span
-                    class="text-yellow-500">OP</span>
-            </h1>
-        </div>
+    <input id="search" type="search" onkeyup="searchProduct()"
+        placeholder="Search couple outfits..."
+        class="hidden md:block w-[300px] px-4 py-2 rounded-full bg-white/10 border border-white/10
+        text-white focus:outline-none focus:ring-2 focus:ring-pink-400">
 
-        <!-- SEARCH -->
-        <div class="text-white">
-            <input id="search"
-                class="border px-4 py-2 rounded-lg w-100 focus:outline-none focus:ring-2 focus:ring-blue-400 "
-                type="search" onkeyup="searchProduct()" placeholder="Search PC, Mouse, Keyboard...">
-        </div>
+    <ul class="flex gap-6 text-sm uppercase font-medium">
+        <li class="text-pink-400 border-b-2 border-pink-400"><a href="Home.html">Home</a></li>
+        <li><a href="/Page/Men/Men.html">Men</a></li>
+        <li><a href="/Page/Women/whomen.html">Women</a></li>
+        <li><a href="/Page/Couple/Couple.html">Couple</a></li>
+        <li><a href="/Page/Carts/Addcart.html">Cart</a></li>
+        <li>
+            <a href="/Page/Login/Login.html"    
+                class="px-4 py-2 rounded-full bg-cyan-500 hover:bg-cyan-600 transition font-semibold">
+                Login
+            </a>
+        </li>
+    </ul>
 
-        <!-- MENU -->
-        <ul class="flex gap-6 font-mono text-xl uppercase items-center  text-white">
-            <li class="hover:text-yellow-500 cursor-pointer home"><a href="Home.html">Home</a></li>
+</nav>
 
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="/Page/Men/Men.html">men</a></li>
+<!-- HERO -->
+<section class="px-6 md:px-10 mt-10">
 
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Men.html">men</a></li>
+<div class="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md
+flex flex-col md:flex-row items-center gap-10 p-10 shadow-2xl">
 
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Whomen.html">whomen</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer "><a href="Computer.html">couple</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Addcart.html">Cart</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Contact.html">Contact</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="About.html">About</a></li>
-            <li class=" text-white px-4 py-1 rounded cursor-pointer log"><a href="Login.html">Login</a></li>
-        </ul>
+    <div class="animate-fadeUp">
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+            Match Your <span class="text-pink-400">Couple Style</span>
+        </h1>
 
-    </nav>
+        <p class="mt-4 text-gray-300 text-lg">
+            Discover trendy couple outfits for romantic, casual, and modern fashion styles.
+        </p>
 
-
-
-
-
-    
-
-=
-    <!-- HERO / SLIDE -->
-   <section class="mt-6 px-4 md:px-10">
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-lg">
-
-        <div class="flex flex-col md:flex-row items-center justify-between gap-10 p-8 md:p-14">
-
-            <!-- LEFT TEXT -->
-            <div class="max-w-xl">
-                <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-                    High Performance Computers
-                </h1>
-
-                <p class="mt-4 text-lg md:text-xl text-blue-100">
-                    Built for gaming, design, and professional work. Power, speed, and reliability in one machine.
-                </p>
-
-                <button
-                    class="mt-6 px-6 py-3 rounded-xl bg-pink-500 hover:bg-pink-600 transition font-semibold shadow-md">
-                    Shop Now
-                </button>
-            </div>
-
-            <!-- RIGHT MARQUEE IMAGE -->
-            <div class="w-full md:w-1/2  overflow-hidden">
-                <div class="relative">
-
-                    <marquee behavior="scroll" direction="left" scrollamount="10" class="rounded-xl">
-                        <img
-                            id="slider"
-                            src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg"
-                            class="rounded-xl shadow-2xl mx-10 banners"
-                            alt="Gaming PC"
-                        />
-                    </marquee>
-
-                    <!-- soft glow background -->
-                    <div class="absolute -inset-3 bg-white/10 blur-2xl rounded-full h-50"></div>
-
-                </div>
-            </div>
-
-        </div>
+        <button
+            class="mt-6 px-7 py-3 rounded-full bg-gradient-to-r from-pink-400 to-red-500
+            hover:scale-105 transition font-bold shadow-lg">
+            Shop Now ❤️
+        </button>
     </div>
+
+    <img id="slider"
+        src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg"
+        class="rounded-2xl w-full md:w-1/2 h-[320px] object-cover shadow-2xl">
+
+</div>
+
 </section>
 
+<!-- PRODUCTS -->
+<section class="px-6 md:px-10 mt-16">
 
-    <!-- FEATURE PRODUCTS -->
-    <section class="px-10 mt-10">
-        <h2 class="text-2xl font-bold mb-5 text-white text-center">Popular Products</h2>
-        <div id="home-list" class="grid grid-cols-4 gap-6"></div>
-    </section>
-    <!-- FOOTER -->
-    <footer
-        class="bg-gray-900 text-white mt-16 px-10 py-12 border-t-4 border-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
+<h2 class="text-center text-3xl font-bold text-pink-400 tracking-[5px] mb-10">
+    POPULAR  PRODUCTS
+</h2>
 
-        <div class="grid md:grid-cols-4 gap-10">
+<div id="home-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
 
-            <!-- LOGO / ABOUT -->
-            <div>
-                <h3
-                    class="text-2xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-                    PCSHOP
-                </h3>
-                <p class="text-gray-400 leading-relaxed">
-                    High-performance computers, gaming gear, and accessories for professionals and gamers.
-                </p>
 
-                <!-- SOCIAL -->
-                <div class="flex gap-4 mt-5">
-                    <span
-                        class="w-9 h-9 flex items-center justify-center bg-gray-800 rounded-full hover:bg-cyan-500 transition cursor-pointer">F</span>
-                    <span
-                        class="w-9 h-9 flex items-center justify-center bg-gray-800 rounded-full hover:bg-pink-500 transition cursor-pointer">I</span>
-                    <span
-                        class="w-9 h-9 flex items-center justify-center bg-gray-800 rounded-full hover:bg-blue-500 transition cursor-pointer">T</span>
-                    <span
-                        class="w-9 h-9 flex items-center justify-center bg-gray-800 rounded-full hover:bg-red-500 transition cursor-pointer">Y</span>
-                </div>
-            </div>
+</section>
 
-            <!-- QUICK LINKS -->
-            <div>
-                <h3 class="text-xl font-bold mb-4">Quick Links</h3>
-                <ul class="space-y-3 text-gray-400">
-                    <li class="hover:text-cyan-400 hover:translate-x-1 transition cursor-pointer"><a
-                            href="Home.html">Home</a></li>
-                    <li class="hover:text-cyan-400 hover:translate-x-1 transition cursor-pointer"><a
-                            href="About.html">About</a></li>
-                    <li class="hover:text-cyan-400 hover:translate-x-1 transition cursor-pointer"><a
-                            href="Contact.html">Contact</a></li>
-                    <li class="hover:text-cyan-400 hover:translate-x-1 transition cursor-pointer"><a
-                            href="Keyborad.html">Keyboard</a></li>
-                </ul>
-            </div>
+<!-- FOOTER -->
+<footer class="mt-20 border-t border-white/10 px-10 py-12 text-center text-gray-400">
 
-            <!-- SUPPORT -->
-            <div>
-                <h3 class="text-xl font-bold mb-4">Support</h3>
-                <ul class="space-y-3 text-gray-400">
-                    <li class="hover:text-purple-400 cursor-pointer">Help Center</li>
-                    <li class="hover:text-purple-400 cursor-pointer">Privacy Policy</li>
-                    <li class="hover:text-purple-400 cursor-pointer">Terms of Service</li>
-                    <li class="hover:text-purple-400 cursor-pointer">Shipping Info</li>
-                </ul>
-            </div>
+<h2 class="text-white text-2xl font-bold">VEXO ❤️</h2>
+<p class="mt-2">Couple Fashion Store</p>
+<p class="mt-6 text-sm">© 2026 VEXO. All rights reserved.</p>
 
-            <!-- NEWSLETTER -->
-            <div>
-                <h3 class="text-xl font-bold mb-4">Newsletter</h3>
-                <p class="text-gray-400 mb-3">Subscribe for latest PC deals 🔥</p>
+</footer>
 
-                <div class="flex">
-                    <input type="email" placeholder="Your email"
-                        class="w-full px-4 py-2 rounded-l-lg bg-gray-800 text-white outline-none">
-                    <button
-                        class="bg-gradient-to-r from-cyan-400 to-purple-500 px-4 rounded-r-lg font-bold hover:scale-105 transition">
-                        Join
-                    </button>
-                </div>
-            </div>
 
-        </div>
 
-        <!-- BOTTOM -->
-        <div
-            class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+<script src="/Page/Men/Men_data.js"></script>
+<script src="/Page/Women/Whomen_data.js"></script>
+<script src="/Page/Couple/Couple_data.js"></script>
 
-            <p>© 2026 PCSHOP. All rights reserved.</p>
+<!-- ADD YOUR HOME JS -->
+<script src="Home_data.js"></script>
 
-            <div class="flex gap-6 mt-3 md:mt-0">
-                <span class="hover:text-cyan-400 cursor-pointer">Terms</span>
-                <span class="hover:text-cyan-400 cursor-pointer">Privacy</span>
-                <span class="hover:text-cyan-400 cursor-pointer">Contact</span>
-            </div>
+<!-- SLIDER -->
+<script>
+const images = [
+    "/Banner/Couple/couple1.jpg",
+    "/Banner/Couple/couple2.jpg",
+    "/Banner/Couple/couple3.jpg",
+    "/Banner/Couple/couple4.jpg"
+];
 
-        </div>
+let index = 0;
+const slider = document.getElementById("slider");
 
-    </footer>
-    <a href="/Banner/Men_Banner/men1.png"></a>
-    <script src="../File_Data/Home_data.js"></script>
-    <!-- Image in slide  -->
-    <script>
-        const images = [
-            "/Banner/Men_Banner/men1.png",
-            "https://i.pinimg.com/736x/4a/e5/d3/4ae5d3074757a801a194a46b84f095cb.jpg",
-            "https://i.pinimg.com/736x/d6/20/cf/d620cf73dfc1456a52a9d55578e3da4c.jpg",
-            "https://i.pinimg.com/1200x/a8/22/a1/a822a15065a73db607b4380439fad3b5.jpg"
+setInterval(() => {
+    index = (index + 1) % images.length;
+    slider.style.opacity = "0.5";
 
-            
+    setTimeout(() => {
+        slider.src = images[index];
+        slider.style.opacity = "1";
+    }, 200);
 
-        ];
+}, 4000);
+</script>
 
-        let index = 0;
-        const slider = document.getElementById("slider");
-
-        setInterval(() => {
-            index++;
-            if (index >= images.length) {
-                index = 0;
-            }
-            slider.src = images[index];
-        }, 15710);
-
-        localStorage.setItem("backPage", "Home.html");
-    </script>
 </body>
-<!-- hhhhhhhhhhhhhhhhhh -->
 </html>
