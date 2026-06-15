@@ -176,6 +176,7 @@ function changeQty(value){
         "$" + (product.price * quantity);
 }
 
+   
 function addToCartFromView(){
 
     if(!selectedSize){

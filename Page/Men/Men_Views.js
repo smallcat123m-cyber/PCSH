@@ -179,6 +179,10 @@ function addToCartFromView() {
         return;
     }
 
+
+
+    
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     cart.push({

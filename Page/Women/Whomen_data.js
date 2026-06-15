@@ -80,6 +80,9 @@ function displayProducts(list) {
 }
 
 
+   
+
+
 // ================= LIKE =================
 function addLike(id) {
   const item = Whomens.find(p => p.id === id);

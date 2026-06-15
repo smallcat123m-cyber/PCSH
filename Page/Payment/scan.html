@@ -87,88 +87,8 @@ button {
     </button>
 </div>
 <a href="/Page/Payment/Payment.html"></a>
-<!-- <a href="stauts.json"></a> -->
-<!-- <script>
 
-// ===============================
-// GET PAYMENT ID FROM QR
-// ===============================
-const params = new URLSearchParams(window.location.search);
-const paymentId = params.get("id");
 
-const paymentText = document.getElementById("paymentId");
-const statusText = document.getElementById("status");
-const btn = document.getElementById("btn");
-
-// ===============================
-// VALIDATE QR
-// ===============================
-if (!paymentId) {
-    paymentText.innerHTML = "<span class='error'>Invalid QR Code</span>";
-    statusText.innerText = "No payment ID found";
-    btn.disabled = true;
-    btn.className = "btn-disabled";
-} else {
-    paymentText.innerText = "Payment ID: " + paymentId;
-}
-
-// ===============================
-// CHECK PAYMENT STATUS (SYNC)
-// ===============================
-function checkStatus() {
-    if (!paymentId) return;
-
-    let data = localStorage.getItem(paymentId);
-
-    if (!data) return;
-
-    try {
-        let parsed = JSON.parse(data);
-
-        if (parsed.status === "success") {
-            showSuccess();
-        }
-    } catch (e) {
-        // fallback for old format
-        if (data === "success") {
-            showSuccess();
-        }
-    }
-}
-
-// ===============================
-// CONFIRM PAYMENT
-// ===============================
-function confirmPayment(){
-
-    let id = new URLSearchParams(location.search).get("id");
-
-    if(!id) return;
-
-    window.opener.paymentDB[id].status = "success";
-
-    alert("Payment success!");
-
-    window.close();
-}
-
-// ===============================
-// SUCCESS UI
-// ===============================
-function showSuccess() {
-    statusText.innerHTML = "<span class='done'>Payment SUCCESS ✅</span>";
-    btn.disabled = true;
-    btn.className = "btn-disabled";
-    btn.innerText = "Already Paid";
-}
-
-// ===============================
-// LIVE CHECK LOOP
-// ===============================
-setInterval(checkStatus, 1000);
-checkStatus();
-
-</script> -->
 <script>
 const params = new URLSearchParams(window.location.search);
 const paymentId = params.get("id");

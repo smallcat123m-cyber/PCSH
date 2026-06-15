@@ -145,7 +145,7 @@ if(product){
         </div>
     </div>
 </div>
-`;
+`;     
 }else{
     box.innerHTML = "<p>No product found</p>";
     setTimeout(() => {

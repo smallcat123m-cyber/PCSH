@@ -276,6 +276,7 @@ function displayProducts(list) {
         `;
         return;
     }
+       
 
     list.forEach(item => {
         const likeCount = likes[item.id] || 0;
