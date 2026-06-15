@@ -1,823 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment</title>
+<title>Premium Payment</title>
 
 <link rel="stylesheet" href="/src/output.css">
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-<!-- CONFETTI -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- SOCKET -->
 <script src="http://192.168.1.13:3000/socket.io/socket.io.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+<!-- QR -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-body{
-    background: radial-gradient(circle at top, #0f172a, #000);
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
 }
 
-/* CARD */
-.card{
-    width: 900px;
-    max-width: 95%;
-    margin: auto;
-    padding: 28px;
-    border-radius: 24px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.12);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+.glass {
+  background: rgba(24,24,27,0.6);
+  backdrop-filter: blur(20px);
 }
 
-/* BUTTON */
-.btn{
-    transition: 0.2s;
-}
-.btn:hover{
-    transform: translateY(-2px);
-}
-.btn:active{
-    transform: scale(0.95);
+.fade-in { animation: fadeIn 0.6s ease; }
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(20px);}
+  to {opacity:1; transform: translateY(0);}
 }
 
-/* BANK */
-.bank-card input{ display:none; }
+.glow { box-shadow: 0 0 25px rgba(99,102,241,0.5); }
 
-.bank-content{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:14px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.04);
-    transition:0.3s;
-    cursor:pointer;
+.pulse {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.6); }
+  70% { box-shadow: 0 0 0 20px rgba(99,102,241,0); }
+  100% { box-shadow: 0 0 0 0 rgba(99,102,241,0); }
 }
 
-.bank-content:hover{
-    transform: translateY(-4px);
-    border-color:#22d3ee;
+.dots::after {
+  content: '';
+  animation: dots 1.5s infinite;
 }
 
-.bank-card input:checked + .bank-content{
-    background: linear-gradient(135deg,#06b6d4,#3b82f6);
-    transform: scale(1.03);
+@keyframes dots {
+  0% {content:'';}
+  33% {content:'.';}
+  66% {content:'..';}
+  100% {content:'...';}
 }
 
-.bank-img{
-    width:48px;
-    height:48px;
-    border-radius:10px;
+.locked {
+  filter: blur(6px);
+  opacity: 0.5;
 }
 
-/* LOADING */
-.loading{
-    position:fixed;
-    inset:0;
-    background: rgba(0,0,0,0.7);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-    backdrop-filter: blur(10px);
+#qrcode {
+  width: 180px;
+  height: 180px;
+  min-width: 180px;
+  min-height: 180px;
+  display: block;
+}
+</style>
+
+</head>
+
+<body class="flex items-center justify-center min-h-screen">
+
+<div class="glass p-6 rounded-2xl w-[900px]  flex gap-6 shadow-2xl fade-in">
+
+  <!-- LEFT -->
+  <div class="flex-1">
+    <h2 class="text-2xl font-bold mb-4">🛒 Checkout</h2>
+
+    <div id="orderList" class="bg-zinc-800/60 p-4 rounded-xl mb-4 space-y-2"></div>
+    <!-- <div id="images" class="bg-zinc-800/60 p-4 rounded-xl mb-4 space-y-2"></div> -->
+
+    <h3 class="text-lg mb-4">
+      Total: $<span id="totalPrice">0</span>
+    </h3>
+
+    <div class="w-full bg-zinc-700 h-2 rounded-full mb-2 overflow-hidden">
+      <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-300" style="width:0%"></div>
+    </div>
+
+    <p id="progressText" class="text-gray-400 mb-4 dots">Initializing</p>
+
+    <button onclick="payments()" id="payBtn"
+      class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg">
+      Pay Now
+    </button>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="w-[320px] flex flex-col items-center justify-center bg-zinc-800/60 rounded-xl p-4 relative">
+
+    <h3 class="mb-3">📱 QR Payment</h3>
+
+    <div id="timer" class="text-sm text-gray-400 mb-2">Expires in: 02:00</div>
+
+    <div id="qrWrapper" class="locked">
+      <div class="bg-white p-4 rounded-xl glow pulse">
+        <div id="qrcode"></div>
+      </div>
+    </div>
+   
+
+    <p id="scanText" class="text-gray-400 text-sm mt-3">
+      Waiting for payment...
+    </p>
+
+    <div id="successBox" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-xl">
+      <h2 class="text-green-400 text-2xl font-bold mb-2">✔ Paid</h2>
+      <p class="text-gray-400">Redirecting...</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/* CART */
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* LOAD */
+function loadOrder(){
+  let total = 0;
+  let list = document.getElementById("orderList");
+//   let images = document.getElementById("images");
+
+  list.innerHTML = "";
+
+  cart.forEach(item=>{
+    let t = item.price * item.qty;
+    total += t;
+
+    list.innerHTML += `
+      <div class="flex justify-start gap-4 items-center border-b border-zinc-700 pb-1">
+         <img class="w-30 h-30 object-cover rounded" src="${item.image}" alt="">
+        <span>Name : ${item.name}<br>
+            Qty :  ${item.qty} <br>
+            Price  : $${t} <br>
+            Date : ${new Date().toLocaleDateString()}</span><br>
+      </div>`;
+  });
+
+  document.getElementById("totalPrice").innerText = total;
 }
 
-.spinner{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    border:6px solid rgba(255,255,255,0.1);
-    border-top:6px solid #22d3ee;
-    animation:spin 1s linear infinite;
+/* PAYMENT */
+function payments(){
+  if(cart.length === 0){
+    alert("Cart is empty");
+    return;
+  }
+
+  document.getElementById("payBtn").disabled = true;
+  startProgress();
 }
 
-@keyframes spin{
-    100%{transform:rotate(360deg)}
+/* PROGRESS */
+let progress = 0;
+
+function startProgress(){
+  document.getElementById("progressText").innerText = "Processing";
+
+  let interval = setInterval(()=>{
+    progress += 4;
+    document.getElementById("progressBar").style.width = progress + "%";
+
+    if(progress >= 100){
+      clearInterval(interval);
+      unlockQR();
+    }
+  },150);
 }
 
-/* PROGRESS BAR */
-.progress{
-    position:absolute;
-    bottom:0;
-    left:0;
-    height:4px;
-    background:#22d3ee;
-    width:0%;
-    transition: width 2s linear;
+/* UNLOCK + GENERATE QR */
+async function unlockQR(){
+  const qr = document.getElementById("qrWrapper");
+
+  qr.classList.remove("locked");
+  document.getElementById("scanText").innerText = "📲 Scan now";
+
+  await showQRCode();
+}
+
+/* QR */
+async function showQRCode(){
+
+  const qrWrapper = document.getElementById("qrWrapper");
+  const qrDiv = document.getElementById("qrcode");
+
+  // 🔥 FORCE VISIBILITY FIRST
+  qrWrapper.style.opacity = "1";
+  qrWrapper.style.transform = "scale(1)";
+  qrWrapper.classList.remove("locked");
+
+  // wait DOM paint
+  await new Promise(r => requestAnimationFrame(r));
+
+  // clear old QR
+  qrDiv.innerHTML = "";
+
+  const res = await fetch("http://192.168.1.13:3000/create-payment", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      amount: document.getElementById("totalPrice").innerText
+    })
+  });
+
+  const data = await res.json();
+
+  console.log("PAYMENT RESPONSE:", data);
+
+  const paymentId = data.paymentId;
+
+  const scanUrl = `http://192.168.1.13:5500/Page/Payment/scan.html?id=${paymentId}`;
+
+  console.log("QR URL:", scanUrl);
+
+  // 🔥 IMPORTANT: create QR AFTER DOM is fully visible
+  setTimeout(() => {
+    new QRCode(qrDiv, {
+      text: scanUrl,
+      width: 180,
+      height: 180,
+      colorDark: "#000",
+      colorLight: "#ffffff"
+    });
+  }, 50);
+
+  startWatcher(paymentId);
+  startTimer();
+}
+/* TIMER */
+function startTimer(){
+  let time = 120;
+
+  let t = setInterval(()=>{
+    time--;
+
+    let m = Math.floor(time/60);
+    let s = time%60;
+
+    document.getElementById("timer").innerText =
+      `Expires in: ${m}:${s<10?'0'+s:s}`;
+
+    if(time <= 0){
+      clearInterval(t);
+      location.reload();
+    }
+  },1000);
+}
+
+/* SOCKET */
+function startWatcher(paymentId){
+  const socket = io("http://192.168.1.13:3000");
+
+  socket.on("payment-success", (data)=>{
+    if(data.paymentId === paymentId){
+      success();
+    }
+  });
 }
 
 /* SUCCESS */
-.success-box{
-    animation: pop 0.4s ease;
-}
-@keyframes pop{
-    from{transform:scale(0.7); opacity:0;}
-    to{transform:scale(1); opacity:1;}
-}
-#progressCircle {
-    transition: stroke-dashoffset 0.3s linear;
-}
-.qrcode{
-    border: 1px solid yellow;
-    border-radius: 4px;
-    padding: 4px;
-}
-</style>
-</head>
+function success(){
+  document.getElementById("successBox").classList.remove("hidden");
 
-<body class="text-white flex items-center justify-center min-h-screen">
+  localStorage.removeItem("cart");
 
-<div class="card relative">
-
-    <div id="progressBar" class="progress"></div>
-
-    <h2 class="text-3xl font-bold text-center mb-6">💳 Secure Checkout</h2>
-
-    <!-- BANKS -->
-    <div class="grid grid-cols-2 gap-4 mb-6">
-
-        <label class="bank-card">
-            <input type="radio" name="bank" value="ABA">
-            <div class="bank-content">
-                <img class="bank-img" src="https://i.pinimg.com/1200x/e2/33/f5/e233f5b0c5a358449398f202b03f063a.jpg">
-                <span>ABA Bank</span>
-            </div>
-        </label>
-
-        <label class="bank-card">
-            <input type="radio" name="bank" value="ACLEDA">
-            <div class="bank-content">
-                <img class="bank-img" src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg">
-                <span>ACLEDA</span>
-            </div>
-        </label>
-
-        <label class="bank-card">
-            <input type="radio" name="bank" value="WING">
-            <div class="bank-content">
-                <img class="bank-img" src="https://i.pinimg.com/1200x/8c/60/0e/8c600eac1bf06ecd663db232c4611a39.jpg">
-                <span>Wing</span>
-            </div>
-        </label>
-
-        <label class="bank-card">
-            <input type="radio" name="bank" value="VISA">
-            <div class="bank-content">
-                <img class="bank-img" src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg">
-                <span>Visa</span>
-            </div>
-        </label>
-
-    </div>
-
-    <!-- ORDER -->
-    <div class="mb-6">
-        <h3 class="text-lg font-semibold mb-3">🛒 Order Summary</h3>
-        <div id="orderList"></div>
-
-        <div class="flex justify-between mt-4 text-xl font-bold">
-            <span>Total</span>
-            <span class="text-cyan-400">$<span id="totalPrice">0</span></span>
-        </div>
-    </div>
-
-    <input id="amount" type="number"
-        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 mb-4">
-
-    <div class="flex gap-4">
-
-        <button id="payBtn" onclick="payments()"
-            class="w-1/2 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 font-bold btn">
-            Pay Now
-        </button>
-
-        <button onclick="Back()"
-            class="w-1/2 py-3 rounded-xl bg-white/10 hover:bg-red-500 transition">
-            Back
-        </button>
-
-
-    </div>
-    <!-- QR Section -->
-<div id="qrSection" class="hidden text-center mt-5 justify-center">
-
-    <h2 class="text-xl font-bold mb-3">Scan to Pay</h2>
-
-    <!-- CIRCLE WRAPPER -->
-    <div class="relative w-[220px] h-[220px] mx-auto flex items-center justify-center">
-
-        <!-- PROGRESS RING -->
-        <svg class="absolute w-full h-full" viewBox="0 0 100 100">
-
-            <circle cx="50" cy="50" r="45"
-                stroke="rgba(255,255,255,0.1)"
-                stroke-width="6"
-                fill="none" />
-
-            <circle id="progressCircle"
-                cx="50" cy="50" r="45"
-                stroke="#22d3ee"
-                stroke-width="6"
-                fill="none"
-                stroke-linecap="round"
-                stroke-dasharray="283"
-                stroke-dashoffset="283"
-                transform="rotate(-90 50 50)" />
-        </svg>
-
-        <!-- QR CODE -->
-        <div id="qrcode" class="z-10 qrcode"></div>
-    </div>
-
-    <p class="mt-3 text-gray-400">Waiting for payment...</p>
-</div>
-
-
-</div>
-
-<div id="loading" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
-  <div class="spinner"></div>
-</div>
-
-<!-- SUCCESS -->
-<div id="success" class="hidden fixed inset-0 flex items-center justify-center bg-black/70 z-[1000]">
-    <div class="success-box text-center">
-        <i class="fa-solid fa-circle-check text-green-400 text-6xl mb-3"></i>
-        <h2 class="text-2xl font-bold">Payment Successful</h2>
-        <p id="countdown" class="text-gray-400 mt-2">Redirecting...</p>
-    </div>
-</div>
-
-
-
-<!-- <a href="scan.html"></a> -->
-
-<!-- <button id="payBtn" onclick="payments()">Pay Now</button> -->
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
-
-<script>
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// 🔥 REAL-TIME CHANNEL
-const channel = new BroadcastChannel("payment_channel");
-
-/* ================= LOAD ORDER ================= */
-function loadOrder(){
-    let total = 0;
-    let list = document.getElementById("orderList");
-    list.innerHTML = "";
-
-    cart.forEach(item=>{
-        let t = item.price * item.qty;
-        total += t;
-
-        list.innerHTML += `
-        <div class="flex justify-between py-2 border-b border-white/10">
-            <span>${item.name} x${item.qty}</span>
-            <span class="text-cyan-400">$${t}</span>
-        </div>`;
-    });
-
-    document.getElementById("totalPrice").innerText = total;
-    document.getElementById("amount").value = total;
+  setTimeout(()=>{
+    window.location.href = "/Page/Home/Home.html";
+  },2500);
 }
 
-/* ================= CONFETTI ================= */
-function fireConfetti(){
-    confetti({ particleCount:150, spread:120, origin:{y:0.6} });
-}
-
-/* ================= BACK ================= */
-function Back(){
-    if(confirm("Back to cart?")){
-        window.location.href = "/Page/Carts/Addcart.html";
-    }
-}
-
-/* ================= PAYMENT START ================= */
-function payments(){
-
-    let bank = document.querySelector('input[name="bank"]:checked');
-    let amount = document.getElementById("amount").value;
-
-    if(!bank) return alert("Select bank");
-    if(cart.length === 0) return alert("Cart empty");
-
-    if(!confirm(`Pay $${amount} via ${bank.value}?`)) return;
-
-    document.getElementById("payBtn").disabled = true;
-    document.getElementById("payBtn").innerText = "Processing...";
-
-    document.getElementById("loading").classList.remove("hidden");
-
-    let width = 0;
-    let progress = document.getElementById("progressBar");
-
-    let interval = setInterval(()=>{
-
-        width += 10;
-        progress.style.width = width + "%";
-
-        if(width >= 100){
-            clearInterval(interval);
-            document.getElementById("loading").classList.add("hidden");
-            showQRCode(amount);
-        }
-
-    }, 200);
-}
-
-/* ================= QR ================= */
-async function showQRCode(amount){
-
-    let qrDiv = document.getElementById("qrcode");
-    qrDiv.innerHTML = "";
-
-    // 🔥 CREATE PAYMENT FROM SERVER
-    let res = await fetch("http://localhost:3000/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount })
-    });
-
-    let data = await res.json();
-    let paymentId = data.paymentId;
-
-    let host = window.location.hostname;
-    if(host === "localhost" || host === "127.0.0.1"){
-        // host = "192.168.1.13";
-        host = "192.168.0.155";
-    }
-
-    let scanUrl = `http://${host}:5500/Page/Payment/scan.html?id=${paymentId}`;
-
-    new QRCode(qrDiv, {
-        text: scanUrl,
-        width: 200,
-        height: 200
-    });
-
-    document.getElementById("qrSection").classList.remove("hidden");
-
-    startWatcher(paymentId);
-}
-
-/* ================= WATCHER (PC SIDE) ================= */
-function startWatcher(paymentId){
-
-    const socket = io("http://localhost:3000");
-
-    socket.on("payment-success", (data) => {
-        if(data.paymentId === paymentId){
-            handleSuccess(paymentId);
-        }
-    });
-
-}
-
-/* ================= SUCCESS ================= */
-function handleSuccess(paymentId){
-
-    if(window.done) return;
-    window.done = true;
-
-    document.getElementById("qrSection").classList.add("hidden");
-    document.getElementById("success").classList.remove("hidden");
-
-    fireConfetti();
-
-    // 🔥 CLEAR CART (MAIN REQUIREMENT)
-    localStorage.removeItem("cart");
-
-    // 🔥 REMOVE ALL PAYMENT KEYS
-    Object.keys(localStorage).forEach(key => {
-        if(key.startsWith("PAY_")){
-            localStorage.removeItem(key);
-        }
-    });
-
-    redirectAfterSuccess();
-}
-
-/* ================= REDIRECT ================= */
-function redirectAfterSuccess(seconds = 3){
-
-    let time = seconds;
-    const cd = document.getElementById("countdown");
-
-    const timer = setInterval(() => {
-
-        if (cd) {
-            cd.innerText = `Redirecting in ${time}s...`;
-        }
-
-        time--;
-
-        if (time < 0) {
-            clearInterval(timer);
-            window.location.href = "/Page/Home/Home.html";
-        }
-
-    }, 1000);
-}
-
+/* INIT */
 loadOrder();
-function startQRProgress(duration = 10){
 
-    let circle = document.getElementById("progressCircle");
-
-    let radius = 45;
-    let circumference = 2 * Math.PI * radius;
-
-    circle.style.strokeDasharray = circumference;
-
-    let start = Date.now();
-
-    let timer = setInterval(() => {
-
-        let elapsed = (Date.now() - start) / 1000;
-        let progress = elapsed / duration;
-
-        if(progress >= 1){
-            progress = 1;
-            clearInterval(timer);
-        }
-
-        let offset = circumference - (progress * circumference);
-        circle.style.strokeDashoffset = offset;
-
-    }, 50);
-}
 </script>
 
-
-
-
-
-
 </body>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
-    <link rel="stylesheet" href="../src/output.css">
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b, #000);
-        }
-
-        .card {
-            width: 850px;
-            max-width: 95%;
-            backdrop-filter: blur(15px);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .bank-box input {
-            display: none;
-        }
-
-        .bank-box {
-            display: flex;
-            gap: 2px;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .bank-box label {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-            color: rgb(22, 222, 118);
-        }
-
-        .bank-box input:checked+label {
-            background: linear-gradient(135deg, #3b82f6, #9333ea);
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .cart-img {
-            width: 55px;
-            height: 55px;
-            border-radius: 10px;
-            border: 2px solid #22d3ee;
-        }
-
-        .Aba {
-            width: 55px;
-            height: 55px;
-            object-fit: cover;
-            border-radius: 7px;
-
-        }
-
-        .bank-box {
-            width: 100%;
-        }
-
-        .bank-card {
-            flex: 1;
-            cursor: pointer;
-        }
-
-        .bank-card input {
-            display: none;
-        }
-
-        /* CARD STYLE */
-        .bank-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-            color: white;
-        }
-
-        /* IMAGE */
-        .bank-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* HOVER EFFECT */
-        .bank-content:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* ACTIVE (SELECTED) */
-        .bank-card input:checked+.bank-content {
-            border: 2px solid #3b82f6;
-            background: linear-gradient(135deg, #3b82f6, #9333ea);
-            transform: scale(1.03);
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-        }
-
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #f10707;
-            border-top: 6px solid #aaadd3;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-</head>
-
-<body class="flex items-center justify-center min-h-screen text-white">
-
-    <div class="card">
-
-        <!-- TITLE -->
-        <h2 class="text-3xl font-bold text-center mb-6">💳 Payment Checkout</h2>
-
-        <!-- BANK -->
-        <div class="bank-box flex gap-4">
-
-            <!-- ABA -->
-            <label class="bank-card">
-                <input type="radio" name="bank" value="ABA">
-
-                <div class="bank-content">
-                    <img src="https://i.pinimg.com/1200x/e2/33/f5/e233f5b0c5a358449398f202b03f063a.jpg"
-                        class="bank-img">
-                    <span class="uppercase text-3xl">ABA Bank</span>
-                </div>
-            </label>
-
-            <!-- ACLEDA -->
-            <label class="bank-card">
-                <input type="radio" name="bank" value="ACLEDA">
-
-                <div class="bank-content">
-                    <img src="https://i.pinimg.com/736x/9b/d9/e5/9bd9e55527b9a81e922697eb7c94b713.jpg" class="bank-img">
-                    <span class="uppercase text-3xl">ACLEDA Bank</span>
-                </div>
-            </label>
-        </div>
-        <div class="bank-box flex gap-4">
-
-            <!-- Wing -->
-            <label class="bank-card">
-                <input type="radio" name="bank" value="WINGBANK">
-
-                <div class="bank-content">
-                    <img src="https://i.pinimg.com/1200x/8c/60/0e/8c600eac1bf06ecd663db232c4611a39.jpg"
-                        class="bank-img">
-                    <span class="uppercase text-3xl">wing Bank</span>
-                </div>
-            </label>
-            <label class="bank-card">
-                <input type="radio" name="bank" value="VISA">
-
-                <div class="bank-content">
-                    <img src="https://i.pinimg.com/736x/74/2e/1f/742e1fc703e862ede9b014aa55bc35be.jpg" class="bank-img">
-                    <span class="uppercase text-3xl">visa cart</span>
-                </div>
-            </label>
-        </div>
-
-        <!-- ORDER -->
-        <div class="mb-6">
-            <h3 class="text-lg font-semibold mb-3">🛒 Order Summary</h3>
-            <div id="orderList"></div>
-
-            <div class="flex justify-between mt-4 text-lg font-bold">
-                <span>Total</span>
-                <span class="text-pink-400">$<span id="totalPrice">0</span></span>
-            </div>
-        </div>
-
-        <!-- FORM -->
-        <div class="space-y-4">
-
-            <input id="amount" type="number" placeholder="Amount"
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 outline-none">
-
-            <!-- BUTTONS -->
-            <div class="flex gap-4 mt-4">
-
-                <button onclick="payments()"
-                    class="w-1/2 bg-gradient-to-r from-blue-500 to-purple-600 py-3 rounded-lg font-bold hover:scale-105 transition">
-                    Pay Now
-                </button>
-
-                <button onclick="Back()" class="w-1/2 bg-white/10 py-3 rounded-lg hover:bg-red-500 transition">
-                    Back To cart
-                </button>
-
-            </div>
-
-        </div>
-    </div>
-
-    <div id="loading" class="loading hidden">
-        <div class="spinner"></div>
-    </div>
-</body>
-<script>
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    function loadOrder() {
-        let orderList = document.getElementById("orderList");
-        let total = 0;
-
-        orderList.innerHTML = "";
-
-        if (cart.length === 0) {
-            orderList.innerHTML = `
-            <p class="text-center text-gray-400 py-4">
-                🛒 Your cart is empty
-            </p>
-        `;
-            document.getElementById("totalPrice").innerText = "0";
-            document.getElementById("amount").value = "";
-            return;
-        }
-
-        cart.forEach(item => {
-            let itemTotal = item.price * item.qty;
-            total += itemTotal;
-
-            orderList.innerHTML += `
-        <div class="flex items-center justify-between py-3 border-b border-white/10">
-
-            <!-- IMAGE + NAME -->
-            <div class="flex items-center gap-3">
-                <img src="${item.image}" class="cart-img">
-
-                <div>
-                    <p class="font-semibold">${item.name}</p>
-                    <p class="text-sm text-gray-400">
-                        Model: ${item.size}
-                    </p>
-                </div>
-            </div>
-
-            <!-- QTY -->
-            <div class="text-center text-gray-300">
-                x${item.qty}
-            </div>
-
-            <!-- PRICE -->
-            <div class="text-pink-400 font-bold">
-                $${itemTotal}
-            </div>
-
-        </div>
-        `;
-        });
-
-        document.getElementById("totalPrice").innerText = total;
-        document.getElementById("amount").value = total;
-    }
-
-    function showLoading() {
-        document.getElementById("loading").classList.remove("hidden");
-    }
-
-    function hideLoading() {
-        document.getElementById("loading").classList.add("hidden");
-    }
-
-    function payments() {
-        let bank = document.querySelector('input[name="bank"]:checked');
-        let amount = document.getElementById("amount").value.trim();
-
-        if (!bank) {
-            alert("⚠️ Please select a bank");
-            return;
-        }
-
-        if (cart.length === 0) {
-            alert("⚠️ Your cart is empty");
-            return;
-        }
-        // CONFIRM
-        let confirmPay = confirm(
-            `💳 Pay $${amount} using ${bank.value}?`
-        );
-
-        if (confirmPay) {
-
-            showLoading(); // show spinner
-
-            setTimeout(() => {
-
-                // clear cart
-                localStorage.removeItem("cart");
-
-                hideLoading(); // hide spinner
-
-                // redirect
-                alert("payment Successful");
-                window.location.href = "Home.html";
-
-            }, 8000); // loading time
-
-        } else {
-            alert("❌ Payment Cancelled");
-        }
-    }
-    function Back() {
-        let ok = confirm("Do you want to go back to cart?");
-        if (ok) {
-            window.location.href = "Addcart.html";
-        }
-    }
-
-    loadOrder();
-
-</script>
 </html>
