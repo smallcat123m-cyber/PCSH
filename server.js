@@ -20,6 +20,7 @@ app.post("/create-payment", (req, res) => {
     payments[paymentId] = { status: "pending" };
     res.json({ paymentId });
 });
+     
 
 /* CONFIRM */
 app.post("/confirm-payment", (req, res) => {
