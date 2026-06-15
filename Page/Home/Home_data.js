@@ -30,7 +30,7 @@ const Homes = [
 // 🎯 GET CONTAINER
 const Homelist = document.getElementById("home-list");
 
-      
+
 
 // 🔁 LOOP
 Homes.forEach(item => {

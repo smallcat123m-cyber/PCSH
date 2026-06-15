@@ -16,6 +16,7 @@ const Couples = [
     image: "https://i.pinimg.com/736x/66/71/a8/6671a814c24cf959744bda2095c780d6.jpg",
     des: "Perfect slim fit shirt for office and events"
   },
+
   {
     id: 3,
     type:"trousers",
@@ -370,12 +371,108 @@ function viewProduct(id) {
 
     window.location.href = "Couple_Views.html";
 }
+
+    
+];
+
+// 🎯 GET CONTAINER
+const Couplelist = document.getElementById("Couple-list");
+
+
+// 🔁 LOOP
+Couples.forEach(item => {
+    const card = `
+        <div class="bg-blue-300 p-4 rounded-xl shadow hover:shadow-lg cart">
+            <img src="${item.image}" class="w-full mb-3 h-80 object-cover rounded-md">
+            <h3 class="font-bold">${item.name}</h3>
+            <p class="text-gray-500">$ ${item.price}</p>
+
+            <div class=" btn">
+                <button class="mt-3 w-full uppercase bg-blue-500 text-white py-1  hover:bg-yellow-600 cursor-pointer">
+                    Buy Now
+                </button>
+
+                <button onclick="addToCart(${item.id})"
+                class="mt-3 w-full uppercase bg-green-500 text-white py-1  hover:bg-green-700 cursor-pointer">
+                    Cart
+                </button>
+                
+                <button onclick="viewProduct(${item.id})"
+                class="mt-3 w-full uppercase bg-orange-500 text-white py-1 hover:bg-orange-700 cursor-pointer">
+                    View
+                </button>
+            </div>
+        </div>
+    `;
+    Couplelist.innerHTML += card;
+});
+
+
+// 🛒 CART
+let cart = [];
+
+// ADD TO CART
+function addToCart(product){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push(product);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("✅ Added to cart");
+}
+
+// 👁 VIEW PRODUCT
+function viewProduct(id){
+    const product = Couples.find(p => p.id === id); // ✅ FIXED
+
+    localStorage.setItem("viewProduct", JSON.stringify(product));
+
+    window.location.href = "../ViewsPage/Couple_views.html";
+}
+// Clear old products
+function displayProducts(list){
+    const Couplelist = document.getElementById("Couple-list");
+
+    Couplelist.innerHTML = ""; // clear old
+
+    list.forEach(item => {
+        const card = `
+        <div class="bg-blue-300 p-4 rounded-xl shadow hover:shadow-lg cart">
+            <img src="${item.image}" class="w-full mb-3 h-80 object-cover rounded-md">
+            <h3 class="font-bold">${item.name}</h3>
+            <p class="text-gray-500">$ ${item.price}</p>
+
+            <div class="btn">
+                <button class="mt-3 w-full bg-blue-500 text-white py-1 uppercase hover:bg-yellow-600 cursor-pointer">
+                    Buy Now
+                </button>
+
+                <button onclick='addToCart(${JSON.stringify(item)})'
+                class="mt-3 w-full bg-green-500 text-white py-1 uppercase hover:bg-green-700 cursor-pointer">
+                    Cart
+                </button>
+
+                <button onclick="viewProduct(${item.id})"
+                class="mt-3 w-full bg-orange-500 text-white py-1 uppercase hover:bg-orange-700 cursor-pointer">
+                    View
+                </button>
+            </div>
+        </div>
+        `;
+        Couplelist.innerHTML += card;
+    });
+}
+
+// Serch 
+
 function searchProduct(){
     const keyword = document.getElementById("search").value.toLowerCase();
 
     const result = Couples.filter(item =>
         item.name.toLowerCase().includes(keyword)
     );
+
 
     const CoupleList = document.getElementById("Couple-List");
 
@@ -412,6 +509,19 @@ function searchProduct(){
         </div>
 
     </div>
+
+    const Couplelist = document.getElementById("Couple-list");
+
+    // ❗ IF NOT FOUND
+    if(result.length === 0){
+    Couplelist.innerHTML = `
+        <div class="not-found">
+            <div class="not-box">
+                <h2 class="not-title">❌ No product found</h2>
+                <p class="not-text">Try searching something else...</p>
+            </div>
+        </div>
+
     `;
 }else{
     displayProducts(result);

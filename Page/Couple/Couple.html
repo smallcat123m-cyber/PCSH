@@ -10,54 +10,115 @@
         .bgs {
             background: linear-gradient(to right, rgb(206, 8, 21), rgb(113, 22, 173), rgb(16, 169, 234), red);
         }
-
         .log {
             background-color: rgb(39, 145, 221);
             transition: 0.8s;
         }
-
         .log:hover {
             animation: loginchange 2s infinite alternate;
         }
-
         @keyframes loginchange {
             0% {
                 background-color: red;
             }
-
             50% {
                 background-color: blue;
             }
-
             100% {
                 background-color: rgba(9, 95, 12, 0.71);
             }
         }
-
         .logo {
             border: 2px solid yellow;
             animation: logochange 3s infinite alternate ease-in-out;
         }
-
         @keyframes logochange {
             0% {
                 border-color: yellow;
             }
-
             50% {
                 border-color: rgb(20, 214, 133);
             }
-
             100% {
                 border-color: blue;
             }
         }
-
-        .about {
-            position: relative;
+        .slide {
+            border-radius: 5px;
+            padding: 2px;
+            height: 320px;
+            border: 2px solid rgb(212, 155, 225);
+            animation: slideMove 5s infinite alternate ease-in-out;
+        }
+        @keyframes slideMove {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-85px);
+            }
+        }
+        .box {
+            border: 3px solid yellow;
+            animation: logochange 3s infinite alternate ease-in-out;
         }
 
-        .about::after {
+        .shop {
+            border: 3px solid yellow;
+            animation: logochange 3s infinite alternate ease-in-out;
+        }
+        .not-found {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+        }
+        .not-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        .not-title {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ff4d4d;
+            animation: fadeBounce 2s infinite;
+        }
+        .not-text {
+            font-size: 18px;
+            color: #aaa;
+            margin-top: 10px;
+            animation: fadeIn 3s infinite alternate;
+        }
+        @keyframes fadeBounce {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .couple {
+            position: relative;
+        }
+        .couple::after {
             content: "";
             position: absolute;
             left: 0;
@@ -65,66 +126,33 @@
             width: 100%;
             height: 3px;
             background: rgb(184, 232, 12);
-
         }
-
-        .profile {
-            background-color: rgb(204, 204, 221);
-            width: 350px;
-            height: 350px;
-            border-radius: 8px;
-            border: 2px solid yellow;
-
-            /* CENTER EVERYTHING */
+        .btn{
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            gap: 30px;
+            width: 400px;
+            height: 60px;
+            justify-content: space-between;
         }
-
-        /* IMAGE */
-        .profile img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 50%;
+        .btn button{
+            border-radius: 10px;
+            border: 2px solid rgb(73, 79, 27);
         }
-
-        /* NAME */
-        .profile h1 {
-            font-size: 20px;
-            margin-bottom: 5px;
+        .cart {
+            transition: all 0.3s ease;
         }
-
-        /* ROLE */
-        .profile p {
-            color: gray;
-            font-size: 14px;
-            margin-bottom: 15px;
+        .cart:hover {
+            box-shadow: 0 10px 10px 10px rgba(29, 139, 235, 0.5);
         }
-
-        /* BUTTON */
-        .profile button {
-            padding: 10px 20px;
-            border: none;
-            background: #3b82f6;
-            color: white;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .profile button:hover {
-            background: #2563eb;
+        .banner{
+            background: linear-gradient(to right, rgb(235, 156, 71), rgb(184, 129, 222), rgb(118, 88, 42), rgb(43, 161, 220));
+            /* background-color: rgb(48, 53, 48); */
         }
     </style>
 </head>
-
 <body class="bg-black">
-
     <!-- HEADER -->
     <nav class="bgs shadow-md flex justify-between items-center px-10 py-3 sticky z-50 top-0">
-
         <!-- LOGO -->
         <div class="flex items-center gap-3">
             <img class="w-12 h-12 rounded-full bg-amber-400 logo"
@@ -134,122 +162,61 @@
                     class="text-yellow-500">OP</span>
             </h1>
         </div>
+
+        <!-- SEARCH -->
+        <div class="text-white">
+            <input id="search"
+                class="border px-4 py-2 rounded-lg w-100 focus:outline-none focus:ring-2 focus:ring-blue-400 "
+                type="search" onkeyup="searchProduct()" placeholder="Search PC, Mouse, Keyboard...">
+        </div>
+
         <!-- MENU -->
         <ul class="flex gap-6 font-mono text-xl uppercase items-center  text-white">
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Home.html">Home</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Mouse.html">Mouse</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer"><a href="Keyborad.html">Keyborad</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer "><a href="Computer.html">Computer</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Men.html">men</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="Whomen.html">whomen</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer couple"><a href="Couple.html">couple</a></li>
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Addcart.html">Cart</a></li>
             <li class="hover:text-yellow-500 cursor-pointer"><a href="Contact.html">Contact</a></li>
-            <li class="hover:text-yellow-500 cursor-pointer about"><a href="About.html">About</a></li>
+            <li class="hover:text-yellow-500 cursor-pointer"><a href="About.html">About</a></li>
             <li class=" text-white px-4 py-1 rounded cursor-pointer log"><a href="Login.html">Login</a></li>
         </ul>
 
     </nav>
-    <section class="px-10 mt-10">
 
+
+    <!-- HERO / SLIDE -->
+    <section class="mt-5 px-10">
         <div
-            class="bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-2xl p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg">
+            class=" text-white rounded-xl p-10 flex justify-between items-center box banner">
 
+            <!-- TEXT -->
             <div>
-                <h1 class="text-5xl font-extrabold mb-4">
-                    About <span class="text-yellow-300">PCSHOP</span>
-                </h1>
-                <p class="text-lg text-white/90">
-                    Your trusted destination for high-performance PCs, gaming gear, and accessories.
-                </p>
+                <h1 class="text-6xl font-bold mb-4">COMPUTERS PAGE</h1>
+                <p class="mb-6 text-3xl">High performance computers for gaming & work</p>
+                <button
+                    class="bg-pink-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 hover:text-orange-400 text-4xl shop">
+                    Shop Now
+                </button>
             </div>
 
-            <img src="https://i.pinimg.com/736x/76/3c/2b/763c2bb8624e6e325c1256ce13c56645.jpg" class="w-50 rounded-xl shadow-xl">
-        </div>
-
-        <div class="mt-16 grid md:grid-cols-2 gap-10 items-center">
-
-            <div class="space-y-4">
-                <h2 class="text-3xl font-bold text-cyan-400">Who We Are</h2>
-                <p class="text-gray-400">
-                    PCSHOP delivers top-quality computers, keyboards, and accessories for gamers and professionals.
-                </p>
-                <p class="text-gray-400">
-                    We focus on performance, affordability, and customer satisfaction.
-                </p>
-            </div>
-
-            <!-- <img src="https://i.pinimg.com/736x/76/3c/2b/763c2bb8624e6e325c1256ce13c56645.jpg" class="rounded-xl shadow-lg w-50"> -->
-        </div>
-
-
-        <div class="mt-20">
-            <h2 class="text-3xl font-bold text-center text-white mb-10">Why Choose Us</h2>
-
-            <div class="grid md:grid-cols-3 gap-8">
-
-                <div
-                    class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-cyan-500/30 transition">
-                    <h3 class="text-xl font-bold text-cyan-400 mb-2">⚡ High Performance</h3>
-                    <p class="text-gray-400">Top-tier hardware for gaming & work.</p>
-                </div>
-
-                <div
-                    class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-purple-500/30 transition">
-                    <h3 class="text-xl font-bold text-purple-400 mb-2">💰 Affordable</h3>
-                    <p class="text-gray-400">Best prices for students & professionals.</p>
-                </div>
-
-                <div
-                    class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-pink-500/30 transition">
-                    <h3 class="text-xl font-bold text-pink-400 mb-2">🚀 Fast Support</h3>
-                    <p class="text-gray-400">Quick and friendly customer service.</p>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="mt-20 grid md:grid-cols-2 gap-10 items-center">
-
-            <img src="https://i.pinimg.com/736x/76/3c/2b/763c2bb8624e6e325c1256ce13c56645.jpg" class="rounded-xl shadow-lg w-50">
-
+            <!-- IMAGE -->
             <div>
-                <h2 class="text-3xl font-bold text-purple-400 mb-4">Our Mission</h2>
-                <p class="text-gray-400 mb-4">
-                    Our mission is to become the best IT shop for students in Cambodia and beyond.
-                </p>
-                <p class="text-gray-400">
-                    We also provide learning content to help people understand technology easily.
-                </p>
+                <img id="slider" class="object-cover slide w-full"
+                    src="https://i.pinimg.com/1200x/c0/7c/df/c07cdf905cb30fd912be1919031b5bbf.jpg">
             </div>
 
         </div>
-       <h1 class="text-white text-center text-5xl font-extrabold mt-20 mb-10">
-    Our Team 👨‍💻
-</h1>
+    </section>
 
-<div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
 
-    <!-- CARD -->
-    <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:scale-105 hover:shadow-cyan-400/30 transition">
-
-        <img src="https://i.pinimg.com/1200x/06/52/db/0652db03fb3e77d833a25e1509ff7759.jpg"
-            class="w-24 h-24 mx-auto rounded-full object-cover mb-3 border-2 border-cyan-400">
-
-        <h2 class="text-white font-bold">Samol Dev</h2>
-        <p class="text-gray-400 text-sm mb-3">Frontend Developer</p>
-
-        <button
-            class="px-4 py-1 text-sm bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full text-white hover:scale-110 transition">
-            Follow
-        </button>
-
-    </div>
-
-    <!-- COPY MORE CARDS -->
-</div>
-
+    <!-- FEATURE PRODUCTS -->
+    <section class="px-10 mt-10">
+        <h2 class="text-2xl font-bold mb-5 text-white text-center">Popular Products</h2>
+        <div id="Couple-list" class="grid grid-cols-4 gap-6"></div>
     </section>
     <!-- FOOTER -->
-    <!-- FOOTER -->
+   <!-- FOOTER -->
     <footer
         class="bg-gray-900 text-white mt-16 px-10 py-12 border-t-4 border-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
 
@@ -336,6 +303,28 @@
         </div>
 
     </footer>
-</body>
+    <script src="../File_Data/Couple_data.js"></script>
 
+    <script>
+        const images = [
+            "../Banner/yyh.png",
+
+
+
+        ];
+
+        let index = 0;
+        const slider = document.getElementById("slider");
+
+        setInterval(() => {
+            index++;
+            if (index >= images.length) {
+                index = 0;
+            }
+            slider.src = images[index];
+        }, 5000);
+
+        localStorage.setItem("backPage", "Couple.html");
+    </script>
+</body>
 </html>
