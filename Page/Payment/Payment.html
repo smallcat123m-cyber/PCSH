@@ -6,9 +6,10 @@
 <title>Premium Payment</title>
 
 <link rel="stylesheet" href="/src/output.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
 <!-- SOCKET -->
-<script src="http://192.168.1.13:3000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.155:3000/socket.io/socket.io.js"></script>
 
 <!-- QR -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -69,76 +70,96 @@ body {
 
 </head>
 
-<body class="flex items-center justify-center min-h-screen">
+<body class="flex items-center justify-center min-h-screen p-3 sm:p-6">
 
-<div class="glass p-6 rounded-2xl w-[900px]  flex gap-6 shadow-2xl fade-in">
+<div class="glass p-4 sm:p-6 rounded-2xl w-full max-w-6xl flex flex-col lg:flex-row gap-6 shadow-2xl fade-in">
 
   <!-- LEFT -->
-  <div class="flex-1">
-    <h2 class="text-2xl font-bold mb-4">🛒 Checkout</h2>
+  <div class="flex-1 w-full">
+    <h2 class="text-xl sm:text-2xl font-bold mb-4">🛒 Checkout</h2>
 
-    <div id="orderList" class="bg-zinc-800/60 p-4 rounded-xl mb-4 space-y-2"></div>
-     <h1 class="text-center py-2 uppercase text-yellow-600 ">Banking</h1>
-  <div class="flex justify-between gap-3 px-10">
-  <button onclick="selectBank('ABA', this)" 
-    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">ABA</button>
+    <div id="orderList" class="bg-zinc-800/60 p-3 sm:p-4 rounded-xl mb-4 space-y-2 text-sm sm:text-base"></div>
 
-  <button onclick="selectBank('WING', this)" 
-    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">Wing</button>
+    <h1 class="text-center py-2 uppercase text-yellow-600 text-sm sm:text-base">Banking</h1>
 
-  <button onclick="selectBank('ACLEDA', this)" 
-    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">Acleda</button>
-</div>
+    <!-- BANK BUTTONS -->
+    <div class="grid grid-cols-3 gap-2 sm:flex sm:justify-between sm:px-10">
+      <button onclick="selectBank('ABA', this)" 
+        class="bank-btn bg-blue-300 py-2 rounded-lg text-sm sm:text-base">ABA</button>
+
+      <button onclick="selectBank('WING', this)" 
+        class="bank-btn bg-blue-300 py-2 rounded-lg text-sm sm:text-base">Wing</button>
+
+      <button onclick="selectBank('ACLEDA', this)" 
+        class="bank-btn bg-blue-300 py-2 rounded-lg text-sm sm:text-base">Acleda</button>
+    </div>
+
     <br>
 
-    <h3 class="text-lg mb-4">
+    <h3 class="text-base sm:text-lg mb-4">
       Total: $<span id="totalPrice">0</span>
     </h3>
 
+    <!-- PROGRESS -->
     <div class="w-full bg-zinc-700 h-2 rounded-full mb-2 overflow-hidden">
-      <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-300" style="width:0%"></div>
-    </div>
-
-    <p id="progressText" class="text-orange-400 mb-4 dots">Initializing</p>
-
-    <button type="button" onclick="payments()" id="payBtn"
-  disabled
-  class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
-  Pay Now
-</button>
-<br><br>
-<button type="button" 
-  class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
-  Back
-</button>
-
-  </div>
-
-  <!-- RIGHT -->
-  <div class="w-[320px] flex flex-col items-center justify-center bg-zinc-800/60 rounded-xl p-4 relative">
-
-    <h3 class="mb-3">📱 QR Payment</h3>
-
-    <div id="timer" class="text-sm text-gray-400 mb-2">Expires in: 02:00</div>
-
-    <div id="qrWrapper" class="locked">
-      <div class="bg-white p-4 rounded-xl glow pulse">
-        <div id="qrcode"></div>
+      <div id="progressBar"
+        class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+        style="width:0%">
       </div>
     </div>
-   
 
-    <p id="scanText" class="text-gray-400 text-sm mt-3">
+    <p id="progressText" class="text-orange-400 mb-4 text-sm sm:text-base dots">
+      Initializing
+    </p>
+
+    <!-- BUTTONS -->
+    <button onclick="payments()" id="payBtn"
+      disabled
+      class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed">
+      Pay Now
+    </button>
+
+    <br><br>
+
+    <button
+      class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg text-sm sm:text-base">
+      Back
+    </button>
+  </div>
+
+  <!-- RIGHT (QR) -->
+  <div class="w-full lg:w-[320px] flex flex-col items-center justify-center bg-zinc-800/60 rounded-xl p-4 relative">
+
+    <h3 class="mb-3 text-sm sm:text-base">QR Payment</h3>
+
+    <div id="timer" class="text-xs sm:text-sm text-gray-400 mb-2">
+      Expires in: 02:00
+    </div>
+
+    <div id="qrWrapper" class="locked">
+      <div class="bg-white p-3 sm:p-4 rounded-xl glow pulse">
+        <div id="qrcode" class="mx-auto"></div>
+      </div>
+    </div>
+
+    <p id="scanText" class="text-gray-400 text-xs sm:text-sm mt-3 text-center">
       Waiting for payment...
     </p>
 
-    <div id="successBox" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-xl">
-      <h2 class="text-green-400 text-2xl font-bold mb-2">✔ Paid</h2>
-      <p class="text-gray-400">Redirecting...</p>
+    <!-- SUCCESS -->
+    <div id="successBox"
+      class="hidden absolute inset-0 flex flex-col items-center justify-center bg-black/80 rounded-xl text-center p-4">
+
+      <h2 class="text-green-400 text-xl sm:text-2xl font-bold mb-2">
+        <i class="fa-solid fa-circle-check"></i> Paid
+      </h2>
+
+      <p class="text-gray-400 text-sm">Redirecting...</p>
     </div>
 
   </div>
 
+</div>
 </div>
 
 <script>
@@ -202,11 +223,15 @@ function payments() {
   }
 
   // now allowed
-  alert("✅ Paying with " + Banks);
+  if(confirm('whoould you lkie to pay with '+Banks)){
 
-  document.getElementById("payBtn").disabled = true;
+    document.getElementById("payBtn").disabled = true;
+    startProgress();
+  }else{
+    alert("Good Luck Bro! ");
+  }
 
-  startProgress();
+
 }
 
 /* PROGRESS */
@@ -253,7 +278,7 @@ async function showQRCode(){
   // clear old QR
   qrDiv.innerHTML = "";
 
-  const res = await fetch("http://192.168.1.13:3000/create-payment", {
+  const res = await fetch("http://192.168.0.155:3000/create-payment", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
@@ -267,7 +292,7 @@ async function showQRCode(){
 
   const paymentId = data.paymentId;
 
-  const scanUrl = `http://192.168.1.13:5500/Page/Payment/scan.html?id=${paymentId}`;
+  const scanUrl = `http://192.168.0.155:5500/Page/Payment/scan.html?id=${paymentId}`;
 
   console.log("QR URL:", scanUrl);
 
@@ -307,7 +332,7 @@ function startTimer(){
 
 /* SOCKET */
 function startWatcher(paymentId){
-  const socket = io("http://192.168.1.13:3000");
+  const socket = io("http://192.168.0.155:3000");
 
   socket.on("payment-success", (data)=>{
     if(data.paymentId === paymentId){

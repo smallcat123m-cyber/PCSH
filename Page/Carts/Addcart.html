@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VEXO Cart</title>
 
+<link rel="stylesheet" href="/src/output.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
 <style>
-
-/* ===== BODY ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -17,21 +16,12 @@ body {
     color: white;
 }
 
-/* ===== CONTAINER ===== */
 .container {
     max-width: 1000px;
     margin: auto;
     padding: 20px;
 }
 
-/* ===== TITLE ===== */
-.title {
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-/* ===== GLASS EFFECT ===== */
 .glass {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(14px);
@@ -39,7 +29,6 @@ body {
     border-radius: 16px;
 }
 
-/* ===== CART ITEM ===== */
 .cart-item {
     display: flex;
     align-items: center;
@@ -47,15 +36,13 @@ body {
     gap: 20px;
     padding: 16px;
     margin-bottom: 15px;
-    transition: 0.3s;
 }
 
 .cart-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: translateY(-3px);
+    transition: 0.3s;
 }
 
-/* ===== IMAGE ===== */
 .cart-img {
     width: 70px;
     height: 70px;
@@ -63,7 +50,6 @@ body {
     border-radius: 12px;
 }
 
-/* ===== LEFT ===== */
 .left {
     display: flex;
     align-items: center;
@@ -71,81 +57,66 @@ body {
     width: 40%;
 }
 
-/* ===== PRICE ===== */
 .price {
     font-size: 18px;
     font-weight: bold;
     color: cyan;
 }
 
-/* ===== QTY BUTTON ===== */
-.qty-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.qty-box input {
+    width: 60px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
 }
 
-.qty-btn {
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-}
-
-.plus { background: #22c55e; }
-.minus { background: #ef4444; }
-
-.qty-btn:hover {
-    transform: scale(1.1);
-}
-
-/* ===== REMOVE ===== */
 .remove {
-    color: #ef4444;
+    color: red;
     cursor: pointer;
 }
 
-.remove:hover {
-    transform: scale(1.2);
-}
-
-/* ===== TOTAL ===== */
 .total-box {
     margin-top: 20px;
     padding: 20px;
     text-align: right;
 }
 
-/* ===== BUTTON ===== */
 .checkout {
     margin-top: 10px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
     border-radius: 10px;
+    background: linear-gradient(135deg, #ef4444, #f97316);
     color: white;
     cursor: pointer;
-    background: linear-gradient(135deg, #ef4444, #f97316);
 }
 
-.checkout:hover {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+/* MODAL */
+#editModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* ===== EMPTY ===== */
-.empty {
-    text-align: center;
-    padding: 80px;
-    opacity: 0.7;
-    animation: fade 0.5s;
+.modal-box {
+    background: white;
+    color: black;
+    width: 350px;
+    padding: 20px;
+    border-radius: 12px;
+}
+.hidden {
+    display: none !important;
 }
 
-@keyframes fade {
-    from {opacity:0; transform: translateY(10px);}
-    to {opacity:1;}
+@keyframes fadeIn {
+    from {opacity:0; transform:scale(0.9);}
+    to {opacity:1; transform:scale(1);}
 }
-
+.animate { animation: fadeIn 0.3s ease; }
 </style>
 </head>
 
@@ -153,31 +124,96 @@ body {
 
 <div class="container">
 
-    <h1 class="title">🛒 Your Cart</h1>
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-5">
+        <h1>🛒 Your Cart</h1>
+        <button onclick="Back()" style="padding:8px 15px;background:#333;color:white;border-radius:8px;">
+            ⬅ Back
+        </button>
+    </div>
 
+    <!-- CART -->
     <div id="cart"></div>
 
+    <!-- TOTAL -->
     <div id="total"></div>
-
 </div>
 
+<!-- ================= EDIT MODAL ================= -->
+<div id="sizeModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+    <div class="bg-white text-black w-96 p-6 rounded-xl">
+
+        <h2 class="text-xl font-bold mb-4">✏️ Edit Size</h2>
+
+        <div id="sizeBox"></div>
+
+        <div class="flex justify-end gap-2 mt-4">
+            <button onclick="closeSizeModal()" class="px-4 py-2 bg-gray-400 text-white rounded">
+                Cancel
+            </button>
+
+            <button onclick="saveEdit()" class="px-4 py-2 bg-blue-600 text-white rounded">
+                Save
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="colorModal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+
+    <div class="bg-white text-black w-96 p-6 rounded-xl">
+
+        <h2 class="text-xl font-bold mb-4">🎨 Edit Color</h2>
+
+        <div id="colorBox"></div>
+
+        <div class="flex justify-end gap-2 mt-4">
+            <button onclick="closeModal()" class="px-4 py-2 bg-gray-400 text-white rounded">
+                Cancel
+            </button>
+
+            <button onclick="saveEdit()" class="px-4 py-2 bg-blue-600 text-white rounded">
+                Save
+            </button>
+        </div>
+
+    </div>
+</div>
+<a href="/Page/Payment/Payment.html"></a>
+
+
 <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let editIndex = null;
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+/* ================= SIZE OPTIONS ================= */
+function getSizeOptions(type) {
+    switch(type) {
+        case "shirt":
+        case "trousers":
+            return ["XS", "S", "M", "L", "XL"];
+        case "shoes":
+            return ["20", "25", "33", "40"];
+        default:
+            return [];
+    }
+}
 
-/* ===== LOAD CART ===== */
+/* ================= COLOR OPTIONS ================= */
+function getColorOptions() {
+    return ["Black", "White", "Red", "Blue", "Gray"];
+}
+
+/* ================= LOAD CART ================= */
 function loadCart() {
 
     let cartDiv = document.getElementById("cart");
     let totalDiv = document.getElementById("total");
 
-    if(cart.length === 0){
-        cartDiv.innerHTML = `
-        <div class="empty">
-            <h2>🛒 Cart is Empty</h2>
-            <p>Add some products first</p>
-            <button onclick="goHome()">Shop Now</button>
-        </div>`;
+    if (cart.length === 0) {
+        cartDiv.innerHTML = `<h2 style="text-align:center;">🛒 Cart is Empty</h2>`;
         totalDiv.innerHTML = "";
         return;
     }
@@ -196,68 +232,163 @@ function loadCart() {
                 <img src="${item.image}" class="cart-img">
                 <div>
                     <h4>${item.name}</h4>
-                    <small>${item.size || ""}</small>
+
+                    <small>
+                        ${
+                            (item.type === "shirt" || item.type === "trousers" || item.type === "shoes")
+                            ? `Size: ${item.size || "-"}`
+                            : `Color: ${item.color || "-"}`
+                        }
+                    </small>
                 </div>
             </div>
 
             <div class="price">$${item.price}</div>
 
             <div class="qty-box">
-                <button class="qty-btn minus" onclick="changeQty(${index}, -1)">-</button>
-                <span>${item.qty}</span>
-                <button class="qty-btn plus" onclick="changeQty(${index}, 1)">+</button>
+                <input type="number" min="1"
+                value="${item.qty}"
+                oninput="this.value=Math.max(1,this.value)"
+                onchange="updateQty(${index},this.value)">
             </div>
 
+            <!-- EDIT -->
+            <i onclick="editItem(${index})" class="fa-solid fa-pencil"></i>
+
+            <!-- DELETE -->
             <div class="remove" onclick="removeItem(${index})">
                 <i class="fa-solid fa-trash"></i>
             </div>
 
-        </div>
-        `;
+        </div>`;
     });
 
     cartDiv.innerHTML = html;
 
     totalDiv.innerHTML = `
-    <div class="total-box glass">
-        <h2>Total: $${total}</h2>
-        <button class="checkout" onclick="checkout()">Checkout</button>
-    </div>
+        <div class="total-box glass">
+            <h2>Total: $${total}</h2>
+            <button onclick="Checkout()" class="checkout">Checkout</button>
+        </div>
     `;
 }
 
-/* ===== CHANGE QTY ===== */
-function changeQty(index, amount){
-    cart[index].qty += amount;
+function Checkout(){
+    window.location.href="/Page/Payment/Payment.html";
+}
 
-    if(cart[index].qty <= 0){
-        cart.splice(index,1);
+/* ================= UPDATE QTY ================= */
+function updateQty(index, value) {
+    cart[index].qty = parseInt(value);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+/* ================= DELETE ================= */
+function removeItem(index) {
+    if (confirm("Delete item?")) {
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+    }
+}
+
+/* ================= EDIT MAIN ================= */
+function editItem(index) {
+    editIndex = index;
+
+    let item = cart[index];
+
+    const sizeOptions = getSizeOptions(item.type);
+
+    if (sizeOptions.length > 0) {
+        renderSizeBox(item);
+        document.getElementById("sizeModal").classList.remove("hidden");
+    } else {
+        renderColorBox(item);
+        document.getElementById("colorModal").classList.remove("hidden");
+    }
+}
+
+/* ================= SIZE BOX ================= */
+function renderSizeBox(item) {
+
+    const sizeOptions = getSizeOptions(item.type);
+
+    let html = `<label>Size</label>
+    <select id="editSize" class="w-full p-2 border rounded mb-3">`;
+
+    if (sizeOptions.length > 0) {
+        sizeOptions.forEach(s => {
+            html += `<option value="${s}">${s}</option>`;
+        });
+    } else {
+        html += `<option value="">No size</option>`;
+    }
+
+    html += `</select>`;
+
+    document.getElementById("sizeBox").innerHTML = html;
+
+    setTimeout(() => {
+        document.getElementById("editSize").value = item.size || "";
+    }, 50);
+}
+
+/* ================= COLOR BOX ================= */
+function renderColorBox(item) {
+
+    const colors = getColorOptions();
+
+    let html = `<label>Color</label>
+    <select id="editColor" class="w-full p-2 border rounded mb-3">`;
+
+    colors.forEach(c => {
+        html += `<option value="${c}">${c}</option>`;
+    });
+
+    html += `</select>`;
+
+    document.getElementById("colorBox").innerHTML = html;
+
+    setTimeout(() => {
+        document.getElementById("editColor").value = item.color || "";
+    }, 50);
+}
+
+/* ================= SAVE ================= */
+function saveEdit() {
+
+    if (editIndex === null) return;
+
+    let item = cart[editIndex];
+    if(document.getElementById("editSize")){
+
+        item.size = document.getElementById("editSize").value;
+    }else{
+
+        item.color = document.getElementById("editColor").value;
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+
+    closeModal();
     loadCart();
 }
 
-/* ===== REMOVE ===== */
-function removeItem(index){
-    cart.splice(index,1);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    loadCart();
+/* ================= CLOSE MODAL ================= */
+function closeModal() {
+    document.getElementById("colorModal").classList.add("hidden");
+    document.getElementById("sizeModal").classList.add("hidden");
 }
 
-/* ===== CHECKOUT ===== */
-function checkout(){
-    alert("Proceed to payment 💳");
-    window.location.href ="/Page/Payment/Payment.html";
-}
-
-/* ===== GO HOME ===== */
-function goHome(){
-    window.location.href = "/Page/Home/Home.html";
+/* ================= BACK ================= */
+function Back() {
+    if (history.length > 1) history.back();
+    else window.location.href = "/Page/Home/Home.html";
 }
 
 loadCart();
-
 </script>
 
 </body>
