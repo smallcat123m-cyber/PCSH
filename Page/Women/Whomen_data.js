@@ -50,38 +50,18 @@ function displayProducts(list) {
     let likes = JSON.parse(localStorage.getItem("likes")) || {};
 
     if (list.length === 0) {
-       WhoMenlist.innerHTML = `
-<div class="col-span-full flex items-center justify-center py-12">
-
-    <div class="text-center bg-white/5 backdrop-blur-md border border-white/10
-        rounded-2xl px-8 py-10 shadow-lg
-        animate-fadeInUp hover:scale-105 transition duration-300 max-w-md w-full">
-
-        <!-- ICON -->
-        <div class="text-5xl mb-4 text-cyan-400 animate-bounce">
-            <i class="fa-solid fa-magnifying-glass"></i>
+      WhoMenlist.innerHTML = `
+    <div class="col-span-full flex items-center justify-center py-12">
+        <div class="text-center bg-white/5 border border-white/10 rounded-2xl p-8">
+            <h2 class="text-xl font-bold">No Product Found</h2>
+            <p class="text-gray-400 mt-2">Try searching again</p>
+            <button onclick="displayProducts(Mens)"
+                class="mt-4 px-6 py-2 rounded-full bg-cyan-500">
+                Show All
+            </button>
         </div>
-
-        <!-- TITLE -->
-        <h2 class="text-2xl font-bold text-white mb-2">
-            No Product Found
-        </h2>
-
-        <!-- TEXT -->
-        <p class="text-gray-400 text-sm mb-6">
-            Try searching <span class="text-cyan-400 font-semibold">shirt, shoes, bag</span>
-        </p>
-
-        <!-- BUTTON -->
-        <button onclick="displayProducts(Mens)"
-            class="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500
-            text-sm font-semibold hover:scale-105 transition shadow-md">
-            Show All Products
-        </button>
-
     </div>
-</div>
-`;
+    `;
         return;
     }
 
