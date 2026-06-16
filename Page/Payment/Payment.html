@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
 <!-- SOCKET -->
-<script src="http://192.168.0.155:3000/socket.io/socket.io.js"></script>
+<script src="http://192.168.0.54:3000/socket.io/socket.io.js"></script>
 
 <!-- QR -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -278,7 +278,7 @@ async function showQRCode(){
   // clear old QR
   qrDiv.innerHTML = "";
 
-  const res = await fetch("http://192.168.0.155:3000/create-payment", {
+  const res = await fetch("http://192.168.0.54:3000/create-payment", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({
@@ -292,7 +292,7 @@ async function showQRCode(){
 
   const paymentId = data.paymentId;
 
-  const scanUrl = `http://192.168.0.155:5500/Page/Payment/scan.html?id=${paymentId}`;
+  const scanUrl = `http://192.168.0.54:5500/Page/Payment/scan.html?id=${paymentId}`;
 
   console.log("QR URL:", scanUrl);
 
@@ -332,7 +332,7 @@ function startTimer(){
 
 /* SOCKET */
 function startWatcher(paymentId){
-  const socket = io("http://192.168.0.155:3000");
+  const socket = io("http://192.168.0.54:3000");
 
   socket.on("payment-success", (data)=>{
     if(data.paymentId === paymentId){

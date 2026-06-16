@@ -2,267 +2,300 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Couple Home | VEXO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Couple Home | VEXO</title>
 
-<link rel="stylesheet" href="/src/output.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="/src/output.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-<style>
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+    <style>
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-.animate-fadeUp {
-    animation: fadeUp 0.6s ease forwards;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    overflow: hidden;
-    transition: 0.3s;
-}
+        .animate-fadeUp {
+            animation: fadeUp 0.6s ease forwards;
+        }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
 
-.animate-fadeIn {
-    animation: fadeIn 0.6s ease forwards;
-}
-</style>
-
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+        }
+    </style>
 </head>
 
-<body id="body" class="bg-black text-white transition duration-300 dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-black dark:text-white">
+<body class="bg-black text-white">
 
-<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-4 md:px-10 py-4 flex justify-between items-center">
+    <!-- NAVBAR -->
+    <nav
+        class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-4 md:px-10 py-4 flex justify-between items-center">
 
-    <h1 class="text-2xl md:text-3xl font-extrabold tracking-[4px] md:tracking-[6px] text-pink-400">
-        VEXO
-    </h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-[4px] text-pink-400">VEXO</h1>
 
-    <!-- MOBILE MENU BUTTON -->
-    <button onclick="toggleMenu()" class="md:hidden text-xl">
-        <i class="fa fa-bars"></i>
-    </button>
+        <ul class="hidden md:flex items-center gap-6 text-sm uppercase">
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="/Page/Men/Men.html">Men</a></li>
+            <li><a href="/Page/Women/whomen.html">Women</a></li>
+            <li><a href="/Page/Couple/Couple.html">Couple</a></li>
 
-    <!-- MENU -->
-    <ul id="menu"
-        class="hidden md:flex gap-4 md:gap-6 text-xs md:text-sm uppercase font-medium 
-        absolute md:static top-16 left-0 w-full md:w-auto bg-black md:bg-transparent 
-        flex-col md:flex-row p-4 md:p-0">
+            <li class="relative">
+                <a href="/Page/Carts/Addcart.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cart-count"
+                        class="absolute -top-2 -right-3 bg-pink-500 text-xs px-1 rounded-full">0</span>
+                </a>
+            </li>
 
-        <li class="text-pink-400"><a href="Home.html">Home</a></li>
-        <li><a href="/Page/Men/Men.html">Men</a></li>
-        <li><a href="/Page/Women/whomen.html">Women</a></li>
-        <li><a href="/Page/Couple/Couple.html">Couple</a></li>
-        <li><a href="/Page/Carts/Addcart.html">Cart</a></li>
-        <li>
-            <a href="/Page/Login/Login.html"
-                class="px-3 py-1 md:px-4 md:py-2 rounded-full bg-cyan-500">
-                Login
-            </a>
-        </li>
-    </ul>
+            <li>
+                <a href="/Page/Login/Login.html" class="px-4 py-2 rounded-full bg-cyan-500">
+                    Login
+                </a>
+            </li>
+        </ul>
 
-</nav>
-
-<!-- HERO -->
-<!--  -->
-<section class="px-4 md:px-10 mt-6">
-
-<div class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md
-    flex flex-col lg:flex-row items-center gap-8 p-6 md:p-12 shadow-2xl">
-
-    <!-- TEXT -->
-    <div class="flex-1 text-center lg:text-left">
-
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-            Match Your <span class="text-cyan-400">Couple Style</span>
-        </h1>
-
-        <p class="mt-4 text-gray-300 text-sm sm:text-base md:text-lg">
-            Discover trendy couple outfits for romantic, casual, and modern fashion styles.
-        </p>
-
-        <button class="mt-6 px-6 py-2 md:px-7 md:py-3 rounded-full 
-            bg-gradient-to-r from-cyan-400 to-blue-500 hover:scale-105 transition font-bold">
-            Shop Now ❤️
+        <button onclick="toggleMenu()" class="md:hidden text-2xl">
+            <i id="menuIcon" class="fa fa-bars"></i>
         </button>
+    </nav>
+
+    <!-- OVERLAY -->
+    <div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40">
     </div>
 
-    <!-- SLIDER -->
-    <div class="w-full lg:w-1/2 relative">
+    <!-- MOBILE MENU -->
+    <div id="menu" class="fixed top-0 left-0 w-[85%] max-w-xs h-full bg-black z-50
+transform -translate-x-full transition-all duration-300 ease-in-out
+p-5 flex flex-col gap-6 rounded-r-2xl shadow-2xl md:hidden">
+        <!-- MAIN BOX -->
+        <div class="flex flex-col gap-3">
 
-        <div class="absolute inset-0 bg-cyan-400/10 blur-3xl rounded-full"></div>
+            <a href="Home.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-pink-500/20 transition active:scale-95">
+                🏠 Home
+            </a>
 
-        <div class="relative z-10 overflow-hidden rounded-2xl">
+            <a href="/Page/Men/Men.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-pink-500/20 transition active:scale-95">
+                👕 Men
+            </a>
 
-            <div id="sliderWrapper"
-                class="flex transition-transform duration-700 ease-in-out">
+            <a href="/Page/Women/whomen.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-pink-500/20 transition active:scale-95">
+                👗 Women
+            </a>
 
-                <img src="/Banner/Men_Banner/men1.png" class="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover flex-shrink-0 rounded-2xl">
-                <img src="/Banner/Men_Banner/men2.png" class="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover flex-shrink-0 rounded-2xl">
-                <img src="/Banner/Men_Banner/men3.png" class="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover flex-shrink-0 rounded-2xl">
-                <img src="/Banner/Men_Banner/men4.png" class="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover flex-shrink-0 rounded-2xl">
+            <a href="/Page/Couple/Couple.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-pink-500/20 transition active:scale-95">
+                💑 Couple
+            </a>
 
+        </div>
+
+        <!-- SECOND BOX -->
+        <div class="flex flex-col gap-3 mt-2 border-t border-white/10 pt-4">
+
+            <a href="/Page/Carts/Addcart.html" class="flex items-center justify-between p-4 rounded-xl
+bg-white/5 border border-white/10
+hover:bg-cyan-500/20
+active:bg-cyan-500/30 active:scale-95
+transition-all duration-150 ease-in-out select-none">
+
+                <div class="flex items-center gap-3">
+                    <span>🛒</span>
+                    <span>Cart</span>
+                </div>
+
+                <i class="fa fa-chevron-right text-sm opacity-70"></i>
+            </a>
+
+            <a href="/Page/About/About.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-cyan-500/20 transition active:scale-95">
+                ℹ️ About
+            </a>
+
+            <a href="/Page/Contact/Contact.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
+        hover:bg-cyan-500/20 transition active:scale-95">
+                📞 Contact
+            </a>
+
+            <a href="/Page/Login/Login.html" class="block p-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500
+        text-center font-semibold active:scale-95">
+                🔐 Login
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- HERO -->
+    <section class="px-4 md:px-10 mt-6">
+        <div class="rounded-3xl border border-white/10 bg-white/5 flex flex-col lg:flex-row items-center gap-8 p-6">
+
+            <div class="flex-1 text-center lg:text-left">
+                <h1 class="text-4xl font-extrabold">
+                    Match Your <span class="text-cyan-400">Couple Style</span>
+                </h1>
+
+                <p class="mt-4 text-gray-300">
+                    Discover trendy couple outfits.
+                </p>
+
+                <button class="mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500">
+                    Shop Now ❤️
+                </button>
+            </div>
+
+            <div class="w-full lg:w-1/2 overflow-hidden rounded-2xl">
+                <div id="sliderWrapper" class="flex transition-transform duration-700">
+
+                    <img src="/Banner/Men_Banner/men1.png" class="w-full flex-shrink-0">
+                    <img src="/Banner/Men_Banner/men2.png" class="w-full flex-shrink-0">
+                    <img src="/Banner/Men_Banner/men3.png" class="w-full flex-shrink-0">
+                    <img src="/Banner/Men_Banner/men4.png" class="w-full flex-shrink-0">
+
+                </div>
             </div>
 
         </div>
-    </div>
+    </section>
 
-</div>
-</section>
+    <!-- PRODUCTS -->
+    <section class="px-4 md:px-10 mt-12">
 
-<!-- PRODUCTS -->
-<section class="px-4 md:px-10 mt-12">
+        <h2 class="text-center text-2xl md:text-3xl font-bold text-pink-400 mb-8">
+            POPULAR PRODUCTS
+        </h2>
 
-<h2 class="text-center text-xl sm:text-2xl md:text-3xl font-bold text-pink-400 tracking-[3px] md:tracking-[5px] mb-8">
-    POPULAR PRODUCTS
-</h2>
+        <div id="home-list"
+            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+        </div>
 
-<div id="home-list"
-    class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-</div>
+    </section>
 
-</section>
+    <!-- FOOTER -->
+    <footer class="mt-20 border-t border-white/10 text-gray-400 text-center py-6">
+        © 2026 VEXO
+    </footer>
 
-<!-- FOOTER -->
-<footer class="mt-20 bg-black border-t border-white/10 text-gray-400">
+    <!-- DATA FILES -->
+    <script src="/Page/Men/Men_data.js"></script>
+    <script src="/Page/Women/Whomen_data.js"></script>
+    <script src="/Page/Couple/Couple_data.js"></script>
 
-  <div class="max-w-7xl mx-auto px-4 md:px-10 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <script>
+        /* =============================
+           🛒 CART COUNT
+        ============================= */
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.getElementById("cart-count").innerText = cart.length;
 
-    <!-- BRAND -->
-    <div>
-      <h2 class="text-2xl font-extrabold text-white mb-3">VEXO ❤️</h2>
-      <p class="text-sm leading-relaxed">
-        Discover the latest fashion trends for Men, Women, and Couples.
-        Style your love with modern and elegant outfits.
-      </p>
+        /* =============================
+           🧠 MERGE DATA
+        ============================= */
+        const Homes = [
+            ...(typeof Mens !== "undefined" ? Mens : []),
+            ...(typeof Whoments !== "undefined" ? Whoments : []),
+            ...(typeof Couples !== "undefined" ? Couples : [])
+        ];
 
-      <!-- SOCIAL -->
-      <div class="flex gap-4 mt-5 text-lg">
-        <i class="fab fa-facebook hover:text-blue-500 cursor-pointer"></i>
-        <i class="fab fa-instagram hover:text-pink-500 cursor-pointer"></i>
-        <i class="fab fa-tiktok hover:text-white cursor-pointer"></i>
-        <i class="fab fa-telegram hover:text-cyan-400 cursor-pointer"></i>
-      </div>
-    </div>
+        /* =============================
+           🎯 RENDER PRODUCTS
+        ============================= */
+        const Homelist = document.getElementById("home-list");
 
-    <!-- SHOP -->
-    <div>
-      <h3 class="text-white font-semibold mb-4">Shop</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="/Page/Men/Men.html" class="hover:text-white">Men Clothing</a></li>
-        <li><a href="/Page/Women/whomen.html" class="hover:text-white">Women Clothing</a></li>
-        <li><a href="/Page/Couple/Couple.html" class="hover:text-white">Couple Outfit</a></li>
-        <li><a href="#" class="hover:text-white">New Arrivals</a></li>
-        <li><a href="#" class="hover:text-white">Best Sellers</a></li>
-      </ul>
-    </div>
+        function renderProducts(list) {
+            Homelist.innerHTML = "";
 
-    <!-- SUPPORT -->
-    <div>
-      <h3 class="text-white font-semibold mb-4">Support</h3>
-      <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-white">Help Center</a></li>
-        <li><a href="#" class="hover:text-white">Order Tracking</a></li>
-        <li><a href="#" class="hover:text-white">Returns & Refunds</a></li>
-        <li><a href="#" class="hover:text-white">Shipping Info</a></li>
-        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
-      </ul>
-    </div>
+            list.forEach((item, i) => {
+                Homelist.innerHTML += `
+        <div class="card p-2 animate-fadeUp">
+            <img src="${item.image}" class="w-full h-40 object-cover rounded-lg">
 
-    <!-- NEWSLETTER -->
-    <div>
-      <h3 class="text-white font-semibold mb-4">Stay Updated</h3>
-      <p class="text-sm mb-4">
-        Subscribe to get special offers and latest fashion updates.
-      </p>
+            <h3 class="mt-2 text-sm font-bold">${item.name}</h3>
+            <p class="text-pink-400">$${item.price}</p>
 
-      <div class="flex items-center bg-white/10 rounded-full overflow-hidden">
-        <input type="email" placeholder="Enter your email"
-          class="bg-transparent px-4 py-2 w-full text-sm focus:outline-none text-white">
-        <button class="bg-gradient-to-r from-pink-500 to-purple-500 px-4 py-2 text-sm">
-          Subscribe
-        </button>
-      </div>
+            <button onclick="addToCart(${i})"
+            class="mt-2 w-full bg-pink-500 py-1 rounded">
+            Add
+            </button>
+        </div>
+        `;
+            });
+        }
 
-      <!-- CONTACT -->
-      <div class="mt-5 text-sm space-y-1">
-        <p><i class="fa fa-map-marker-alt mr-2"></i> Phnom Penh, Cambodia</p>
-        <p><i class="fa fa-phone mr-2"></i> +855 123 456 78</p>
-        <p><i class="fa fa-envelope mr-2"></i> support@vexo.com</p>
-      </div>
-    </div>
+        /* =============================
+           🛒 ADD TO CART
+        ============================= */
+        function addToCart(index) {
+            if (confirm('add now')) {
 
-  </div>
+                cart.push(Homes[index]);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                document.getElementById("cart-count").innerText = cart.length;
+            }
+        }
 
-  <!-- BOTTOM -->
-  <div class="border-t border-white/10 text-center py-4 text-sm">
-    © 2026 VEXO. All rights reserved. | Designed with ❤️
-  </div>
+        /* =============================
+           🎬 SLIDER
+        ============================= */
+        const sliderWrapper = document.getElementById("sliderWrapper");
+        let index = 0;
 
-</footer>
-<!-- <a href="/Banner/Men_Banner/"></a> -->
+        function slideNext() {
+            index++;
+            sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
 
+            if (index >= sliderWrapper.children.length) {
+                index = 0;
+                sliderWrapper.style.transform = `translateX(0%)`;
+            }
+        }
+        setInterval(slideNext, 3000);
 
-<script src="/Page/Men/Men_data.js"></script>
-<script src="/Page/Women/Whomen_data.js"></script>
-<script src="/Page/Couple/Couple_data.js"></script>
+        /* =============================
+           📱 MOBILE MENU
+        ============================= */
+        let menuOpen = false;
 
-<!-- ADD YOUR HOME JS -->
-<script src="Home_data.js"></script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            const overlay = document.getElementById("overlay");
+            const icon = document.getElementById("menuIcon");
 
-<!-- SLIDER -->
-<script>
-const images = [
-    "/Banner/Men_Banner/men1.png",
-    "/Banner/Men_Banner/men2.png",
-    "/Banner/Men_Banner/men3.png",
-    "/Banner/Men_Banner/men4.png"
-];
+            menuOpen = !menuOpen;
 
-const sliderWrapper = document.getElementById("sliderWrapper");
-const slides = sliderWrapper.children;
+            if (menuOpen) {
+                menu.style.transform = "translateX(0)";
+                overlay.classList.remove("hidden");
+                icon.classList.replace("fa-bars", "fa-times");
+            } else {
+                menu.style.transform = "translateX(-100%)";
+                overlay.classList.add("hidden");
+                icon.classList.replace("fa-times", "fa-bars");
+            }
+        }
 
-let index = 0;
-const total = slides.length;
+        /* INIT */
+        renderProducts(Homes);
+    </script>
 
-function slideNext() {
-    index++;
-
-    sliderWrapper.style.transition = "transform 0.7s ease-in-out";
-    sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
-
-    // when reach last slide → reset smoothly
-    if (index === total) {
-        setTimeout(() => {
-            sliderWrapper.style.transition = "none";
-            index = 0;
-            sliderWrapper.style.transform = `translateX(0%)`;
-        }, 700);
-    }
-}
-
-// auto loop
-setInterval(slideNext, 5000);
-</script>
 </body>
+
 </html>
