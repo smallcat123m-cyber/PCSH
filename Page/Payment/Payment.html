@@ -78,7 +78,18 @@ body {
     <h2 class="text-2xl font-bold mb-4">🛒 Checkout</h2>
 
     <div id="orderList" class="bg-zinc-800/60 p-4 rounded-xl mb-4 space-y-2"></div>
-    <!-- <div id="images" class="bg-zinc-800/60 p-4 rounded-xl mb-4 space-y-2"></div> -->
+     <h1 class="text-center py-2 uppercase text-yellow-600 ">Banking</h1>
+  <div class="flex justify-between gap-3 px-10">
+  <button onclick="selectBank('ABA', this)" 
+    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">ABA</button>
+
+  <button onclick="selectBank('WING', this)" 
+    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">Wing</button>
+
+  <button onclick="selectBank('ACLEDA', this)" 
+    class="bank-btn bg-blue-300 w-30 h-10 rounded-lg">Acleda</button>
+</div>
+    <br>
 
     <h3 class="text-lg mb-4">
       Total: $<span id="totalPrice">0</span>
@@ -88,12 +99,19 @@ body {
       <div id="progressBar" class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-300" style="width:0%"></div>
     </div>
 
-    <p id="progressText" class="text-gray-400 mb-4 dots">Initializing</p>
+    <p id="progressText" class="text-orange-400 mb-4 dots">Initializing</p>
 
-    <button onclick="payments()" id="payBtn"
-      class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg">
-      Pay Now
-    </button>
+    <button type="button" onclick="payments()" id="payBtn"
+  disabled
+  class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+  Pay Now
+</button>
+<br><br>
+<button type="button" 
+  class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+  Back
+</button>
+
   </div>
 
   <!-- RIGHT -->
@@ -153,14 +171,41 @@ function loadOrder(){
   document.getElementById("totalPrice").innerText = total;
 }
 
+
+// Select Banks
+let Banks = null;
+function selectBank(bank, el) {
+  Banks = bank;
+
+  // remove active style from all
+  document.querySelectorAll(".bank-btn").forEach(btn => {
+    btn.classList.remove("bg-yellow-500", "text-black");
+  });
+
+  // highlight selected
+  el.classList.add("bg-yellow-500", "text-black");
+
+  // enable pay button
+  document.getElementById("payBtn").disabled = false;
+}
 /* PAYMENT */
-function payments(){
-  if(cart.length === 0){
+function payments() {
+  
+  if (cart.length === 0) {
     alert("Cart is empty");
     return;
   }
 
+  if (!Banks) {
+    alert("⚠️ Please select a bank first!");
+    return;
+  }
+
+  // now allowed
+  alert("✅ Paying with " + Banks);
+
   document.getElementById("payBtn").disabled = true;
+
   startProgress();
 }
 

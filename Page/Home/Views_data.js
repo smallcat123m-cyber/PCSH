@@ -1,100 +1,126 @@
-
 const product = JSON.parse(localStorage.getItem("viewProduct"));
 const box = document.getElementById("view-box");
 
 let quantity = 1;
+let selectedSize = null;
 let selectedColor = null;
+
+// =========================
+// SIZE OPTIONS
+// =========================
+function getSize(type) {
+    if (type === "shirt" || type === "trousers") {
+        return ["XS", "S", "M", "L", "XL"];
+    } else if (type === "shoes") {
+        return ["20", "25", "33", "40"];
+    } else if (type === "sidebag") {
+        return ["Black", "White", "Gray", "Red"];
+    }
+    return [];
+}
 
 // =========================
 // RENDER
 // =========================
 if (product) {
 
+    const sizes = getSize(product.type);
+
+    const sizeHTML = sizes.map(size => `
+        <button onclick="selectOption(this)"
+            class=" px-6 py-3 border rounded-xl text-xl hover:bg-pink-500 transition">
+            ${size}
+        </button>
+    `).join("");
+
     box.innerHTML = `
-    <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 py-10">
+   <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 py-10">
 
-        <!-- TOP -->
-        <div class="flex justify-between mb-8">
-            <button onclick="goBack()" class="text-gray-300 hover:text-cyan-400">
-                ← Back
-            </button>
+    <!-- TOP -->
+    <div class="flex justify-end items-center mb-10 gap-7">
+        
 
-            <button onclick="goCart()" class="bg-cyan-500 px-5 py-2 rounded-full">
-                Cart 🛒
-            </button>
+        <button onclick="goBack()" 
+            class="bg-cyan-500/20 backdrop-blur px-5 py-2 rounded-br-md rounded-bl-xl border border-cyan-400 hover:bg-cyan-500 hover:text-black transition">
+            Back
+        </button>
+
+        <button onclick="goCart()" 
+            class="bg-cyan-500/20 backdrop-blur px-5 py-2 rounded-full border border-cyan-400 hover:bg-cyan-500 hover:text-black transition">
+            Cart 🛒
+        </button>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- IMAGE -->
+        <div class="relative group">
+            <img src="${product.image}" 
+                class="w-160 h-160 object-cover rounded-3xl shadow-2xl transition duration-500 group-hover:scale-105">
+
+            <div class="absolute inset-0 bg-black/20 rounded-3xl"></div>
         </div>
 
-        <div class="grid lg:grid-cols-2 gap-10">
+        <!-- INFO -->
+        <div class="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-xl">
 
-            <!-- IMAGE -->
-            <div>
-                <img src="${product.image}"
-                    class="w-full h-[520px] object-cover rounded-2xl shadow-lg">
+            <h1 class="text-4xl font-bold mb-2">${product.name}</h1>
+
+            <p class="text-gray-400 mt-3 leading-relaxed">
+                ${product.des}
+            </p>
+
+            <h2 class="text-4xl text-cyan-400 mt-5 font-bold">
+                $${product.price}
+            </h2>
+
+            <!-- SIZE -->
+            <div class="mt-6">
+                <p class="text-gray-400 mb-3">Model</p>
+                <div class="flex gap-3 flex-wrap">
+                    ${sizeHTML}
+                </div>
             </div>
 
-            <!-- INFO -->
-            <div class="flex flex-col justify-between">
+            <!-- QTY -->
+            <div class="mt-8 flex items-center justify-between bg-white/5 px-5 py-4 rounded-xl border border-white/10">
 
-                <div>
+                <span class="text-gray-400">Quantity</span>
 
-                    <h1 class="text-4xl font-bold">${product.name}</h1>
-
-                    <p class="text-gray-300 mt-3">
-                        ${product.des || "Premium quality modern product"}
-                    </p>
-
-                    <h2 class="text-3xl text-cyan-400 mt-4">
-                        $${product.price}
-                    </h2>
-
-                    <!-- COLOR -->
-                    <div class="mt-6">
-                        <p class="text-gray-400 mb-3">Select Color</p>
-
-                        <div class="flex flex-wrap gap-3">
-
-                            <button onclick="selectColor(this)" class="color-btn px-4 py-2 border rounded-xl">Black</button>
-                            <button onclick="selectColor(this)" class="color-btn px-4 py-2 border rounded-xl">White</button>
-                            <button onclick="selectColor(this)" class="color-btn px-4 py-2 border rounded-xl">Blue</button>
-                            <button onclick="selectColor(this)" class="color-btn px-4 py-2 border rounded-xl">Red</button>
-
-                        </div>
-                    </div>
-
-                    <!-- QTY -->
-                    <div class="mt-6 flex items-center gap-4">
-
-                        <button onclick="changeQty(-1)"
-                            class="px-4 py-2 bg-white/10 rounded hover:bg-red-500">-</button>
-
-                        <span id="qty" class="text-xl font-bold">1</span>
-
-                        <button onclick="changeQty(1)"
-                            class="px-4 py-2 bg-white/10 rounded hover:bg-green-500">+</button>
-
-                    </div>
-
-                </div>
-
-                <!-- ACTION -->
-                <div class="mt-8 border-t border-white/20 pt-6">
-
-                    <div class="flex justify-between mb-4">
-                        <span>Total</span>
-                        <span id="totalPrice">$${product.price}</span>
-                    </div>
-
-                    <button id="addBtn"
-                        onclick="addToCartFromView()"
-                        class="w-full bg-gradient-to-r from-cyan-400 to-blue-500 py-3 rounded-xl font-bold hover:scale-105 transition">
-                        Add to Cart
+                <div class="flex items-center gap-4">
+                    <button onclick="changeQty(-1)" 
+                        class="w-10 h-10 rounded-full bg-white/10 hover:bg-cyan-400 hover:text-black transition">
+                        -
                     </button>
 
-                </div>
+                    <span id="qty" class="text-xl font-bold w-6 text-center">
+                        ${quantity}
+                    </span>
 
+                    <button onclick="changeQty(1)" 
+                        class="w-10 h-10 rounded-full bg-white/10 hover:bg-cyan-400 hover:text-black transition">
+                        +
+                    </button>
+                </div>
             </div>
+
+            <!-- TOTAL -->
+            <div class="mt-6 bg-gradient-to-r from-pink-500/20 to-cyan-500/20 p-5 rounded-xl border border-white/10 flex justify-between items-center">
+                <span class="text-gray-300">Total</span>
+                <span class="text-2xl text-pink-400 font-bold">
+                    $<span id="totalPrice">${product.price}</span>
+                </span>
+            </div>
+
+            <!-- BUTTON -->
+            <button onclick="addToCartFromView()"
+                class="mt-8 w-full bg-gradient-to-r from-cyan-400 to-blue-500 py-4 rounded-xl font-bold text-black text-lg shadow-lg hover:scale-105 hover:shadow-cyan-500/40 transition duration-300">
+                Add to Cart 🛒
+            </button>
+
         </div>
     </div>
+</div>
     `;
 
 } else {
@@ -120,31 +146,46 @@ function changeQty(value) {
     if (quantity < 1) quantity = 1;
 
     document.getElementById("qty").innerText = quantity;
-    document.getElementById("totalPrice").innerText = "$" + (product.price * quantity);
+    document.getElementById("totalPrice").innerText = product.price * quantity;
 }
 
 // =========================
-// COLOR SELECT
+// SIZE SELECT ✅ FIXED
 // =========================
-function selectColor(btn) {
+function selectOption(btn) {
 
-    document.querySelectorAll(".color-btn").forEach(b => {
+    // remove active from all
+    document.querySelectorAll(".option-btn").forEach(b => {
         b.classList.remove("bg-pink-500", "text-white");
     });
 
+    // add active
     btn.classList.add("bg-pink-500", "text-white");
 
-    selectedColor = btn.innerText.trim();
+    const value = btn.innerText.trim();
+
+    if (product.type === "sidebag") {
+        selectedColor = value;
+    } else {
+        selectedSize = value;
+    }
 }
 
 // =========================
-// ADD TO CART
+// ADD TO CART ✅ FIXED
 // =========================
 function addToCartFromView() {
 
-    if (!selectedColor) {
-        alert("⚠️ Please select a color");
-        return;
+    if (product.type === "sidebag") {
+        if (!selectedColor) {
+            alert("⚠️ Please select a color");
+            return;
+        }
+    } else {
+        if (!selectedSize) {
+            alert("⚠️ Please select a size");
+            return;
+        }
     }
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -152,11 +193,14 @@ function addToCartFromView() {
     const newItem = {
         ...product,
         qty: quantity,
+        size: selectedSize,
         color: selectedColor
     };
 
-    const existing = cart.find(
-        item => item.id === newItem.id && item.color === newItem.color
+    const existing = cart.find(item =>
+        item.id === newItem.id &&
+        item.size === newItem.size &&
+        item.color === newItem.color
     );
 
     if (existing) {
