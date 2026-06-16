@@ -1,60 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us | VEXO Couple</title>
+<title>About | VEXO Couple</title>
 
 <link rel="stylesheet" href="/src/output.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
+<style>
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeUp {
+    animation: fadeUp 0.6s ease forwards;
+}
+</style>
 </head>
 
 <body class="bg-gradient-to-b from-black via-gray-900 to-black text-white">
 
 <!-- NAVBAR -->
-<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-4 md:px-10 py-4 flex justify-between items-center">
 
-    <h1 class="text-3xl font-extrabold tracking-[6px] text-pink-400 drop-shadow-[0_0_15px_pink]">
-        VEXO ❤️
+    <h1 class="text-2xl md:text-3xl font-extrabold tracking-[6px] text-pink-400">
+        VEXO
     </h1>
 
-    <ul class="flex gap-6 text-sm uppercase font-medium">
-        <li><a href="/Page/Home/Home.html" class="hover:text-pink-400">Home</a></li>
-        <li><a href="/Page/Men/Men.html" class="hover:text-pink-400">Men</a></li>
-        <li><a href="/Page/Women/whomen.html" class="hover:text-pink-400">Women</a></li>
-        <li><a href="/Page/Couple/Couple.html" class="hover:text-pink-400">Couple</a></li>
-        <li class="text-pink-400 border-b-2 border-pink-400"><a href="About.html">About</a></li>
+    <!-- DESKTOP MENU -->
+    <ul class="hidden md:flex gap-6 text-sm uppercase">
+        <li><a href="/Page/Home/Home.html">Home</a></li>
+        <li><a href="/Page/Men/Men.html">Men</a></li>
+        <li><a href="/Page/Women/whomen.html">Women</a></li>
+        <li><a href="/Page/Couple/Couple.html">Couple</a></li>
+        <li><a href="/Page/Carts/Addcart.html">Cart</a></li>
+        <li><a href="/Page/Contact/Contact.html">Contact</a></li>
+        <li class="text-pink-400 border-b-2 border-pink-400">About</li>
+        <li><a href="/Page/Login/Login.html">Login</a></li>
     </ul>
 
+    <!-- MOBILE BUTTON -->
+    <button class="md:hidden text-xl" onclick="toggleMenu()">
+        <i id="menuIcon" class="fa fa-bars"></i>
+    </button>
 </nav>
 
+<!-- MOBILE MENU -->
+<div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/60 z-40"></div>
+
+<div id="menu"
+<div id="menu"
+class="fixed top-0 left-0 w-[85%] max-w-xs h-full bg-black z-50
+transform -translate-x-full transition-all duration-300 p-5 flex flex-col gap-6 md:hidden text-xl">
+
+        <a href="/Page/Home/Home.html">🏠 Home</a>
+        <a href="/Page/Men/Men.html" class="p-4 bg-white/5 rounded-xl">👕 Men</a>
+        <a href="/Page/Women/whomen.html" class="p-4 bg-white/5 rounded-xl">👗 Women</a>
+        <a href="/Page/Couple/Couple.html" class="p-4 bg-white/5 rounded-xl">💑 Couple</a>
+        <a href="/Page/Carts/Addcart.html" class="p-4 bg-white/5 rounded-xl"> Cart</a>
+        <a href="/Page/Contact/Contact.html" class="p-4 bg-white/5 rounded-xl">Caontact</a>
+        <a href="/Page/About/About.html" class="p-4 bg-white/5 rounded-xl">About</a>
+        <a href="/Page/Login/Login.html" class="p-4 bg-white/5 rounded-xl">Login</a>
+
+</div>
+
 <!-- HERO -->
-<section class="px-6 md:px-10 mt-12">
+<section class="px-4 md:px-10 mt-12">
 
 <div class="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md
-flex flex-col md:flex-row items-center justify-between gap-10 p-10 shadow-2xl">
+p-6 md:p-10 text-center animate-fadeUp">
 
-    <div>
-        <h1 class="text-4xl md:text-6xl font-extrabold">
-            About <span class="text-pink-400">VEXO Couple</span>
-        </h1>
+    <h1 class="text-3xl md:text-5xl font-extrabold">
+        About <span class="text-pink-400">VEXO Couple</span>
+    </h1>
 
-        <p class="mt-4 text-gray-300 text-lg">
-            We create modern couple fashion that connects love, style, and confidence ❤️
-        </p>
-    </div>
-
+    <p class="mt-4 text-gray-300 text-base md:text-lg">
+        We create modern couple fashion that connects love, style, and confidence ❤️
+    </p>
 
 </div>
 
 </section>
 
 <!-- WHO WE ARE -->
-<section class="px-6 md:px-10 mt-16 grid md:grid-cols-2 gap-10 items-center">
+<section class="px-4 md:px-10 mt-16 grid md:grid-cols-2 gap-10 items-center">
 
-    <div>
+    <div class="animate-fadeUp">
         <h2 class="text-3xl font-bold text-pink-400 mb-4">Who We Are</h2>
 
         <p class="text-gray-400 mb-4">
@@ -65,30 +97,31 @@ flex flex-col md:flex-row items-center justify-between gap-10 p-10 shadow-2xl">
             We design stylish, comfortable, and trendy clothes that help couples express love through fashion.
         </p>
     </div>
+
 </section>
 
 <!-- WHY CHOOSE US -->
-<section class="px-6 md:px-10 mt-20">
+<section class="px-4 md:px-10 mt-20">
 
-<h2 class="text-3xl font-bold text-center text-white mb-10">
+<h2 class="text-3xl font-bold text-center mb-10">
     Why Choose VEXO ❤️
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-pink-500/30 transition">
-        <h3 class="text-xl font-bold text-pink-400 mb-2">💕 Couple Style</h3>
-        <p class="text-gray-400">Matching outfits designed for love and connection.</p>
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 transition">
+        <h3 class="text-xl font-bold text-pink-400">💕 Couple Style</h3>
+        <p class="text-gray-400 mt-2">Matching outfits designed for love and connection.</p>
     </div>
 
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-cyan-500/30 transition">
-        <h3 class="text-xl font-bold text-cyan-400 mb-2">⚡ Modern Design</h3>
-        <p class="text-gray-400">Trendy and aesthetic fashion collections.</p>
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 transition">
+        <h3 class="text-xl font-bold text-cyan-400">⚡ Modern Design</h3>
+        <p class="text-gray-400 mt-2">Trendy and aesthetic fashion collections.</p>
     </div>
 
-    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 hover:shadow-purple-500/30 transition">
-        <h3 class="text-xl font-bold text-purple-400 mb-2">🚀 Fast Delivery</h3>
-        <p class="text-gray-400">Quick shipping and trusted service.</p>
+    <div class="bg-white/5 border border-white/10 p-6 rounded-xl text-center hover:scale-105 transition">
+        <h3 class="text-xl font-bold text-purple-400">🚀 Fast Delivery</h3>
+        <p class="text-gray-400 mt-2">Quick shipping and trusted service.</p>
     </div>
 
 </div>
@@ -96,13 +129,13 @@ flex flex-col md:flex-row items-center justify-between gap-10 p-10 shadow-2xl">
 </section>
 
 <!-- TEAM -->
-<section class="px-6 md:px-10 mt-20">
+<section class="px-4 md:px-10 mt-20">
 
 <h1 class="text-center text-4xl font-extrabold text-pink-400 mb-10">
     Our Team 👨‍💻
 </h1>
 
-<div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
     <!-- MEMBER -->
     <div class="bg-white/5 border border-white/10 rounded-xl p-5 text-center hover:scale-105 transition">
@@ -117,7 +150,6 @@ flex flex-col md:flex-row items-center justify-between gap-10 p-10 shadow-2xl">
         </button>
     </div>
 
-    <!-- ADD MORE TEAM MEMBERS HERE -->
     <div class="bg-white/5 border border-white/10 rounded-xl p-5 text-center hover:scale-105 transition">
         <img src="https://i.pinimg.com/736x/55/ee/66/55ee66ff77889900aa11bb22cc33dd44.jpg"
             class="w-24 h-24 mx-auto rounded-full border-2 border-cyan-400 mb-3">
@@ -134,14 +166,67 @@ flex flex-col md:flex-row items-center justify-between gap-10 p-10 shadow-2xl">
 
 </section>
 
-<!-- FOOTER -->
-<footer class="mt-20 border-t border-white/10 px-10 py-12 text-center text-gray-400">
+<!-- FOOTER (UPGRADED) -->
+<footer class="mt-20 border-t border-white/10 px-6 md:px-10 py-12">
 
-<h2 class="text-white text-2xl font-bold">VEXO ❤️</h2>
-<p class="mt-2">Couple Fashion Brand</p>
-<p class="mt-6 text-sm">© 2026 VEXO. All rights reserved.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+
+    <div>
+        <h2 class="text-xl font-bold text-pink-400 mb-3">VEXO ❤️</h2>
+        <p class="text-gray-400">Modern couple fashion brand built with love and style.</p>
+    </div>
+
+    <div>
+        <h3 class="font-bold mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-gray-400">
+            <li>Home</li>
+            <li>Men</li>
+            <li>Women</li>
+            <li>Couple</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3 class="font-bold mb-3">Support</h3>
+        <ul class="space-y-2 text-gray-400">
+            <li>Contact</li>
+            <li>FAQ</li>
+            <li>Shipping</li>
+            <li>Returns</li>
+        </ul>
+    </div>
+
+    <div>
+        <h3 class="font-bold mb-3">Social</h3>
+        <div class="flex gap-4 text-xl">
+            <i class="fab fa-facebook text-blue-400"></i>
+            <i class="fab fa-instagram text-pink-400"></i>
+            <i class="fab fa-tiktok text-white"></i>
+            <i class="fab fa-telegram text-cyan-400"></i>
+        </div>
+    </div>
+
+</div>
+
+<p class="text-center text-gray-500 mt-10 text-xs">
+    © 2026 VEXO. All rights reserved.
+</p>
 
 </footer>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("menu");
+    const overlay = document.getElementById("overlay");
+    const icon = document.getElementById("menuIcon");
+
+    menu.classList.toggle("-translate-x-full");
+    overlay.classList.toggle("hidden");
+
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-times");
+}
+</script>
 
 </body>
 </html>

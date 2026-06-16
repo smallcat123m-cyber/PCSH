@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Couple Home | VEXO</title>
+    <title>Home | VEXO</title>
 
     <link rel="stylesheet" href="/src/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
@@ -23,37 +23,32 @@
         }
 
         .animate-fadeUp {
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+            animation: fadeUp .6s ease forwards;
         }
     </style>
+
 </head>
 
 <body class="bg-black text-white">
 
-    <!-- NAVBAR -->
+    <!-- ================= NAVBAR ================= -->
     <nav
-        class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-4 md:px-10 py-4 flex justify-between items-center">
+        class="sticky top-0 z-50 bg-black/70 backdrop-blur border-b border-white/10 px-4 md:px-10 py-4 flex justify-between items-center">
 
-        <h1 class="text-2xl md:text-3xl font-extrabold tracking-[4px] text-pink-400">VEXO</h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-[4px] text-cyan-400">
+            VEXO HOME
+        </h1>
 
         <ul class="hidden md:flex items-center gap-6 text-sm uppercase">
-            <li><a href="Home.html">Home</a></li>
+            <!-- <li><a href="Home.html" class="text-cyan-400 border-b-2 border-cyan-400">Home</a></li> -->
+            <li class="text-cyan-400 border-b-2 border-cyan-400"><a href="Home.html">Home</a></li>
             <li><a href="/Page/Men/Men.html">Men</a></li>
             <li><a href="/Page/Women/whomen.html">Women</a></li>
             <li><a href="/Page/Couple/Couple.html">Couple</a></li>
+            <li><a href="/Page/Carts/Addcart.html">Cart</a></li>
+            <li><a href="/Page/Contact/Contact.html">Contact</a></li>
+            <li><a href="/Page/About/About.html">About</a></li>
+            <li><a href="/Page/Login/Login.html">Login</a></li>
 
             <li class="relative">
                 <a href="/Page/Carts/Addcart.html">
@@ -62,113 +57,57 @@
                         class="absolute -top-2 -right-3 bg-pink-500 text-xs px-1 rounded-full">0</span>
                 </a>
             </li>
-
-            <li>
-                <a href="/Page/Login/Login.html" class="px-4 py-2 rounded-full bg-cyan-500">
-                    Login
-                </a>
-            </li>
         </ul>
 
         <button onclick="toggleMenu()" class="md:hidden text-2xl">
             <i id="menuIcon" class="fa fa-bars"></i>
         </button>
+
     </nav>
 
-    <!-- OVERLAY -->
-    <div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40">
-    </div>
+    <!-- ================= MOBILE MENU ================= -->
+    <div id="overlay" onclick="toggleMenu()" class="hidden fixed inset-0 bg-black/60 z-40"></div>
 
-    <!-- MOBILE MENU -->
     <div id="menu" class="fixed top-0 left-0 w-[85%] max-w-xs h-full bg-black z-50
-transform -translate-x-full transition-all duration-300 ease-in-out
-p-5 flex flex-col gap-6 rounded-r-2xl shadow-2xl md:hidden">
-        <!-- MAIN BOX -->
-        <div class="flex flex-col gap-3">
+transform -translate-x-full transition duration-300 p-5 flex flex-col gap-4 text-xl">
 
-            <a href="Home.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-pink-500/20 transition active:scale-95">
-                🏠 Home
-            </a>
+        <a href="Home.html" class="p-4 bg-white/5 rounded-xl">🏠 Home</a>
+        <a href="/Page/Men/Men.html" class="p-4 bg-white/5 rounded-xl">👕 Men</a>
+        <a href="/Page/Women/whomen.html" class="p-4 bg-white/5 rounded-xl">👗 Women</a>
+        <a href="/Page/Couple/Couple.html" class="p-4 bg-white/5 rounded-xl">💑 Couple</a>
+        <a href="/Page/Carts/Addcart.html" class="p-4 bg-white/5 rounded-xl"> Cart</a>
+        <a href="/Page/Contact/Contact.html" class="p-4 bg-white/5 rounded-xl">Caontact</a>
+        <a href="/Page/About/About.html" class="p-4 bg-white/5 rounded-xl">About</a>
+        <a href="/Page/Login/Login.html" class="p-4 bg-white/5 rounded-xl">Login</a>
 
-            <a href="/Page/Men/Men.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-pink-500/20 transition active:scale-95">
-                👕 Men
-            </a>
 
-            <a href="/Page/Women/whomen.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-pink-500/20 transition active:scale-95">
-                👗 Women
-            </a>
-
-            <a href="/Page/Couple/Couple.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-pink-500/20 transition active:scale-95">
-                💑 Couple
-            </a>
-
-        </div>
-
-        <!-- SECOND BOX -->
-        <div class="flex flex-col gap-3 mt-2 border-t border-white/10 pt-4">
-
-            <a href="/Page/Carts/Addcart.html" class="flex items-center justify-between p-4 rounded-xl
-bg-white/5 border border-white/10
-hover:bg-cyan-500/20
-active:bg-cyan-500/30 active:scale-95
-transition-all duration-150 ease-in-out select-none">
-
-                <div class="flex items-center gap-3">
-                    <span>🛒</span>
-                    <span>Cart</span>
-                </div>
-
-                <i class="fa fa-chevron-right text-sm opacity-70"></i>
-            </a>
-
-            <a href="/Page/About/About.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-cyan-500/20 transition active:scale-95">
-                ℹ️ About
-            </a>
-
-            <a href="/Page/Contact/Contact.html" class="block p-4 rounded-xl bg-white/5 border border-white/10
-        hover:bg-cyan-500/20 transition active:scale-95">
-                📞 Contact
-            </a>
-
-            <a href="/Page/Login/Login.html" class="block p-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500
-        text-center font-semibold active:scale-95">
-                🔐 Login
-            </a>
-
-        </div>
 
     </div>
 
-    <!-- HERO -->
-    <section class="px-4 md:px-10 mt-6">
+    <!-- ================= HERO ================= -->
+    <section class="px-4 sm:px-6 md:px-10 mt-6">
         <div class="rounded-3xl border border-white/10 bg-white/5 flex flex-col lg:flex-row items-center gap-8 p-6">
 
             <div class="flex-1 text-center lg:text-left">
-                <h1 class="text-4xl font-extrabold">
-                    Match Your <span class="text-cyan-400">Couple Style</span>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold">
+                    Upgrade Your <span class="text-cyan-400">Style</span>
                 </h1>
 
-                <p class="mt-4 text-gray-300">
-                    Discover trendy couple outfits.
+                <p class="mt-4 text-gray-300 text-sm md:text-base">
+                    Discover modern fashion for everyone.
                 </p>
 
-                <button class="mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500">
-                    Shop Now ❤️
+                <button class="mt-6 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 active:scale-95">
+                    Shop Now
                 </button>
             </div>
 
             <div class="w-full lg:w-1/2 overflow-hidden rounded-2xl">
-                <div id="sliderWrapper" class="flex transition-transform duration-700">
+                <div id="sliderWrapper" class="flex transition duration-700">
 
                     <img src="/Banner/Men_Banner/men1.png" class="w-full flex-shrink-0">
                     <img src="/Banner/Men_Banner/men2.png" class="w-full flex-shrink-0">
                     <img src="/Banner/Men_Banner/men3.png" class="w-full flex-shrink-0">
-                    <img src="/Banner/Men_Banner/men4.png" class="w-full flex-shrink-0">
 
                 </div>
             </div>
@@ -176,124 +115,137 @@ transition-all duration-150 ease-in-out select-none">
         </div>
     </section>
 
-    <!-- PRODUCTS -->
-    <section class="px-4 md:px-10 mt-12">
+    <!-- ================= PRODUCTS ================= -->
+    <section class="px-4 sm:px-6 md:px-10 lg:px-16 mt-12">
 
-        <h2 class="text-center text-2xl md:text-3xl font-bold text-pink-400 mb-8">
+        <h2 class="text-center text-xl sm:text-2xl md:text-3xl font-bold text-pink-400 mb-8">
             POPULAR PRODUCTS
         </h2>
 
         <div id="home-list"
-            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
+            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
         </div>
 
     </section>
 
-    <!-- FOOTER -->
-    <footer class="mt-20 border-t border-white/10 text-gray-400 text-center py-6">
+    <!-- ================= FOOTER ================= -->
+    <footer class="mt-20 border-t border-white/10 text-center py-6 text-gray-400">
         © 2026 VEXO
     </footer>
 
-    <!-- DATA FILES -->
+    <!-- ================= JS ================= -->
     <script src="/Page/Men/Men_data.js"></script>
     <script src="/Page/Women/Whomen_data.js"></script>
     <script src="/Page/Couple/Couple_data.js"></script>
 
     <script>
-        /* =============================
-           🛒 CART COUNT
-        ============================= */
+
+        // CART
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         document.getElementById("cart-count").innerText = cart.length;
 
-        /* =============================
-           🧠 MERGE DATA
-        ============================= */
+        // MERGE DATA
         const Homes = [
             ...(typeof Mens !== "undefined" ? Mens : []),
             ...(typeof Whoments !== "undefined" ? Whoments : []),
             ...(typeof Couples !== "undefined" ? Couples : [])
         ];
 
-        /* =============================
-           🎯 RENDER PRODUCTS
-        ============================= */
+        // RENDER
         const Homelist = document.getElementById("home-list");
 
         function renderProducts(list) {
             Homelist.innerHTML = "";
+            let likes = JSON.parse(localStorage.getItem("likes")) || {};
 
-            list.forEach((item, i) => {
+            list.forEach(item => {
+                const likeCount = likes[item.id] || 0;
+
                 Homelist.innerHTML += `
-        <div class="card p-2 animate-fadeUp">
-            <img src="${item.image}" class="w-full h-40 object-cover rounded-lg">
+<div class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-400 transition flex flex-col">
 
-            <h3 class="mt-2 text-sm font-bold">${item.name}</h3>
-            <p class="text-pink-400">$${item.price}</p>
+<div class="overflow-hidden">
+<img src="${item.image}" 
+class="w-full h-52 sm:h-56 md:h-60 object-cover group-hover:scale-105 transition">
+</div>
 
-            <button onclick="addToCart(${i})"
-            class="mt-2 w-full bg-pink-500 py-1 rounded">
-            Add
-            </button>
-        </div>
-        `;
+<div class="p-4 flex flex-col flex-1">
+
+<h3 class="text-sm md:text-base font-semibold truncate">${item.name}</h3>
+
+<div class="flex justify-between mt-2">
+<p class="text-cyan-400 font-bold">$${item.price}</p>
+
+<span class="text-sm">
+❤️ <span id="like-${item.id}">${likeCount}</span>
+</span>
+</div>
+
+<div class="flex gap-2 mt-4">
+
+<button onclick="addLike(${item.id})"
+class="flex-1 py-2 rounded-xl bg-red-500/10 text-red-400 active:scale-95">
+♥
+</button>
+
+<button onclick="viewProduct(${item.id})"
+class="flex-1 py-2 rounded-xl bg-cyan-500 active:scale-95">
+View
+</button>
+
+</div>
+
+</div>
+</div>
+`;
             });
         }
 
-        /* =============================
-           🛒 ADD TO CART
-        ============================= */
-        function addToCart(index) {
-            if (confirm('add now')) {
+        // LIKE
+        function addLike(id) {
+            let likes = JSON.parse(localStorage.getItem("likes")) || {};
+            likes[id] = (likes[id] || 0) + 1;
+            localStorage.setItem("likes", JSON.stringify(likes));
 
-                cart.push(Homes[index]);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                document.getElementById("cart-count").innerText = cart.length;
-            }
+            document.getElementById(`like-${id}`).innerText = likes[id];
         }
 
-        /* =============================
-           🎬 SLIDER
-        ============================= */
-        const sliderWrapper = document.getElementById("sliderWrapper");
+        // VIEW
+        function viewProduct(id) {
+            const product = Homes.find(p => p.id === id);
+            localStorage.setItem("viewProduct", JSON.stringify(product));
+            window.location.href = "Views.html";
+        }
+
+        // SLIDER
         let index = 0;
+        const slider = document.getElementById("sliderWrapper");
 
-        function slideNext() {
+        setInterval(() => {
             index++;
-            sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+            if (index >= slider.children.length) { index = 0; }
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }, 3000);
 
-            if (index >= sliderWrapper.children.length) {
-                index = 0;
-                sliderWrapper.style.transform = `translateX(0%)`;
-            }
-        }
-        setInterval(slideNext, 3000);
-
-        /* =============================
-           📱 MOBILE MENU
-        ============================= */
-        let menuOpen = false;
-
+        // MOBILE MENU
+        let open = false;
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const overlay = document.getElementById("overlay");
             const icon = document.getElementById("menuIcon");
 
-            menuOpen = !menuOpen;
+            open = !open;
 
-            if (menuOpen) {
-                menu.style.transform = "translateX(0)";
-                overlay.classList.remove("hidden");
-                icon.classList.replace("fa-bars", "fa-times");
-            } else {
-                menu.style.transform = "translateX(-100%)";
-                overlay.classList.add("hidden");
-                icon.classList.replace("fa-times", "fa-bars");
-            }
+            menu.classList.toggle("-translate-x-full");
+            overlay.classList.toggle("hidden");
+
+            icon.classList.toggle("fa-bars");
+            icon.classList.toggle("fa-times");
         }
 
-        /* INIT */
+        // INIT
         renderProducts(Homes);
+
     </script>
 
 </body>

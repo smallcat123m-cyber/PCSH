@@ -1,6 +1,6 @@
 // 🧠 PRODUCT DATA
 const Couples = [
-  { id: 53, type: "shirt", name: "Casual Cotton Shirt", price: 22, image: "https://i.pinimg.com/1200x/5c/93/f0/5c93f0edbcc255e6ed5bcbdf48a82d59.jpg", des: "Comfortable cotton shirt for everyday wear" },
+  { id: 53, type: "shirt", name: "ABC", price: 22, image: "https://i.pinimg.com/1200x/5c/93/f0/5c93f0edbcc255e6ed5bcbdf48a82d59.jpg", des: "Comfortable cotton shirt for everyday wear" },
   { id: 54, type: "shirt", name: "Slim Fit Formal Shirt", price: 28, image: "https://i.pinimg.com/736x/66/71/a8/6671a814c24cf959744bda2095c780d6.jpg", des: "Perfect slim fit shirt for office and events" },
   { id: 55, type: "trousers", name: "Denim Jeans Trousers", price: 35, image: "https://i.pinimg.com/736x/43/12/a0/4312a0ec688db9f00b41396bbb3519f2.jpg", des: "Classic blue denim trousers with modern fit" },
   { id: 56, type: "trousers", name: "Black Chino Trousers", price: 30, image: "https://i.pinimg.com/736x/e6/71/fe/e671fe1d47c28510658e6901e264e01e.jpg", des: "Stylish chinos suitable for casual and formal" },
@@ -57,7 +57,7 @@ function displayProducts(list) {
         </p>
 
         <!-- BUTTON -->
-        <button onclick="displayProducts(Mens)"
+        <button onclick="displayProducts(Couples)"
             class="px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500
             text-sm font-semibold hover:scale-105 transition shadow-md">
             Show All Products
@@ -74,30 +74,35 @@ function displayProducts(list) {
 
         Coupleslist.innerHTML += `
 <div class="group bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden
-    hover:shadow-[0_0_25px_rgba(0,255,255,0.2)] hover:border-cyan-400 transition duration-300">
+hover:shadow-[0_0_25px_rgba(0,255,255,0.2)] hover:border-cyan-400 transition duration-300">
 
     <!-- IMAGE -->
-   <div class="overflow-hidden rounded-xl">
-    <img src="${item.image}" 
-        class="w-full h-100 object-cover mx-auto transition duration-500 group-hover:scale-105">
-</div>
+    <div class="overflow-hidden">
+        <img src="${item.image}" 
+        class="w-full h-40 sm:h-48 md:h-52 lg:h-56 xl:h-60 object-cover 
+        transition duration-500 group-hover:scale-105">
+    </div>
 
     <!-- CONTENT -->
-    <div class="p-4">
+    <div class="p-3 sm:p-4">
 
         <!-- NAME -->
-        <h3 class="text-white font-semibold text-lg truncate group-hover:text-cyan-400 transition">
+        <h3 class="text-white font-semibold 
+        text-sm sm:text-base md:text-lg truncate 
+        group-hover:text-cyan-400 transition">
             ${item.name}
         </h3>
 
         <!-- PRICE + LIKE -->
         <div class="flex justify-between items-center mt-2">
 
-            <p class="text-cyan-400 font-bold text-lg">
+            <p class="text-cyan-400 font-bold 
+            text-sm sm:text-base md:text-lg">
                 $${item.price}
             </p>
 
-            <p class="flex items-center gap-1 text-gray-300 text-sm">
+            <p class="flex items-center gap-1 text-gray-300 
+            text-xs sm:text-sm">
                 <i class="fa-solid fa-heart text-red-400"></i>
                 <span id="like-${item.id}" class="text-white">${likeCount}</span>
             </p>
@@ -105,28 +110,32 @@ function displayProducts(list) {
         </div>
 
         <!-- BUTTONS -->
-        <div class="flex gap-2 mt-4">
+        <div class="flex gap-2 mt-3 sm:mt-4">
 
             <!-- LIKE -->
             <button onclick="addLike(${item.id})"
-                class="flex-1 py-2 rounded-xl bg-red-500/10 border border-red-500/30
-                text-red-400 hover:bg-red-500/20 hover:scale-105 transition">
+                class="flex-1 py-1.5 sm:py-2 rounded-xl 
+                bg-red-500/10 border border-red-500/30
+                text-red-400 text-sm sm:text-base
+                hover:bg-red-500/20 active:scale-95 transition">
                 <i class="fa-solid fa-heart"></i>
             </button>
 
             <!-- VIEW -->
             <button onclick="viewProduct(${item.id})"
-                class="flex-1 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500
-                text-white font-semibold hover:scale-105 transition shadow-md">
+                class="flex-1 py-1.5 sm:py-2 rounded-xl 
+                bg-gradient-to-r from-cyan-400 to-blue-500
+                text-white text-sm sm:text-base font-semibold
+                hover:scale-105 active:scale-95 transition shadow-md">
                 View
             </button>
-
         </div>
 
     </div>
 </div>
 `;
-    });
+    
+});
 }
 
 // ❤️ LIKE FUNCTION
