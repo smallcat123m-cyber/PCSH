@@ -29,7 +29,7 @@ function renderProducts(list) {
         const likeCount = likes[item.id] || 0;
 
         html += `
-<div class="group bg-white text-black dark:bg-white/5 dark:text-white 
+<div class="group bg-black text-white dark:bg-white/5 dark:text-white 
     backdrop-blur-md border border-gray-200 dark:border-white/10 
     rounded-2xl overflow-hidden
     hover:shadow-[0_0_25px_rgba(0,255,255,0.2)] hover:border-cyan-400 
@@ -140,13 +140,33 @@ function searchProduct() {
         item.name.toLowerCase().includes(keyword)
     );
 
-    if (result.length === 0) {
-        Homelist.innerHTML = `
-            <div class="text-center text-red-400 p-10">
-                ❌ No product found
+   if (result.length === 0) {
+    Homelist.innerHTML = `
+        <div class="flex flex-col items-center justify-center p-16 text-center animate-fadeIn">
+            
+            <!-- Icon -->
+            <div class="text-6xl mb-4 animate-bounce">
+                🔍
             </div>
-        `;
-    } else {
-        renderProducts(result);
-    }
+
+            <!-- Title -->
+            <h2 class="text-2xl font-bold text-red-400 mb-2">
+                No Products Found
+            </h2>
+
+            <!-- Description -->
+            <p class="text-gray-400 mb-6">
+                Try searching something else or explore our latest items.
+            </p>
+
+            <!-- Button -->
+            <button onclick="location.reload()" 
+                class="px-6 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-full shadow-lg hover:scale-105 transition duration-300">
+                🔄 Refresh
+            </button>
+        </div>
+    `;
+} else {
+    renderProducts(result);
+}
 }
