@@ -35,9 +35,8 @@
 
 </head>
 
-<body class="bg-gradient-to-b from-black via-gray-900 to-black text-white">
+<body id="body" class="bg-white text-black transition duration-300 dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-black dark:text-white">
 
-<!-- NAV -->
 <nav class="sticky top-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10 px-6 md:px-10 py-4 flex justify-between items-center">
 
     <h1 class="text-3xl font-extrabold tracking-[6px] text-pink-400 drop-shadow-[0_0_15px_pink]">
@@ -47,9 +46,16 @@
     <input id="search" type="search" onkeyup="searchProduct()"
         placeholder="Search couple outfits..."
         class="hidden md:block w-[300px] px-4 py-2 rounded-full bg-white/10 border border-white/10
-        text-white focus:outline-none focus:ring-2 focus:ring-pink-400">
+        text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-pink-400">
 
     <ul class="flex gap-6 text-sm uppercase font-medium">
+
+        <!-- ✅ ADD id="modeBtn" -->
+        <!-- <button id="modeBtn" onclick="toggleDark()" 
+        class="px-4 py-2 bg-gray-800 text-white rounded">
+        Dark 🌙
+        </button> -->
+
         <li class="text-pink-400 border-b-2 border-pink-400"><a href="Home.html">Home</a></li>
         <li><a href="/Page/Men/Men.html">Men</a></li>
         <li><a href="/Page/Women/whomen.html">Women</a></li>
@@ -66,33 +72,50 @@
 </nav>
 
 <!-- HERO -->
-<section class="px-6 md:px-10 mt-10">
+<!--  -->
+<section class="px-6 md:px-10 mt-8">
 
-<div class="rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md
-flex flex-col md:flex-row items-center gap-10 p-10 shadow-2xl">
+    <div class="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md
+        flex flex-col md:flex-row items-stretch gap-10 p-8 md:p-14 shadow-2xl  h-100">
 
-    <div class="animate-fadeUp">
-        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-            Match Your <span class="text-pink-400">Couple Style</span>
-        </h1>
+        <!-- TEXT -->
+        <div class=" justify-center">
 
-        <p class="mt-4 text-gray-300 text-lg">
-            Discover trendy couple outfits for romantic, casual, and modern fashion styles.
-        </p>
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+                Match Your  <span class="text-cyan-400">Couple Style</span>
+            </h1>
 
-        <button
-            class="mt-6 px-7 py-3 rounded-full bg-gradient-to-r from-pink-400 to-red-500
-            hover:scale-105 transition font-bold shadow-lg">
-            Shop Now ❤️
-        </button>
+            <p class="mt-4 text-gray-300 text-lg">
+                Discover trendy couple outfits for romantic, casual, and modern fashion styles.
+            </p>
+
+            <button
+                class="mt-6 px-7 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500
+                hover:scale-105 transition font-bold shadow-lg w-fit">
+                 Shop Now ❤️
+            </button>
+
+        </div>
+        
+      <div class="w-full md:w-1/2 overflow-hidden relative">
+
+    <div class="absolute inset-0 bg-cyan-400/10 blur-3xl rounded-full"></div>
+
+    <div class="relative z-10 overflow-hidden rounded-2xl">
+
+        <div id="sliderWrapper"
+            class="flex w-full transition-transform duration-700 ease-in-out">
+
+            <img src="/Banner/Men_Banner/men1.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+            <img src="/Banner/Men_Banner/men2.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+            <img src="/Banner/Men_Banner/men3.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+            <img src="/Banner/Men_Banner/men4.png" class="w-full flex-shrink-0 rounded-2xl shadow-2xl">
+
+        </div>
+
     </div>
-
-    <img id="slider"
-        src="https://i.pinimg.com/736x/53/64/39/536439a1429b19c531e2cd31d5e69b3b.jpg"
-        class="rounded-2xl w-full md:w-1/2 h-[320px] object-cover shadow-2xl">
-
 </div>
-
+</div>
 </section>
 
 <!-- PRODUCTS -->
@@ -115,7 +138,7 @@ flex flex-col md:flex-row items-center gap-10 p-10 shadow-2xl">
 <p class="mt-6 text-sm">© 2026 VEXO. All rights reserved.</p>
 
 </footer>
-
+<!-- <a href="/Banner/Men_Banner/"></a> -->
 
 
 <script src="/Page/Men/Men_data.js"></script>
@@ -128,26 +151,36 @@ flex flex-col md:flex-row items-center gap-10 p-10 shadow-2xl">
 <!-- SLIDER -->
 <script>
 const images = [
-    "/Banner/Couple/couple1.jpg",
-    "/Banner/Couple/couple2.jpg",
-    "/Banner/Couple/couple3.jpg",
-    "/Banner/Couple/couple4.jpg"
+    "/Banner/Men_Banner/men1.png",
+    "/Banner/Men_Banner/men2.png",
+    "/Banner/Men_Banner/men3.png",
+    "/Banner/Men_Banner/men4.png"
 ];
 
+const sliderWrapper = document.getElementById("sliderWrapper");
+const slides = sliderWrapper.children;
+
 let index = 0;
-const slider = document.getElementById("slider");
+const total = slides.length;
 
-setInterval(() => {
-    index = (index + 1) % images.length;
-    slider.style.opacity = "0.5";
+function slideNext() {
+    index++;
 
-    setTimeout(() => {
-        slider.src = images[index];
-        slider.style.opacity = "1";
-    }, 200);
+    sliderWrapper.style.transition = "transform 0.7s ease-in-out";
+    sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
 
-}, 4000);
+    // when reach last slide → reset smoothly
+    if (index === total) {
+        setTimeout(() => {
+            sliderWrapper.style.transition = "none";
+            index = 0;
+            sliderWrapper.style.transform = `translateX(0%)`;
+        }, 700);
+    }
+}
+
+// auto loop
+setInterval(slideNext, 5000);
 </script>
-
 </body>
 </html>
